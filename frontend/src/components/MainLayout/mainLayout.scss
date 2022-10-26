@@ -1,0 +1,10 @@
+@import '../../sassStyles/variables';
+
+.mainWrapper {
+    display: flex;
+    flex-direction: column;
+    color: $textDarkColor;
+    width: 100vw;
+    height: 100vh;
+    background: $backgroundDarkColor;
+}

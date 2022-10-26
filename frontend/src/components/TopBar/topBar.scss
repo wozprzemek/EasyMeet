@@ -1,0 +1,10 @@
+@import '../../sassStyles/variables';
+
+.topBarContainer {
+    display: flex;
+    width: 100vw;
+    height: 4rem;
+    background-color: $backgroundDarkColor;
+    padding: 1rem;
+    box-sizing: border-box;
+}
