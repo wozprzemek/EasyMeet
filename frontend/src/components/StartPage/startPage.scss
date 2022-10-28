@@ -1,0 +1,87 @@
+@import '../../sassStyles/variables';
+
+.HeroSectionWrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: end;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    // align-items: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.BannerImageContainer {
+    position: absolute;
+    display: flex;
+    gap: 2.25vh;
+
+    img {
+        height: 130vh;
+        z-index: 3;
+        margin: 0;
+        padding: 0;
+        &:nth-of-type(odd) {z-index: 1;}
+    }
+}
+
+.InfoSection {
+    width: 100%;
+    height: 80vh;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10vw;
+    box-sizing: border-box;
+
+    &:nth-of-type(odd) {background-color: #E06461;}
+    &:nth-of-type(even) {background-color: #FFFCE8;}
+}
+
+.InfoSectionContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.InfoSectionImage {
+    max-height: 40%;
+    border-radius: 16px;
+    -webkit-box-shadow: 0px 4px 8px 0px rgba(10, 20, 31, 0.5);
+    -moz-box-shadow: 0px 4px 8px 0px rgba(10, 20, 31, 0.5);
+    box-shadow: 0px 4px 8px 0px rgba(10, 20, 31, 0.5);
+    max-width: 40%;
+    width: auto;
+    height: auto;
+}
+
+.InfoSectionText {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    color: $backgroundDarkColor;
+    gap: 2rem;
+    font-family: 'Inter', sans-serif;
+
+    h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+        font-weight: 400;
+    }
+}
+
+.Footer {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

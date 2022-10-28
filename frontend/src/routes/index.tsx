@@ -1,5 +1,5 @@
 import { MainLayout } from "components/MainLayout/MainLayout";
-import { HeroPage } from "components/HeroPage/HeroPage";
+import { StartPage } from "components/StartPage/StartPage";
 import { Outlet, useRoutes } from "react-router";
 
 const App = () => {
@@ -15,7 +15,7 @@ export const protectedRoutes = [
       path: '/',
       element: <App />,
       children: [
-        { path: '/', element: <HeroPage /> },
+        { path: '/', element: <StartPage /> },
       ],
     },
   ];

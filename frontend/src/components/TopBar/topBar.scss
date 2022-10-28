@@ -2,9 +2,14 @@
 
 .topBarContainer {
     display: flex;
-    width: 100vw;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    width: 100%;
     height: 4rem;
-    background-color: $backgroundDarkColor;
+    background-color: rgba(10,20,31,0.75);
+    backdrop-filter: blur(5px);
+    // opacity: 50%;
     padding: 1rem;
     box-sizing: border-box;
 }
