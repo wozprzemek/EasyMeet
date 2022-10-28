@@ -48,7 +48,7 @@ export const StartPage = () => {
           </div>
       </div>
       <div className='Footer'>
-        Copyright © 2022 Przemysław Woźniak
+        <span>Copyright © 2022 Przemysław Woźniak</span>
       </div>
     </ContentLayout>
   )

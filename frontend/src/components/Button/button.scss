@@ -1,0 +1,39 @@
+@import '../../sassStyles/variables';
+
+.Button {
+    width: 9rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    background-color: rgba(0,0,0,0);
+    color: #FFFCE8;
+    font-family: 'Inter', sans-serif;
+}
+
+.Button--outline {
+    border: 1px #8A2333 solid;
+    color: #FFFCE8;
+    transition: cubic-bezier(0.39, 0.575, 0.565, 1);
+
+    &:hover {
+        background: linear-gradient(90deg, rgba(215,38,61,1) 0%, rgba(244,115,125,1) 100%);
+        border: none;
+    }
+}
+
+.Button--solid {
+    background: rgb(215,38,61);
+    background: linear-gradient(90deg, rgba(215,38,61,1) 0%, rgba(244,115,125,1) 100%);
+}
+
+.Button--text {
+    border: none;
+
+    &:hover {
+        color: #b1b1b1;
+    }
+}
