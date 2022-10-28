@@ -15,6 +15,12 @@ export const StartPage = () => {
   return (
     <ContentLayout>
       <div className='HeroSectionWrapper'>
+        <div className='HeroSectionContent'>
+            <div className='HeroSectionText'>
+              <h1>Schedule meetings with ease</h1>
+              <h2>Organize your meetings easily with the help of simple availability polls.</h2>
+            </div>
+        </div>
         <div className='BannerImageContainer'>
           {Array.from(Array(6).keys()).map((i) => {
             return (

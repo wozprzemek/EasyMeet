@@ -4,16 +4,45 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    justify-content: end;
+    // flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     padding-left: 10vw;
     padding-right: 10vw;
-    // align-items: center;
     box-sizing: border-box;
     overflow: hidden;
 }
 
+.HeroSectionContent {
+    display: flex;
+    align-items: center;
+}
+
+.HeroSectionText {
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    gap: 3rem;
+
+    h1 {
+        font-size: 4.25rem;
+        font-weight: 600;
+        max-width: 1000px;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+        font-weight: 300;
+        line-height: 1.5rem;
+        max-width: 600px;
+    }
+}
+
 .BannerImageContainer {
     position: absolute;
+    right: 10vw;
+    align-self: flex-start;
+    justify-self: flex-start;
     display: flex;
     gap: 2.25vh;
 
