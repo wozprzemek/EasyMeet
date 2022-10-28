@@ -31,12 +31,19 @@ export const StartPage = () => {
             <h2>Select the possible date(s) for the meeting. You can limit availability hours for the dates and even set the password for the participants.</h2>
           </div>
         </div>
-        
       </div>
       <div className='InfoSection'>
-
+          <div className='InfoSectionContent'>
+            <div className='InfoSectionText'>
+              <h1>Share the meeting with your colleagues</h1>
+              <h2>They can mark their availability times using a simple poll. Bookmark the meeting and come back to decide the optimal meeting time based on your team's availability.</h2>
+            </div>
+            <img src={selectAvailabilityImage} className='InfoSectionImage' />
+          </div>
       </div>
-      <div className='Footer'></div>
+      <div className='Footer'>
+        Copyright © 2022 Przemysław Woźniak
+      </div>
     </ContentLayout>
   )
 }

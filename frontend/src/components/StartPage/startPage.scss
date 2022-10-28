@@ -36,8 +36,14 @@
     padding: 10vw;
     box-sizing: border-box;
 
-    &:nth-of-type(odd) {background-color: #E06461;}
-    &:nth-of-type(even) {background-color: #FFFCE8;}
+    &:nth-of-type(odd) {
+        background-color: #E06461;
+        color: #FFFDF7;
+    }
+    &:nth-of-type(even) {
+        background-color: #FFFCE8;
+        color: $backgroundDarkColor;
+    }
 }
 
 .InfoSectionContent {
@@ -62,18 +68,17 @@
     display: flex;
     flex-direction: column;
     max-width: 600px;
-    color: $backgroundDarkColor;
-    gap: 2rem;
-    font-family: 'Inter', sans-serif;
+    gap: 3rem;
 
     h1 {
         font-size: 3.5rem;
-        font-weight: 700;
+        font-weight: 600;
     }
 
     h2 {
         font-size: 1.25rem;
-        font-weight: 400;
+        font-weight: 300;
+        line-height: 1.5rem;
     }
 }
 
