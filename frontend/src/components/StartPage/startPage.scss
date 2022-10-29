@@ -27,6 +27,10 @@
         font-size: 4.25rem;
         font-weight: 600;
         max-width: 1000px;
+
+        @media only screen and (max-height: 640px) {
+            font-size: 3.5rem;
+        }
     }
 
     h2 {
@@ -56,6 +60,7 @@
         margin: 0;
         padding: 0; 
         &:nth-of-type(odd) {z-index: 1;}
+        pointer-events: none;
 
         @media only screen and (max-width: 1280px) {
             height: 100vh;
@@ -85,6 +90,13 @@
     &:nth-of-type(odd) {
         background-color: #E06461;
         color: #FFFDF7;
+
+        div {
+            @media only screen and (max-width: 1280px) {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
     }
     &:nth-of-type(even) {
         background-color: #FFFCE8;
@@ -159,17 +171,21 @@
 
 .Footer {
     width: 100%;
-    height: 10rem;
+    height: 6rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #596c81;
+    color: #505f70;
 
     span {
         height: 2rem;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-weight: 200;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        transform-origin: bottom;
     }
 
     span:hover {

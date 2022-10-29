@@ -1,5 +1,6 @@
 import { MainLayout } from "components/MainLayout/MainLayout";
 import { StartPage } from "components/StartPage/StartPage";
+import { CreateMeeting } from "features/CreateMeeting/routes/CreateMeeting";
 import { Outlet, useRoutes } from "react-router";
 
 const App = () => {
@@ -16,6 +17,7 @@ export const protectedRoutes = [
       element: <App />,
       children: [
         { path: '/', element: <StartPage /> },
+        { path: '/create', element: <CreateMeeting /> },
       ],
     },
   ];

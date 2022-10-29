@@ -1,0 +1,75 @@
+@import '../../../sassStyles/variables';
+
+.Wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.WrapperContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.TitleInput {
+    appearance: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: none;
+    border-bottom: 1px solid #FFFDF7;
+    padding: 1rem;
+    width: 400px;
+    text-align: center;
+    background-color: rgba(0,0,0,0);
+    box-sizing: border-box;
+    color: #FFFDF7;
+}
+
+.SetPasswordContainer {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    width: 400px;
+}
+
+.PasswordCheckbox {
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    background-color: rgba(0,0,0,0);
+    border: 1px solid #FFFDF7;
+    cursor: pointer;
+    margin-right: 1rem;
+
+    &:checked {
+        background-color: #E06461;
+        border: none;
+    }
+}
+
+.PasswordInput {
+    appearance: none;
+    font-size: 1rem;
+    font-weight: 400;
+    border: none;
+    padding: 0.25rem;
+    height: 2.25rem;
+    width: 240px;
+    text-align: left;
+    background-color: rgba(255,253,247,0.1);
+    border-radius: 0.25rem;
+    margin-left: 1rem;
+    color: #FFFDF7;
+
+}
+
+input::placeholder {
+    color: #FFFDF7;
+    opacity: 1;
+}

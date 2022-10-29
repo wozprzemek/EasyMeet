@@ -3,7 +3,7 @@ import './topBar.scss'
 import logo from 'assets/logo.svg'
 import { Button } from 'components/Button/Button'
 import { ButtonType } from 'types'
-import { SunIcon } from "@heroicons/react/24/outline";
+import { Bars2Icon, Bars3Icon, SunIcon } from "@heroicons/react/24/outline";
 
 const Logo = () => {
   return (
@@ -23,6 +23,7 @@ export const TopBar = () => {
         <Button type={ButtonType.TEXT} text='About' onClick={() => console.log('about')} />
         <Button type={ButtonType.OUTLINE} text='Create' onClick={() => console.log('create')} />
       </div>
+      <Bars3Icon className='ShowMenuButton'/>
     </div>
   )
 }

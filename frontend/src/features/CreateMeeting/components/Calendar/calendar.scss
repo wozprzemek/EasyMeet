@@ -1,0 +1,46 @@
+@import '../../../../sassStyles/variables';
+
+
+.CalendarWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 312px;
+    gap: 2.5rem;
+}
+
+.MonthHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.125rem;
+    font-weight: 600;
+    height: 1.5rem;
+    color: #E06461;
+}
+
+.MonthHeader--chevron {
+    height: 1.5rem;
+    width: auto;
+    color: #FFFCE8;
+    cursor: pointer;
+}
+
+.CalendarDaysContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+
+    div {
+        width: 2.125rem;
+        height: 2.125rem;
+        border: 1px solid #e6e6e6;
+        box-sizing: border-box;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #E06461;
+            border: none;
+        }
+    }
+}
