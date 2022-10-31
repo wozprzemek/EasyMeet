@@ -1,10 +1,10 @@
 @import '../../../../sassStyles/variables';
 
-
 .CalendarWrapper {
     display: flex;
     flex-direction: column;
     width: 312px;
+    height: 310px;
     gap: 2.5rem;
 }
 
@@ -28,19 +28,37 @@
 
 .CalendarDaysContainer {
     display: flex;
+    position: relative;
     flex-wrap: wrap;
     gap: 0.75rem;
 
-    div {
+    .CalendarDayCheckbox {
+        appearance: none;
         width: 2.125rem;
         height: 2.125rem;
         border: 1px solid #e6e6e6;
+        // background-color: rgba(255,255,255, 0.05);
         box-sizing: border-box;
+        position: relative;
         cursor: pointer;
 
         &:hover {
+            background-color: rgba(255,255,255, 0.1);
+        }
+
+        &:checked {
             background-color: #E06461;
-            border: none;
+            border: none
         }
     }
+
+    .CalendarDayLabel {
+        position: absolute;
+        transform: translate(-100%, 50%);
+    }
+}
+
+.WeekDayText {
+    width: 2.125rem;
+    text-align: center;
 }
