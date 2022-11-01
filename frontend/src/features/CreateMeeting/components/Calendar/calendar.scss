@@ -26,6 +26,13 @@
     cursor: pointer;
 }
 
+.MonthHeader--textContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
 .CalendarDaysContainer {
     display: flex;
     position: relative;
