@@ -37,6 +37,15 @@ export const Calendar = () => {
 
     }
 
+    const isDaySelected = (dateObject: StateProperties) => {
+        for (let i=0; i < selectedDays.length; i++) {
+            if (selectedDays[i].day === dateObject.day && selectedDays[i].month === dateObject.month && selectedDays[i].year === dateObject.year) {
+                return true
+            }
+        }
+        return false
+    }
+
     const handleDaySelection = (dateObject : StateProperties) => {
         for (let i=0; i < selectedDays.length; i++) {
             if (selectedDays[i].day === dateObject.day && selectedDays[i].month === dateObject.month && selectedDays[i].year === dateObject.year) {
@@ -54,7 +63,7 @@ export const Calendar = () => {
             month: day.getMonth(),
             year: day.getFullYear()
         }
-        console.log(handleDaySelection(dateObject))
+        handleDaySelection(dateObject)
     }
 
     const selectedMonthDays = (getAllDaysInMonth(10,2022))
@@ -66,12 +75,9 @@ export const Calendar = () => {
     const [selectedDays, setSelectedDays] = useState<StateProperties[]>([]) // used for selected days
     const [displayedDays, setDisplayedDays] = useState(getAllDaysInMonth(selectedMonth.month + 1, selectedMonth.year))
     const weekDays = ['M', 'Tu', 'W', 'Th', 'F', 'Sa', 'Su']
-    console.log('selectedMonth', selectedMonth.month)
     
     useEffect(() => {
         setDisplayedDays(getAllDaysInMonth(selectedMonth.month + 1, selectedMonth.year))
-        console.log(selectedMonth.month + 1, selectedMonth.year)
-        console.log(selectedDays)
     }, [selectedMonth])
 
     useEffect(() => {
@@ -93,7 +99,7 @@ export const Calendar = () => {
                 })}
                 {displayedDays.map((day) => {   
                     return (
-                        <DayCheckbox key={day.getDate()} day={day} selected={selectedDays.indexOf(day as never)} handleClick={() => handleDayCheckboxClick(day)} /> //????????????????????????????
+                        <DayCheckbox key={day.getDate()} day={day} selected={isDaySelected({day: day.getDate(), month: day.getMonth(), year: day.getFullYear()})} handleClick={() => handleDayCheckboxClick(day)} /> //????????????????????????????
                     )
                 })}
             </div>
