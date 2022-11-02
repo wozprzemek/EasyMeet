@@ -16,7 +16,10 @@ interface StateProperties {
 const getCurrentMonthDays = (month : number, year : number) =>
   Array.from(
     { length: new Date(year, month, 0).getDate() },
-    (_, i) => new Date(year, month - 1, i + 1)
+    (_, i) => ({
+        date: new Date(year, month - 1, i + 1),
+        current: true
+    })
 )
 
 const getPreviousMonthDays = (month : number, year : number) => {
@@ -24,7 +27,10 @@ const getPreviousMonthDays = (month : number, year : number) => {
     return(
         Array.from(
             { length: firstDayOfCurrentMonth - 1},
-            (_, i) => new Date(year, month, 1 - i - 1)
+            (_, i) => ({
+                date: new Date(year, month, 1 - i - 1),
+                current: false
+            })
         ).reverse()
     )
 }
@@ -32,7 +38,7 @@ const getPreviousMonthDays = (month : number, year : number) => {
 const getAllDays = (month : number, year : number) => {
     const previousMonthDays = getPreviousMonthDays(month, year)
     const currentMonthDays = getCurrentMonthDays(month+1, year)
-    const nextMonthDays = getNextMonthDays(month, year, previousMonthDays, currentMonthDays)
+    const nextMonthDays = getNextMonthDays(month, year, Array.from(previousMonthDays, x => x.date), Array.from(currentMonthDays, x => x.date))
 
     const allDays = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays]
     console.log(allDays)
@@ -44,7 +50,10 @@ const getNextMonthDays = (month : number, year : number, previousMonthDays : Dat
     return(
         Array.from(
             { length: 42 - previousMonthDays.length - currentMonthDays.length},
-            (_, i) => new Date(year, month + 1, i + 1)
+            (_, i) => ({
+                date: new Date(year, month + 1, i + 1),
+                current: false
+            })
         )
     )
 }
@@ -99,6 +108,7 @@ export const Calendar = () => {
 
     useEffect(() => {
         console.log(selectedDays)
+        // console.log(Array.from([1, 2, 3], x => ({num: x + x})));
     }, [selectedDays])
     
     return (
@@ -119,7 +129,7 @@ export const Calendar = () => {
                 })}
                 {displayedDays.map((day) => {   
                     return (
-                        <DayCheckbox key={null} day={day} selected={isDaySelected({day: day.getDate(), month: day.getMonth(), year: day.getFullYear()})} handleClick={() => handleDayCheckboxClick(day)} /> //????????????????????????????
+                        <DayCheckbox key={null} day={day} selected={isDaySelected({day: day.date.getDate(), month: day.date.getMonth(), year: day.date.getFullYear()})} handleClick={() => handleDayCheckboxClick(day.date)} /> //????????????????????????????
                     )
                 })}
             </div>

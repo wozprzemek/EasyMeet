@@ -4,6 +4,7 @@ import logo from 'assets/logo.svg'
 import { Button } from 'components/Button/Button'
 import { ButtonType } from 'types'
 import { Bars2Icon, Bars3Icon, SunIcon } from "@heroicons/react/24/outline";
+import { Link } from 'react-router-dom'
 
 const Logo = () => {
   return (
@@ -17,11 +18,11 @@ const Logo = () => {
 export const TopBar = () => {
   return (
     <div className='TopBarContainer'>
-      <Logo />
+      <Link to='/'><Logo /></Link>
       <div className='ButtonContainer'>
         <SunIcon className='ModeChangeButton'></SunIcon>
         <Button type={ButtonType.TEXT} text='About' onClick={() => console.log('about')} />
-        <Button type={ButtonType.OUTLINE} text='Create' onClick={() => console.log('create')} />
+        <Link to='/create/'><Button type={ButtonType.OUTLINE} text='Create' onClick={() => console.log('create')} /></Link>
       </div>
       <Bars3Icon className='ShowMenuButton'/>
     </div>

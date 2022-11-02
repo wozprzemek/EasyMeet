@@ -5,7 +5,7 @@
     flex-direction: column;
     width: 312px;
     height: 310px;
-    gap: 2.5rem;
+    gap: 3rem;
 }
 
 .MonthHeader {
@@ -24,6 +24,10 @@
     width: auto;
     color: #FFFCE8;
     cursor: pointer;
+
+    &:hover {
+        color: #b1b1b1;
+    }
 }
 
 .MonthHeader--textContainer {
@@ -68,4 +72,5 @@
 .WeekDayText {
     width: 2.125rem;
     text-align: center;
+    margin-bottom: 0.5rem;
 }

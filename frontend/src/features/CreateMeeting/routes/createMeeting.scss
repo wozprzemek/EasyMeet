@@ -18,7 +18,7 @@
 }
 
 .TitleInput {
-    appearance: none;
+    appearance: none;    
     font-size: 1.5rem;
     font-weight: 600;
     border: none;
@@ -58,7 +58,7 @@
     font-size: 1rem;
     font-weight: 400;
     border: none;
-    padding: 0.25rem;
+    padding: 0rem 0.25rem;
     height: 2.25rem;
     width: 240px;
     text-align: left;
@@ -70,6 +70,6 @@
 }
 
 input::placeholder {
-    color: #FFFDF7;
+    color: #b8b8b8;
     opacity: 1;
 }

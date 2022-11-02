@@ -2,7 +2,7 @@ import React from 'react'
 import './dayCheckbox.scss'
 
 interface IDayCheckbox {
-    day: Date,
+    day: {date: Date, current: boolean},
     selected: boolean,
     handleClick: () => void,
 }
@@ -10,8 +10,8 @@ interface IDayCheckbox {
 export const DayCheckbox = ({day, selected, handleClick} : IDayCheckbox) => {
     console.log(selected)
     return (
-        <div className={`DayCheckbox ${selected ? 'DayCheckbox-selected' : ''}`} onClick={handleClick}>
-            {day.getDate()}
+        <div className={`DayCheckbox ${selected ? 'DayCheckbox-selected' : ''} ${day.current ? 'DayCheckbox-current' : 'DayCheckbox-notCurrent'}`} onClick={handleClick}>
+            {day.date.getDate()}
         </div>
     )
 }
