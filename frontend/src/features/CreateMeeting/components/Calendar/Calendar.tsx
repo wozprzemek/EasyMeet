@@ -1,17 +1,8 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import { DateType } from 'features/CreateMeeting/types';
 import React, { useEffect, useState } from 'react'
-import { DayCheckbox } from '../DayCheckBox/DayCheckbox';
+import { DayCheckbox } from '../DayCheckbox/DayCheckbox';
 import './calendar.scss'
-
-interface ICalendar {
-    setDates: () => void,
-}
-
-interface StateProperties {
-    day: number;
-    month: number;
-    year: number;
-}  
 
 const getCurrentMonthDays = (month : number, year : number) =>
   Array.from(
@@ -35,17 +26,6 @@ const getPreviousMonthDays = (month : number, year : number) => {
     )
 }
 
-const getAllDays = (month : number, year : number) => {
-    const previousMonthDays = getPreviousMonthDays(month, year)
-    const currentMonthDays = getCurrentMonthDays(month+1, year)
-    const nextMonthDays = getNextMonthDays(month, year, Array.from(previousMonthDays, x => x.date), Array.from(currentMonthDays, x => x.date))
-
-    const allDays = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays]
-    console.log(allDays)
-    return allDays
-
-}
-
 const getNextMonthDays = (month : number, year : number, previousMonthDays : Date[], currentMonthDays : Date[]) => {
     return(
         Array.from(
@@ -58,14 +38,28 @@ const getNextMonthDays = (month : number, year : number, previousMonthDays : Dat
     )
 }
 
+const getAllDays = (month : number, year : number) => {
+    const previousMonthDays = getPreviousMonthDays(month, year)
+    const currentMonthDays = getCurrentMonthDays(month+1, year)
+    const nextMonthDays = getNextMonthDays(month, year, Array.from(previousMonthDays, x => x.date), Array.from(currentMonthDays, x => x.date))
+
+    const allDays = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays]
+    console.log(allDays)
+    return allDays
+
+}
+
+const getDayKey = (day: Date) => {
+    return day.getDate().toString() + day.getMonth() + day.getFullYear()
+}
+
 export const Calendar = () => {
     const changeMonth = (offset : number) => {
         const newDate = new Date(selectedMonth.year, selectedMonth.month + offset + 1, 0)
         setSelectedMonth({month: newDate.getMonth(), year: newDate.getFullYear()})
     }
 
-
-    const isDaySelected = (dateObject: StateProperties) => {
+    const isDaySelected = (dateObject: DateType) => {
         for (let i=0; i < selectedDays.length; i++) {
             if (selectedDays[i].day === dateObject.day && selectedDays[i].month === dateObject.month && selectedDays[i].year === dateObject.year) {
                 return true
@@ -74,41 +68,39 @@ export const Calendar = () => {
         return false
     }
 
-    const handleDaySelection = (dateObject : StateProperties) => {
+    const handleDaySelection = (dateObject : DateType) => {
         for (let i=0; i < selectedDays.length; i++) {
             if (selectedDays[i].day === dateObject.day && selectedDays[i].month === dateObject.month && selectedDays[i].year === dateObject.year) {
-                setSelectedDays(selectedDays.filter((_, index) => index !== i))
+                setSelectedDays(selectedDays.filter((_, index) => index !== i)) // remove an already selected day
                 return true
             }
         }
         setSelectedDays([...selectedDays, dateObject])
+        changeMonth(dateObject.month - selectedMonth.month) // change the month only if a date has not been selected
         return false
     }
 
-    const handleDayCheckboxClick = (day : Date) => {
+    const handleDayCheckboxClick = (day : {date: Date, current: boolean}) => {
         const dateObject = {
-            day: day.getDate(),
-            month: day.getMonth(),
-            year: day.getFullYear()
+            day: day.date.getDate(),
+            month: day.date.getMonth(),
+            year: day.date.getFullYear()
         }
-        handleDaySelection(dateObject)
+        handleDaySelection(dateObject) // select/deselect day and handle month change if clicked on a part off different month
     }
 
     var now = new Date() // current date
     const [selectedMonth, setSelectedMonth] = useState({month: now.getMonth(), year: now.getFullYear()}) // used for selected year and month
-    const [selectedDays, setSelectedDays] = useState<StateProperties[]>([]) // used for selected days
+    const [selectedDays, setSelectedDays] = useState<DateType[]>([]) // used for selected days
     const [displayedDays, setDisplayedDays] = useState(getCurrentMonthDays(selectedMonth.month + 1, selectedMonth.year))
     const weekDays = ['M', 'Tu', 'W', 'Th', 'F', 'Sa', 'Su']
     
     useEffect(() => {
         setDisplayedDays(getAllDays(selectedMonth.month, selectedMonth.year))
-        console.log(new Date(selectedMonth.year, selectedMonth.month, 1), new Date(selectedMonth.year, selectedMonth.month, 1).getDay())
-        console.log('previous month days', getPreviousMonthDays(selectedMonth.month, selectedMonth.year))
     }, [selectedMonth])
 
     useEffect(() => {
         console.log(selectedDays)
-        // console.log(Array.from([1, 2, 3], x => ({num: x + x})));
     }, [selectedDays])
     
     return (
@@ -129,7 +121,7 @@ export const Calendar = () => {
                 })}
                 {displayedDays.map((day) => {   
                     return (
-                        <DayCheckbox key={null} day={day} selected={isDaySelected({day: day.date.getDate(), month: day.date.getMonth(), year: day.date.getFullYear()})} handleClick={() => handleDayCheckboxClick(day.date)} /> //????????????????????????????
+                        <DayCheckbox key={getDayKey(day.date)} day={day} selected={isDaySelected({day: day.date.getDate(), month: day.date.getMonth(), year: day.date.getFullYear()})} handleClick={() => handleDayCheckboxClick(day)} /> //????????????????????????????
                     )
                 })}
             </div>

@@ -2,7 +2,7 @@
 
 .Button {
     width: 9rem;
-    height: 2.25rem;
+    height: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,6 +28,7 @@
 .Button--solid {
     background: rgb(215,38,61);
     background: linear-gradient(90deg, rgba(215,38,61,1) 0%, rgba(244,115,125,1) 100%);
+    border: none;
 }
 
 .Button--text {

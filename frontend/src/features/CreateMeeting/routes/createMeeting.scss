@@ -14,6 +14,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 6rem;
+}
+
+.TitleInputWrapper {
+    display: flex;
+    flex-direction: column;
     gap: 3rem;
 }
 
@@ -22,20 +28,22 @@
     font-size: 1.5rem;
     font-weight: 600;
     border: none;
-    border-bottom: 1px solid #FFFDF7;
+    border-bottom: 1px solid #b1b1b1;
     padding: 1rem;
-    width: 400px;
+    width: 420px;
     text-align: center;
     background-color: rgba(0,0,0,0);
     box-sizing: border-box;
-    color: #FFFDF7;
+    background: linear-gradient(90deg, rgba(215,38,61,1) 0%, rgba(244,115,125,1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .SetPasswordContainer {
     display: flex;
     align-items: center;
     font-size: 1rem;
-    width: 400px;
+    justify-content: space-between;
 }
 
 .PasswordCheckbox {
@@ -55,10 +63,8 @@
 
 .PasswordInput {
     appearance: none;
-    font-size: 1rem;
     font-weight: 400;
     border: none;
-    padding: 0rem 0.25rem;
     height: 2.25rem;
     width: 240px;
     text-align: left;
@@ -66,10 +72,18 @@
     border-radius: 0.25rem;
     margin-left: 1rem;
     color: #FFFDF7;
-
+    padding: 0.125rem 0.75rem;
+    font-size: 1rem;
 }
 
 input::placeholder {
     color: #b8b8b8;
     opacity: 1;
+}
+
+.ColumnWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6rem;
 }
