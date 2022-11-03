@@ -6,7 +6,8 @@
     justify-content: center;
     width: 2.125rem;
     height: 2.125rem;
-    border: 1px solid rgba(255,255,255,0.3);
+    border: 1px solid rgba(255,255,255,0.5);
+    // border: 1px solid $textOnDarkColor;
     font-size: 1rem;
     font-weight: 300;
     box-sizing: border-box;
@@ -27,14 +28,14 @@
 }
 
 .DayCheckbox-current {
-    color: white;
+    color: $textOnDarkColor;
 }
 
 .DayCheckbox-notCurrent {
-    color:rgba(255,255,255, 0.3)
+    color:rgba(255,255,255, 0.5)
 }
 
 .DayCheckbox-selected {
-    background-color: #E06461 !important;
+    background-color: $primaryColor1 !important;
     border: none;
 }

@@ -2,7 +2,7 @@
 
 .Wrapper {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,6 +15,8 @@
     align-items: center;
     justify-content: center;
     gap: 6rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
 }
 
 .TitleInputWrapper {
@@ -28,15 +30,20 @@
     font-size: 1.5rem;
     font-weight: 600;
     border: none;
-    border-bottom: 1px solid #b1b1b1;
+    border-bottom: 1px solid $primaryColor1;
     padding: 1rem;
     width: 420px;
     text-align: center;
     background-color: rgba(0,0,0,0);
     box-sizing: border-box;
-    background: linear-gradient(90deg, rgba(215,38,61,1) 0%, rgba(244,115,125,1) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: white;
+    // background: linear-gradient(90deg, rgba(215,38,61,1) 0%, rgba(244,115,125,1) 100%);
+    // -webkit-background-clip: text;
+    // -webkit-text-fill-color: transparent;
+
+    @media only screen and (max-width: 640px) {
+        width: 90vw;
+    }
 }
 
 .SetPasswordContainer {
@@ -44,6 +51,17 @@
     align-items: center;
     font-size: 1rem;
     justify-content: space-between;
+
+    @media only screen and (max-width: 640px) {
+        flex-direction: column;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    & > span {
+        display: flex;
+        gap: 1rem;
+    }
 }
 
 .PasswordCheckbox {
@@ -53,10 +71,9 @@
     background-color: rgba(0,0,0,0);
     border: 1px solid #FFFDF7;
     cursor: pointer;
-    margin-right: 1rem;
 
     &:checked {
-        background-color: #E06461;
+        background-color: $primaryColor1;
         border: none;
     }
 }
@@ -70,7 +87,6 @@
     text-align: left;
     background-color: rgba(255,253,247,0.1);
     border-radius: 0.25rem;
-    margin-left: 1rem;
     color: #FFFDF7;
     padding: 0.125rem 0.75rem;
     font-size: 1rem;
@@ -86,4 +102,8 @@ input::placeholder {
     flex-direction: row;
     align-items: center;
     gap: 6rem;
+
+    @media only screen and (max-width: 640px) {
+        flex-direction: column;
+    }
 }

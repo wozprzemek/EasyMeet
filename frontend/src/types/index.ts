@@ -3,3 +3,8 @@ export enum ButtonType {
     OUTLINE,
     SOLID
 }
+
+export enum ButtonSize {
+    SM,
+    LG,
+}

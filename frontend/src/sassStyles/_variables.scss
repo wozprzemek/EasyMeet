@@ -1,21 +1,23 @@
 // background colors
-$backgroundLightColor: #0F1E2E;
+$backgroundLightColor: #FFFCE8;
 $backgroundDarkColor: #0A141F;
 
-
 // text colors
-$textLightColor: #0A141F;
-$textDarkColor: #F9F9F9;
-
+$textOnLightColor: #0A141F;
+$textOnDarkColor: #F7F7F9;
 
 // primary colors
-$primaryLightColor1: #EC4067;
-$primaryDarkColor1: #EC4067;
-
-$primaryLightColor1: #925097;
-$primaryDarkColor1: #925097;
-
+$primaryColor1: #E06461;
 
 // secondary colors
-$secondaryLightColor1: #D7D6D7;
-$secondaryDarkColor1: #0F1E2E;
+$secondaryColor1: #D7263D; // gradient color
+$secondaryColor2: #EAAC8B; // gradient color
+$secondaryColor3: #8A2333; // button outline color
+
+// input colors
+$inputOnDarkColor: #1E262E;
+$inputOnLightColor: #EDE9D6;
+
+// hover colors
+$hoverOnDarkColor: #b1b1b1; // hover color
+$hoverOnLightColor: #23282e; // hover color

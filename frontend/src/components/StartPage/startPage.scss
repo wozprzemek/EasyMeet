@@ -88,8 +88,8 @@
     box-sizing: border-box;
 
     &:nth-of-type(odd) {
-        background-color: #E06461;
-        color: #FFFDF7;
+        background-color: $primaryColor1;
+        color: $textOnDarkColor;
 
         div {
             @media only screen and (max-width: 1280px) {
@@ -99,8 +99,8 @@
         }
     }
     &:nth-of-type(even) {
-        background-color: #FFFCE8;
-        color: $backgroundDarkColor;
+        background-color: $backgroundLightColor;
+        color: $textOnLightColor;
     }
 }
 
@@ -186,7 +186,7 @@
     }
 
     span:hover {
-        background: linear-gradient(90deg, rgba(215,38,61,1) 0%, rgba(244,115,125,1) 100%);
+        background: linear-gradient(90deg, $secondaryColor1 0%, $secondaryColor2 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         cursor: pointer;

@@ -20,11 +20,11 @@
 .MonthHeader--chevron {
     height: 1.5rem;
     width: auto;
-    color: #FFFCE8;
+    color: $textOnDarkColor;
     cursor: pointer;
 
     &:hover {
-        color: #b1b1b1;
+        color: $hoverOnDarkColor;
     }
 }
 
@@ -33,7 +33,7 @@
     flex-direction: column;
     gap: 1rem;
     align-items: center;
-    color: white;
+    color: $textOnDarkColor;
 }
 
 .CalendarDaysContainer {
@@ -41,31 +41,6 @@
     position: relative;
     flex-wrap: wrap;
     gap: 0.75rem;
-
-    .CalendarDayCheckbox {
-        appearance: none;
-        width: 2.125rem;
-        height: 2.125rem;
-        border: 1px solid #e6e6e6;
-        // background-color: rgba(255,255,255, 0.05);
-        box-sizing: border-box;
-        position: relative;
-        cursor: pointer;
-
-        &:hover {
-            background-color: rgba(255,255,255, 0.1);
-        }
-
-        &:checked {
-            background-color: #E06461;
-            border: none
-        }
-    }
-
-    .CalendarDayLabel {
-        position: absolute;
-        transform: translate(-100%, 50%);
-    }
 }
 
 .WeekDayText {

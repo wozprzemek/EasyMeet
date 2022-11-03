@@ -1,7 +1,7 @@
 import { Button } from 'components/Button/Button'
 import { ContentLayout } from 'components/ContentLayout/ContentLayout'
 import React from 'react'
-import { ButtonType } from 'types'
+import { ButtonSize, ButtonType } from 'types'
 import { Calendar } from '../components/Calendar/Calendar'
 import { DetailsForm } from '../components/DetailsForm/DetailsForm'
 import './createMeeting.scss'
@@ -13,8 +13,11 @@ export const CreateMeeting = () => {
             <div className='WrapperContent'>
                 <div className='TitleInputWrapper'>
                   <input type="text" placeholder='New Meeting Name' className='TitleInput'></input>
-                  <span className='SetPasswordContainer'><input type="checkbox" className='PasswordCheckbox' />
+                  <span className='SetPasswordContainer'>
+                    <span>
+                      <input type="checkbox" className='PasswordCheckbox' />
                       <span>Set Password</span>
+                    </span>                      
                       <input type='text' className='PasswordInput'></input>
                   </span>
                 </div>
@@ -22,7 +25,7 @@ export const CreateMeeting = () => {
                   <Calendar />
                   <DetailsForm />
                 </div>
-                <Button type={ButtonType.SOLID} text="Create" onClick={() => console.log('CREATE')}/>
+                <Button type={ButtonType.SOLID} size={ButtonSize.LG} text="Create" onClick={() => console.log('CREATE')}/>
             </div>
         </div>
     </ContentLayout>
