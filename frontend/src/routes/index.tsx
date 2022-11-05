@@ -1,5 +1,6 @@
 import { MainLayout } from "components/MainLayout/MainLayout";
 import { StartPage } from "components/StartPage/StartPage";
+import { Availability } from "features/Availability/routes/Availability";
 import { CreateMeeting } from "features/CreateMeeting/routes/CreateMeeting";
 import { Outlet, useRoutes } from "react-router";
 
@@ -18,6 +19,7 @@ export const protectedRoutes = [
       children: [
         { path: '/', element: <StartPage /> },
         { path: '/create', element: <CreateMeeting /> },
+        { path: '/meetings/:id', element: <Availability /> },
       ],
     },
   ];

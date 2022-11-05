@@ -1,6 +1,7 @@
 import { Button } from 'components/Button/Button'
 import { ContentLayout } from 'components/ContentLayout/ContentLayout'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { ButtonSize, ButtonType } from 'types'
 import { Calendar } from '../components/Calendar/Calendar'
 import { DetailsForm } from '../components/DetailsForm/DetailsForm'
@@ -25,7 +26,7 @@ export const CreateMeeting = () => {
                   <Calendar />
                   <DetailsForm />
                 </div>
-                <Button type={ButtonType.SOLID} size={ButtonSize.LG} text="Create" onClick={() => console.log('CREATE')}/>
+                <Link to='/meetings/1'><Button type={ButtonType.SOLID} size={ButtonSize.LG} text="Create" onClick={() => console.log('CREATE')}/></Link>
             </div>
         </div>
     </ContentLayout>

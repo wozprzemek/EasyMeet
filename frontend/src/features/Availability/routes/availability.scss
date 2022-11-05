@@ -1,0 +1,42 @@
+@import 'sassStyles/variables';
+
+.Wrapper {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.WrapperContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+.TitleWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    pointer-events: none;
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: $textOnDarkColor;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        background: linear-gradient(90deg, $secondaryColor1 0%, $secondaryColor2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
