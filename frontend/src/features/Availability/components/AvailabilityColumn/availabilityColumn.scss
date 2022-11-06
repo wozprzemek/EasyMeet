@@ -1,22 +1,37 @@
 @import 'sassStyles/variables';
 
-.AvailabilityColumnWrapper {
+.AvailabilityGridWrapper {
+    display: flex;
+    padding-right: 10rem;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.AvailabilityGrid {
+    display: flex;
+
+}
+
+.AvailabilityColumn {
     width: 3.5rem;
     display: flex;
     flex-direction: column;
-    // border: 2px solid $textOnDarkColor;
     box-sizing: border-box;
-    // pointer-events: none;
 
     &:first-of-type {
-        div {
-            border-left: 2px solid $textOnDarkColor;
+        .TimeWindow {
+            border-left: 1px solid $textOnDarkColor;
         } 
     }
 
     &:last-of-type {
-        div {
-            border-right: 2px solid $textOnDarkColor;
+        .TimeWindow {
+            border-right: 1px solid $textOnDarkColor;
         } 
     }
 }
@@ -26,31 +41,71 @@
     height: 1.125rem;
     box-sizing: border-box;
     cursor: crosshair;
-    border: 1px solid #545C65;
+    border-right: 1px solid #545C65;
 
     &:first-of-type {
-        border-top: 2px solid $textOnDarkColor !important;
+        border-top: 1px solid $textOnDarkColor !important;
     }
 
     &:last-of-type {
-        border-bottom: 2px solid $textOnDarkColor !important;
+        border-bottom: 1px solid $textOnDarkColor !important;
     }
 
     &:nth-of-type(odd) {
-        border-bottom: 1px solid #545C65;
+        border-bottom: 1px solid #39414b;
     }
 
     &:nth-of-type(even) {
-        border-bottom: 2px solid #545C65;
+        border-bottom: 2px solid #666e77;
     }
-
-    
 }
 
 .TimeWindow--selected {
     background-color: $primaryColor1;
 }
 
-.AvailabilityGrid {
+.TimesColumn {
+    width: 10rem;
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 0.875rem;
+    color: $textOnDarkColor;
+    font-weight: 300;
+    margin-top: 4rem;
+
+    div {
+        text-align: end;
+        display: flex;
+        align-items: flex-start;
+        justify-content: end;
+        padding: 0 0.625rem;
+        height: 2.25rem;
+        width: 100%;
+        transform: translateY(-0.5rem);
+    }   
 }
+
+.ColumnHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+    height: 4rem;
+    pointer-events: none;
+
+    h1 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: $textOnDarkColor;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: $hoverOnDarkColor;
+        text-align: center;
+    }
+}
+

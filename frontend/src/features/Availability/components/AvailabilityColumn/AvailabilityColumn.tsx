@@ -15,6 +15,17 @@ type TimeWindow = {
 
 const isBetween = (n : number, a: number, b: number) => (n - a) * (n - b) <= 0
 
+const formattedColumnHeader = (time: any) => {
+  const dateSplit = time.time.toString().split(' ').slice(0, 3)
+  console.log(dateSplit)
+  return (
+    <span className='ColumnHeader'>
+      <h1>{dateSplit[0]}</h1>
+      <h2>{dateSplit[1]} {dateSplit[2]}</h2>
+    </span>
+  )
+}
+
 export const AvailabilityColumn = () => {
 
   const timeWindowsPlaceholder = Array.from(
@@ -30,19 +41,6 @@ export const AvailabilityColumn = () => {
     )
   )
 
-  const handleTimeWindowClick = (i?: number, j?: number) => {
-    setTimeWindows(timeWindows.map((column: any, i_: number) => 
-      column.map((timeWindow: TimeWindow, j_: number) => {
-        if (i === i_ && j === j_) {
-              return { ...timeWindow, selected: !timeWindow.selected }
-            } 
-            else {
-              return timeWindow
-            }
-      })
-    ))
-  }
-
   const handleGridSelect = () => {
     setTimeWindows(timeWindows.map((column: any, i: number) => 
       column.map((timeWindow: TimeWindow, j: number) => {
@@ -56,7 +54,6 @@ export const AvailabilityColumn = () => {
           else {
             return { ...timeWindow, selected: false}
           }
-          
         }
       })
     ))
@@ -111,7 +108,8 @@ export const AvailabilityColumn = () => {
 
   const timeGrid = timeWindows.map((column : any, i: number) => {
     return (
-      <div className='AvailabilityColumnWrapper' onDragStart={(e) => e.preventDefault()}>
+      <div className='AvailabilityColumn' onDragStart={(e) => e.preventDefault()}>
+        {formattedColumnHeader(column[0])}
         {column.map((timeWindow: TimeWindow, j: number) => {
           return (
             <div className={`TimeWindow ${timeWindow.selected ? 'TimeWindow--selected' : ''}`}
@@ -124,8 +122,19 @@ export const AvailabilityColumn = () => {
   })
   
   return (
-    <div className='AvailabilityGrid'>
-      {timeGrid}
+    <div className='AvailabilityGridWrapper'>
+      <div className='TimesColumn'>
+        {Array.from({length: 17}, (_, i) => i).map((i) => {
+          return (
+            <div>
+              {i+8}:00
+            </div>
+          )
+        })}
+      </div>
+      <div className='AvailabilityGrid'>
+        {timeGrid}
+      </div>
     </div>
   )
 }
