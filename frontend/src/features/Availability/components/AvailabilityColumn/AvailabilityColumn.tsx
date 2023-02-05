@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './availabilityColumn.scss'
 
 type Position = {
@@ -42,14 +42,15 @@ export const AvailabilityColumn = () => {
   )
 
   const handleGridSelect = () => {
-    setTimeWindows(timeWindows.map((column: any, i: number) => 
+    setTimeWindows(timeWindows.map((column: TimeWindow[], i: number) => 
       column.map((timeWindow: TimeWindow, j: number) => {
         if (isBetween(i, currentCell!.position.x, startCell!.position.x) && isBetween(j, currentCell!.position.y, startCell!.position.y)) {
-          return { ...timeWindow, selected: !startCell?.selected }
+          console.log('BETWEEN')
+          return { ...timeWindow, selected: !startCell?.selected}
         } 
         else {
           if (timeWindow.saved){
-            return {...timeWindow}
+            return {...timeWindow, selected: true}
           }
           else {
             return { ...timeWindow, selected: false}
@@ -60,7 +61,7 @@ export const AvailabilityColumn = () => {
   }
 
   const saveCells = () => {
-    setTimeWindows(timeWindows.map((column: any, i: number) => 
+    setTimeWindows(timeWindows.map((column: TimeWindow[]) => 
       column.map((timeWindow: TimeWindow, j: number) => {
         if (timeWindow.selected) {
           return {...timeWindow, saved: true}
@@ -102,8 +103,13 @@ export const AvailabilityColumn = () => {
     if (isClicked) {
       handleGridSelect()
     }
-    console.log('isClicked', isClicked)
+    // console.log|()
   }, [currentCell, startCell])
+
+  useEffect(() => {
+    console.log(startCell?.position, startCell?.selected)
+    // console.log(timeWindows.flat().filter((cell: TimeWindow) => cell.selected).map(x => x.position))
+  }, [timeWindows])
 
 
   const selectTimeWindowClass = (timeWindow: TimeWindow) => {
