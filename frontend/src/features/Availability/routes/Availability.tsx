@@ -9,7 +9,7 @@ export const Availability = () => {
         <div className='Wrapper'>
             <div className='WrapperContent'>
                 <div className='TitleWrapper'>
-                    <h1>Important Team Meeting</h1>
+                    <h1>Meeting</h1>
                     <h2>5 participants</h2>
                 </div>
                 <AvailabilityColumn />

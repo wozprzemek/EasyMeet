@@ -8,7 +8,7 @@ interface IDayCheckbox {
 }
 
 export const DayCheckbox = ({day, selected, handleClick} : IDayCheckbox) => {
-    console.log(selected)
+    // console.log(selected)
     return (
         <div className={`DayCheckbox ${selected ? 'DayCheckbox-selected' : ''} ${day.current ? 'DayCheckbox-current' : 'DayCheckbox-notCurrent'}`} onClick={handleClick}>
             {day.date.getDate()}

@@ -1,13 +1,17 @@
 // background colors
 $backgroundLightColor: #FFFCE8;
 $backgroundDarkColor: #0A141F;
+$backgroundDarkColorHover: #0F1E2E;
+$backgroundDarkColorHover2: #1D2B3B;
 
 // text colors
 $textOnLightColor: #0A141F;
 $textOnDarkColor: #F7F7F9;
 
 // primary colors
-$primaryColor1: #E06461;
+$primaryColor1: rgba(224, 100, 97, 1);
+$primaryColorHover: rgba(224, 100, 97, 0.6);
+$primaryColorDeselect: rgba(224, 100, 97, 0.4);
 
 // secondary colors
 $secondaryColor1: #D7263D; // gradient color

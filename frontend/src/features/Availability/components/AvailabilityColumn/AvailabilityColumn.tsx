@@ -17,7 +17,7 @@ const isBetween = (n : number, a: number, b: number) => (n - a) * (n - b) <= 0
 
 const formattedColumnHeader = (time: any) => {
   const dateSplit = time.time.toString().split(' ').slice(0, 3)
-  console.log(dateSplit)
+  // console.log(dateSplit)
   return (
     <span className='ColumnHeader'>
       <h1>{dateSplit[0]}</h1>
@@ -59,6 +59,19 @@ export const AvailabilityColumn = () => {
     ))
   }
 
+  const saveCells = () => {
+    setTimeWindows(timeWindows.map((column: any, i: number) => 
+      column.map((timeWindow: TimeWindow, j: number) => {
+        if (timeWindow.selected) {
+          return {...timeWindow, saved: true}
+        }
+        else {
+          return {...timeWindow, saved: false}
+        }
+      })
+    ))
+  }
+
   const gridSelect = (event: any, timeWindow: TimeWindow) => {
     if (event.type === 'mousedown') {
       setIsClicked(true)
@@ -66,18 +79,7 @@ export const AvailabilityColumn = () => {
     }
     else if (event.type === 'mouseup') {
       setIsClicked(false)
-
-      // "save" the selected cells
-      setTimeWindows(timeWindows.map((column: any, i: number) => 
-        column.map((timeWindow: TimeWindow, j: number) => {
-          if (timeWindow.selected) {
-            return {...timeWindow, saved: true}
-          }
-          else {
-            return {...timeWindow, saved: false}
-          }
-        })
-      ))
+      saveCells()
     }
 
     if (event.type === 'mouseenter') {
@@ -85,34 +87,52 @@ export const AvailabilityColumn = () => {
     }
   }
 
+  const handleMouseLeave = () => {
+    setIsClicked(false)
+    saveCells()
+  }
+
   const [timeWindows, setTimeWindows] = useState(timeWindowsPlaceholder)
 
   const [startCell, setStartCell] = useState<TimeWindow>() // saved position at mouse click
   const [currentCell, setCurrentCell] = useState<TimeWindow>() // current hover position
   const [isClicked, setIsClicked] = useState(false) // is mouse currently down
-  
-  useEffect(() => {
-    console.log(isClicked)
-  }, [isClicked])
-  
-  useEffect(() => {
-    console.log(startCell)
-  }, [startCell])
 
   useEffect(() => {
     if (isClicked) {
       handleGridSelect()
     }
+    console.log('isClicked', isClicked)
   }, [currentCell, startCell])
+
+
+  const selectTimeWindowClass = (timeWindow: TimeWindow) => {
+    // select the class based on the timeWindow cell state
+    if (timeWindow.saved) {
+      if (timeWindow.selected) {
+        return 'TimeWindow--saved'
+      }
+      else {
+        return 'TimeWindow--deselected'
+      }
+    }
+    else {
+      if (timeWindow.selected) {
+        return 'TimeWindow--selected'
+      }
+    }
+
+    return ''
+  }
   
 
-  const timeGrid = timeWindows.map((column : any, i: number) => {
+  const timeGrid = timeWindows.map((column : TimeWindow[]) => {
     return (
       <div className='AvailabilityColumn' onDragStart={(e) => e.preventDefault()}>
         {formattedColumnHeader(column[0])}
-        {column.map((timeWindow: TimeWindow, j: number) => {
+        {column.map((timeWindow: TimeWindow) => {
           return (
-            <div className={`TimeWindow ${timeWindow.selected ? 'TimeWindow--selected' : ''}`}
+            <div className={`TimeWindow ${selectTimeWindowClass(timeWindow)}`}
             onMouseEnter={e => gridSelect(e, timeWindow)} onMouseDown={e => gridSelect(e, timeWindow)} onMouseUp={e => gridSelect(e, timeWindow)}>
             </div>
           )
@@ -132,7 +152,7 @@ export const AvailabilityColumn = () => {
           )
         })}
       </div>
-      <div className='AvailabilityGrid'>
+      <div className='AvailabilityGrid' onMouseEnter={() => handleMouseLeave()}>
         {timeGrid}
       </div>
     </div>

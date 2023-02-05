@@ -1,4 +1,3 @@
-import React from 'react'
 import './availabilityGrid.scss'
 
 export const AvailabilityGrid = () => {

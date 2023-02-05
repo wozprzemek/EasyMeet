@@ -1,8 +1,8 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { DateType } from 'features/CreateMeeting/types';
-import React, { useEffect, useState } from 'react'
-import { DayCheckbox } from '../DayCheckbox/DayCheckbox';
-import './calendar.scss'
+import { useEffect, useState } from 'react';
+import { DayCheckbox } from '../DayCheckBox/DayCheckbox';
+import './calendar.scss';
 
 const getCurrentMonthDays = (month : number, year : number) =>
   Array.from(
@@ -44,7 +44,7 @@ const getAllDays = (month : number, year : number) => {
     const nextMonthDays = getNextMonthDays(month, year, Array.from(previousMonthDays, x => x.date), Array.from(currentMonthDays, x => x.date))
 
     const allDays = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays]
-    console.log(allDays)
+    // console.log(allDays)
     return allDays
 
 }
@@ -100,7 +100,7 @@ export const Calendar = () => {
     }, [selectedMonth])
 
     useEffect(() => {
-        console.log(selectedDays)
+        // console.log(selectedDays)
     }, [selectedDays])
     
     return (
