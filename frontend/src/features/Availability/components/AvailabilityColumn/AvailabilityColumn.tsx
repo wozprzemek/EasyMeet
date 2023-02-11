@@ -29,7 +29,7 @@ const formattedColumnHeader = (time: any) => {
 export const AvailabilityColumn = () => {
 
   const timeWindowsPlaceholder = Array.from(
-    {length: 8},
+    {length: 16},
     (_, i) => Array.from(
       {length: 32},
       (_, j) => ({
