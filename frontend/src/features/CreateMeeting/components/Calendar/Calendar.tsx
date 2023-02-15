@@ -44,7 +44,6 @@ const getAllDays = (month : number, year : number) => {
     const nextMonthDays = getNextMonthDays(month, year, Array.from(previousMonthDays, x => x.date), Array.from(currentMonthDays, x => x.date))
 
     const allDays = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays]
-    // console.log(allDays)
     return allDays
 
 }
@@ -98,10 +97,6 @@ export const Calendar = () => {
     useEffect(() => {
         setDisplayedDays(getAllDays(selectedMonth.month, selectedMonth.year))
     }, [selectedMonth])
-
-    useEffect(() => {
-        // console.log(selectedDays)
-    }, [selectedDays])
     
     return (
         <div className='CalendarWrapper'>

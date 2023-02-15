@@ -17,7 +17,6 @@ const isBetween = (n : number, a: number, b: number) => (n - a) * (n - b) <= 0
 
 const formattedColumnHeader = (time: any) => {
   const dateSplit = time.time.toString().split(' ').slice(0, 3)
-  // console.log(dateSplit)
   return (
     <span className='ColumnHeader'>
       <h1>{dateSplit[0]}</h1>
@@ -45,7 +44,6 @@ export const AvailabilityColumn = () => {
     setTimeWindows(timeWindows.map((column: TimeWindow[], i: number) => 
       column.map((timeWindow: TimeWindow, j: number) => {
         if (isBetween(i, currentCell!.position.x, startCell!.position.x) && isBetween(j, currentCell!.position.y, startCell!.position.y)) {
-          console.log('BETWEEN')
           return { ...timeWindow, selected: !startCell?.selected}
         } 
         else {
@@ -103,14 +101,7 @@ export const AvailabilityColumn = () => {
     if (isClicked) {
       handleGridSelect()
     }
-    // console.log|()
   }, [currentCell, startCell])
-
-  useEffect(() => {
-    console.log(startCell?.position, startCell?.selected)
-    // console.log(timeWindows.flat().filter((cell: TimeWindow) => cell.selected).map(x => x.position))
-  }, [timeWindows])
-
 
   const selectTimeWindowClass = (timeWindow: TimeWindow) => {
     // select the class based on the timeWindow cell state
