@@ -1,23 +1,37 @@
-import { RequestContext } from "@mikro-orm/core";
-import { MikroORM } from "@mikro-orm/core";
-import express, { Request, Response } from "express"
-import options from "./src/config/mikro-orm.config";
-
-const port = 8000
+import { EntityManager, MikroORM, RequestContext } from "@mikro-orm/core";
+import bodyParser from 'body-parser';
+import express from "express";
+import http from 'http';
+import options from "./src/mikro-orm.config";
+import AvailabilityRoutes from "./src/routes/Availability.routes";
+import MeetingRoutes from "./src/routes/Meeting.routes";
+import MeetingDateRoutes from "./src/routes/MeetingDate.routes";
+import UserRoutes from "./src/routes/User.routes";
 
 const app = express()
-export const init = (async () => {
-    const orm = await MikroORM.init(options);
-    app.use((req, res, next) => RequestContext.create(orm.em, next));
+const port = 8000
+
+export const DI = {} as {
+    server: http.Server
+    orm: MikroORM,
+    em: EntityManager,
+}
+
+(async () => {
+    DI.orm = await MikroORM.init(options);
+    DI.em = DI.orm.em as EntityManager;
+    app.use(bodyParser.json())
+    app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
+    app.use('/availability', AvailabilityRoutes)
+    app.use('/meetings', MeetingRoutes)
+    app.use('/meetingdates', MeetingDateRoutes)
+    app.use('/users', UserRoutes)
+
+    app.use('*', (req, res) => {
+        res.send('SORRY')
+    })
+    
+    DI.server = app.listen(port, () => {
+        console.log(`listening on ${port}`);
+    })
 })();
-app.get("/", async (req: Request, res: Response) => {
-    res.send('Sorry :(')
-})
-
-app.get("/test/", (req: Request, res: Response) => {
-    res.send('HELLO TEST')
-})
-
-app.listen(port, () => {
-    console.log(`listening on ${port}`);
-})

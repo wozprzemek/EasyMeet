@@ -8,7 +8,8 @@ const options: Options = {
     dbName: 'postgres',
     entities: ['dist/src/**/*.entity.js'],
     entitiesTs: ['src/**/*.entity.ts'],
-    type: 'postgresql'
+    type: 'postgresql',
+    persistOnCreate: true,
 };
 
 export default options;
