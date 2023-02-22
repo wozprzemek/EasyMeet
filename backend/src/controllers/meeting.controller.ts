@@ -38,7 +38,7 @@ export const MeetingController = {
     update: async (req: Request, res: Response) => {
         try {
             const data = req.body as TMeeting
-            const meeting = await DI.em.findOneOrFail(Meeting, {id: req.params.id});
+            const meeting = await DI.em.findOneOrFail(Meeting, {id: req.params.id}, {populate: ['dates']});
 
             wrap(meeting).assign(data);
             await DI.em.flush();
