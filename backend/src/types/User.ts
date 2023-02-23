@@ -1,10 +1,8 @@
-import { DateTimeType, DateType } from '@mikro-orm/core';
+import { Availability } from '../entities/Availability.entity';
+import { Meeting } from '../entities/Meeting.entity';
 
 export interface User {
     username: string;
-    password: string;
-    start_time: DateTimeType;
-    end_time: DateTimeType;
-    active: boolean;
-    dates: DateType[];
+    meeting: Meeting;
+    availabilities: Availability[];
 }

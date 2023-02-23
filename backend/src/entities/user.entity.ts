@@ -11,13 +11,14 @@ export class User {
     @Property({length: 50})
     username!: string;
 
-    @ManyToOne(() => Meeting)
+    @ManyToOne(() => Meeting, {primary: true, cascade: [Cascade.ALL]})
     meeting!: Meeting;
 
-    @OneToMany(() => Availability, a => a.user, { cascade: [Cascade.ALL] })
-    dates = new Collection<Availability>(this);
+    @OneToMany(() => Availability, a => a.user, { cascade: [Cascade.ALL], orphanRemoval: true })
+    availabilities = new Collection<Availability>(this);
 
-    constructor(username: string) {
+    constructor(username: string, meeting: Meeting) {
         this.username = username;
+        this.meeting = meeting;
     }
 }

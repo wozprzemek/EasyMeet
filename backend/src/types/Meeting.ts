@@ -1,4 +1,4 @@
-import { DateTimeType, DateType } from '@mikro-orm/core';
+import { DateTimeType } from '@mikro-orm/core';
 import { MeetingDate } from '../entities/MeetingDate.entity';
 
 export interface Meeting {

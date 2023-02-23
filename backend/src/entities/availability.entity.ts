@@ -1,4 +1,4 @@
-import { Check, DateTimeType, Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { Cascade, Check, DateTimeType, Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuidv4 } from 'uuid';
 import { User } from './User.entity';
 
@@ -15,7 +15,7 @@ export class Availability {
     @Check({ expression: '(EXTRACT (MINUTE FROM "to") IN (0, 30)) AND (EXTRACT (SECOND FROM "to") = 0) AND ("to" > "from") AND (DATE ("to") = DATE ("from"))' })
     to!: DateTimeType;
     
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, {cascade: [Cascade.ALL]})
     user!: User;
 
     constructor(from: DateTimeType, to: DateTimeType, user: User) {

@@ -7,7 +7,7 @@ import { Meeting as TMeeting } from "../types/Meeting";
 export const MeetingController = {
     getAll: async (req: Request, res: Response) => {
         try {
-            const result = await DI.em.find(Meeting, {}, { populate: ['dates'] })
+            const result = await DI.em.find(Meeting, {})
             res.send(result)
         } catch (error) {
             console.error(error);
@@ -16,7 +16,7 @@ export const MeetingController = {
     },
     getOne: async (req: Request, res: Response) => {
         try {
-            const result = await DI.em.findOne(Meeting, {id: req.params.id}, { populate: ['dates'] })
+            const result = await DI.em.findOne(Meeting, {id: req.params.id}, { populate: ['dates', 'users.availabilities'] })
             res.send(result)
         } catch (error) {
             console.error(error);
