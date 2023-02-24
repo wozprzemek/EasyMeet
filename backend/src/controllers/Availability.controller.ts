@@ -1,28 +1,28 @@
 import { Request, Response } from "express";
 import { DI } from "../..";
-import { MeetingDate } from "../entities/MeetingDate.entity";
+import { Availability } from "../entities/Availability.entity";
 
-export const MeetingDateController = {
+export const AvailabilityController = {
     getMany: async (req: Request, res: Response) => {
         try {
             if (!req.query) {
-                const result = await DI.em.find(MeetingDate, {})
+                const result = await DI.em.find(Availability, {})
                 res.send(result)
             }
             else {
-                let filter: {date?: any, meeting?: any} = {}
+                let filter: {time?: any, meeting?: any} = {}
                 if (req.query.meeting_id && req.query.date) {
-                    filter = {meeting: req.query.meeting_id, date: req.query.date}
+                    filter = {meeting: req.query.meeting_id, time: req.query.time}
                 }
                 else {
                     if (req.query.meeting_id) {
                         filter = {meeting: req.query.meeting_id}
                     }
-                    else if(req.query.date) {
-                        filter = {date: req.query.date}
+                    else if(req.query.time) {
+                        filter = {time: req.query.time}
                     }
                 }
-                const result = await DI.em.find(MeetingDate, filter)
+                const result = await DI.em.find(Availability, filter)
                 res.send(result)
             }
         } catch (error) {
@@ -32,7 +32,7 @@ export const MeetingDateController = {
     },
     getOne: async (req: Request, res: Response) => {
         try {
-            const result = await DI.em.findOne(MeetingDate, {id: req.params.id})
+            const result = await DI.em.findOne(Availability, {id: req.params.id as string})
             res.send(result)
         } catch (error) {
             console.error(error);
