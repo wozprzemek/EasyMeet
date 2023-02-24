@@ -1,8 +1,9 @@
-import { wrap } from "@mikro-orm/core";
+import { DateTimeType, wrap } from "@mikro-orm/core";
 import { Request, Response } from "express";
 import { DI } from "../..";
+import { Availability } from "../entities/Availability.entity";
 import { Meeting } from "../entities/Meeting.entity";
-import { Meeting as TMeeting } from "../types/Meeting";
+import { MeetingDate } from "../entities/MeetingDate.entity";
 
 export const MeetingController = {
     getAll: async (req: Request, res: Response) => {
@@ -16,7 +17,7 @@ export const MeetingController = {
     },
     getOne: async (req: Request, res: Response) => {
         try {
-            const result = await DI.em.findOne(Meeting, {id: req.params.id}, { populate: ['dates', 'users.availabilities'] })
+            const result = await DI.em.findOne(Meeting, {id: req.params.id}, { populate: ['dates', 'availabilities'] })
             res.send(result)
         } catch (error) {
             console.error(error);
@@ -25,7 +26,7 @@ export const MeetingController = {
     },
     add: async (req: Request, res: Response) => {
         try {
-            const data = req.body as TMeeting
+            const data : {name: string, password: string, dates: MeetingDate[], start_time: DateTimeType, end_time: DateTimeType, active: boolean} = req.body
             const meeting = DI.em.create(Meeting, data)
 
             await DI.em.persistAndFlush(meeting)
@@ -37,8 +38,8 @@ export const MeetingController = {
     },
     update: async (req: Request, res: Response) => {
         try {
-            const data = req.body as TMeeting
-            const meeting = await DI.em.findOneOrFail(Meeting, {id: req.params.id}, {populate: ['dates']});
+            const data: {name?: string, password?: string, dates?: MeetingDate[], availabilities?: Availability[], start_time?: DateTimeType, end_time?: DateTimeType, active?: boolean} = req.body
+            const meeting = await DI.em.findOneOrFail(Meeting, {id: req.params.id}, {populate: ['dates', 'availabilities']});
 
             wrap(meeting).assign(data);
             await DI.em.flush();

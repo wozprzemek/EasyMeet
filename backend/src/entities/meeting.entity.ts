@@ -1,7 +1,7 @@
 import { Cascade, Check, Collection, DateTimeType, Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuidv4 } from 'uuid';
+import { Availability } from './Availability.entity';
 import { MeetingDate } from './MeetingDate.entity';
-import { User } from './User.entity';
 
 @Entity()
 export class Meeting {
@@ -17,8 +17,8 @@ export class Meeting {
     @OneToMany(() => MeetingDate, md => md.meeting, { cascade: [Cascade.ALL], orphanRemoval: true })
     dates = new Collection<MeetingDate>(this);
 
-    @OneToMany(() => User, u => u.meeting, { cascade: [Cascade.ALL], orphanRemoval: true })
-    users = new Collection<User>(this);
+    @OneToMany(() => Availability, a => a.meeting, { cascade: [Cascade.ALL], orphanRemoval: true })
+    availabilities = new Collection<Availability>(this);
 
     @Property({columnType: 'timestamp with time zone'})
     @Check({ expression: '(EXTRACT (MINUTE FROM start_time) IN (0, 30)) AND (EXTRACT (SECOND FROM start_time) = 0)' })
@@ -32,10 +32,10 @@ export class Meeting {
     active: boolean = true
 
     constructor(name: string, start_time: DateTimeType, end_time: DateTimeType, active: boolean, password?: string) {
-        this.name = name;
-        this.start_time = start_time;
-        this.end_time = end_time;
-        this.active = active;
-        this.password = password
-      }
+      this.name = name;
+      this.start_time = start_time;
+      this.end_time = end_time;
+      this.active = active;
+      this.password = password
+    }
 }

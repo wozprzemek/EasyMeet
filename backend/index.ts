@@ -6,7 +6,6 @@ import options from "./src/mikro-orm.config";
 import AvailabilityRoutes from "./src/routes/Availability.routes";
 import MeetingRoutes from "./src/routes/Meeting.routes";
 import MeetingDateRoutes from "./src/routes/MeetingDate.routes";
-import UserRoutes from "./src/routes/User.routes";
 
 const app = express()
 const port = 8000
@@ -22,10 +21,9 @@ export const DI = {} as {
     DI.em = DI.orm.em as EntityManager;
     app.use(bodyParser.json())
     app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
-    app.use('/availability', AvailabilityRoutes)
+    app.use('/availabilities', AvailabilityRoutes)
     app.use('/meetings', MeetingRoutes)
     app.use('/meetingdates', MeetingDateRoutes)
-    app.use('/users', UserRoutes)
 
     app.use('*', (req, res) => {
         res.send('SORRY')
