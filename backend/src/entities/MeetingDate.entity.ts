@@ -5,8 +5,8 @@ import { Meeting } from './Meeting.entity';
 @Entity()
 export class MeetingDate {
 
-    // @PrimaryKey({columnType: 'uuid'})
-    // id = uuidv4();
+    @PrimaryKey({columnType: 'uuid'})
+    id = uuidv4();
 
     @PrimaryKey({columnType: 'date'})
     date!: DateType;
