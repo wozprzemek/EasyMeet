@@ -42,11 +42,13 @@
     box-sizing: border-box;
     cursor: pointer;
     border: 1px solid $backgroundDarkColor;
-    background-color: $backgroundDarkColorHover2;
+    // background-color: $backgroundDarkColorHover2;
+    border-radius: 0.125rem;
+    background-color: $gray;
     border-right: 2px solid $backgroundDarkColor;
 
     &:hover {
-        background-color: $backgroundDarkColorHover;
+        background-color: $grayHover;
     }
 
     &:nth-of-type(even) {

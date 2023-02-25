@@ -1,3 +1,4 @@
+import { TimePicker } from 'components/TimePicker/TimePicker';
 import React from 'react'
 import './detailsForm.scss'
 
@@ -11,11 +12,11 @@ interface IDetailsForm {
 export const DetailsForm = ({from, setFrom, to, setTo} : IDetailsForm) => {
   return (
     <form className='DetailsForm'>
-        <label htmlFor='from'>From</label>
-        <input name='from' type='time' value={from} onChange={e => setFrom(e.target.value)}></input>
+        <span>From</span>
+        <TimePicker defaultTime='09:00'></TimePicker>
 
-        <label htmlFor='to'>To</label>
-        <input name='to' type='time' value={to} onChange={e => setTo(e.target.value)}></input>
+        <span>To</span>
+        <TimePicker defaultTime='09:00'></TimePicker>
 
         {/* <label htmlFor='from'>Time Zone</label> */}
         {/* <input name='from' type='time'></input> */}

@@ -18,16 +18,11 @@ export const CreateMeeting = () => {
   const [to, setTo] = useState<string>(`17:00`)
   const [selectedDates, setSelectedDates] = useState<DateType[]>([])
 
-  useEffect(() => {
-    console.log(name);
-    console.log(password);
-  }, [name, password])
-
   const handleCreate = async () => {
     const today = new Date().toISOString().split('T')[0]
     const meeting = {
       name,
-      ...(enablePassword && {password}),
+      password,
       from: `${today} ${from}`,
       to: `${today} ${to}`,
       dates: selectedDates
@@ -37,12 +32,10 @@ export const CreateMeeting = () => {
       createdMeeting = await createMeeting(meeting)
       
       if (createdMeeting) {
-        navigate(`meetings/${createdMeeting}`)
+        navigate(`/meetings/${createdMeeting}`)
       }
     }
     catch (error) {
-      console.log('ERRRROOOOOOOOOOOOOOOOOOOR');
-      
       console.error(error)
     }
   }
@@ -66,7 +59,7 @@ export const CreateMeeting = () => {
                       <input type="checkbox" className='PasswordCheckbox' checked={enablePassword} onChange={e => setEnablePassword(e.target.checked)}/>
                       <span>Set Password</span>
                     </span>
-                      <input type='text' className={`PasswordInput ${enablePassword ? 'PasswordInput--enabled' : 'PasswordInput--disabled'}`}
+                      <input type='text' placeholder='Enter password' className={`PasswordInput ${enablePassword ? 'PasswordInput--enabled' : 'PasswordInput--disabled'}`}
                         value={password} disabled={!enablePassword} onChange={e => setPassword(e.target.value)}></input>
                   </span>
                 </div>

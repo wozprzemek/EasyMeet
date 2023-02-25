@@ -27,6 +27,10 @@ export const MeetingController = {
     add: async (req: Request, res: Response) => {
         try {
             const data : {name: string, password: string, dates: MeetingDate[], from: DateTimeType, to: DateTimeType, active: boolean} = req.body
+            if (data.dates.length === 0) {
+                res.status(500).send('Meeting must have dates.')
+                return
+            }  
             const meeting = DI.em.create(Meeting, data)
 
             await DI.em.persistAndFlush(meeting)

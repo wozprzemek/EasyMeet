@@ -9,14 +9,15 @@ $textOnLightColor: #101319;
 $textOnDarkColor: #F7F7F9;
 
 // primary colors
-$primaryColor1: rgba(255, 120, 79, 1);
-$primaryColorHover: rgba(255, 120, 79, 0.6);
-$primaryColorDeselect: rgba(255, 120, 79,0.4);
+$primaryColor1: rgba(224, 100, 97, 1);
+$primaryColorHover: rgba(224, 100, 97, 0.8);
+$primaryColorSelect: rgba(224, 100, 97, 0.7);
+$primaryColorDeselect: rgba(224, 100, 97, 0.6);
 
 // secondary colors
-$secondaryColor1: #FF784F; // gradient color
-$secondaryColor2: #FF784F; // gradient color
-$secondaryColor3: #FF784F; // button outline color
+$secondaryColor1: #E06461; // gradient color
+$secondaryColor2: #E06461; // gradient color
+$secondaryColor3: #E06461; // button outline color
 
 // input colors
 $inputOnDarkColor: #1E262E;
@@ -25,3 +26,12 @@ $inputOnLightColor: #EDE9D6;
 // hover colors
 $hoverOnDarkColor: #b1b1b1; // hover color
 $hoverOnLightColor: #23282e; // hover color
+
+$gray: #32353a;
+$gray2: #282B30;
+$grayHover: rgba(255,255,255, 0.2);
+
+
+$radius_sm: 0.25rem;
+$radius_md: 0.5rem;
+$radius_xl: 0.75rem;

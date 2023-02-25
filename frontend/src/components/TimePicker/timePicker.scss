@@ -1,0 +1,61 @@
+@import '../../sassStyles/variables';
+
+.TimePickerContainer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.TimePickerButton {
+    font-weight: 400;
+    border: none;
+    padding: 0.75rem 0.5rem;
+    box-sizing: border-box;
+    height: 2.5rem;
+    width: 10rem;
+    background-color: $gray;
+    border-radius: $radius_md;
+    color: #e9e9e9;
+    font-family: 'Inter';
+    font-size: 1rem;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background-color: $grayHover;
+    }
+}
+
+.TimePickerDropdown {
+    margin-top: 3rem;
+    width: 100%;
+    height: 12rem;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    background-color: #282B30;
+    color: #e9e9e9;
+    z-index: 100;
+    position: absolute; 
+    scrollbar-width: thin;
+    border-radius: $radius_md;
+}
+
+.TimePickerOption {
+    width: 100%;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+    padding: 0.75rem 0 0.75rem 0;
+    &:hover {
+        background-color: $gray;
+    }
+}

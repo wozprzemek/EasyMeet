@@ -5,22 +5,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-
-    label {
-        margin-bottom: 0.875rem;
-    }
+    gap: 1.25rem;
 
     input {
         appearance: none;
-        font-size: 1rem;
         font-weight: 400;
         border: none;
         padding: 0.125rem 0.5rem;
         height: 2.25rem;
         width: 10rem;
-        text-align: left;
         background-color: rgba(255,253,247,0.1);
-        border-radius: 0.25rem;
+        border-radius: $radius_md;
         color: #c8c8c8;
         font-family: 'Inter';
         font-size: 1rem;

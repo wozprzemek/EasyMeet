@@ -1,10 +1,6 @@
 import { axios } from "config/axios";
 import { Meeting } from "features/CreateMeeting/types";
 
-// interface ICreateMeeting extends Meeting{
-//     dates: 
-// }
-
 export const createMeeting = async (meeting: Meeting) => {
     const dates = meeting.dates.map((date) => {
         return {
@@ -25,8 +21,6 @@ export const createMeeting = async (meeting: Meeting) => {
     .then((e) => { return e })
     .catch((e) => { return e })
 
-    console.log(response);
-    
 
     return response.data
 }

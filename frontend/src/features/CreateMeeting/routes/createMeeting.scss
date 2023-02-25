@@ -27,19 +27,16 @@
 
 .TitleInput {
     appearance: none;    
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 600;
     border: none;
-    border-bottom: 1px solid $primaryColor1;
-    padding: 1rem;
-    width: 420px;
+    border-radius: 0.5rem;
+    padding: 0.6rem;
+    width: 26rem;
     text-align: center;
-    background-color: rgba(0,0,0,0);
     box-sizing: border-box;
     color: white;
-    // background: linear-gradient(90deg, rgba(215,38,61,1) 0%, rgba(244,115,125,1) 100%);
-    // -webkit-background-clip: text;
-    // -webkit-text-fill-color: transparent;
+    background-color: $gray;
 
     @media only screen and (max-width: 640px) {
         width: 90vw;
@@ -68,8 +65,9 @@
     appearance: none;
     width: 1rem;
     height: 1rem;
-    background-color: rgba(0,0,0,0);
-    border: 1px solid #FFFDF7;
+    border-radius: 0.125rem;
+    background-color: #32353a;
+    // border: 1px solid #FFFDF7;
     cursor: pointer;
 
     &:checked {
@@ -85,18 +83,17 @@
     height: 2.25rem;
     width: 240px;
     text-align: left;
-    border-radius: 0.25rem;
+    border-radius: $radius_md;
     padding: 0.125rem 0.75rem;
     font-size: 1rem;
+    background-color: $gray;
 }
 
 .PasswordInput--disabled {
-    background-color: rgba(255,253,247,0.05);
-    color: #bbbbba;
+    opacity: 0.7;
 }
 
 .PasswordInput--enabled {
-    background-color: rgba(255,253,247,0.1);
     color: #FFFDF7;
 }
 
