@@ -52,15 +52,21 @@ const getDayKey = (day: Date) => {
     return day.getDate().toString() + day.getMonth() + day.getFullYear()
 }
 
-export const Calendar = () => {
+
+interface ICalendar {
+    selectedDates: DateType[];
+    setSelectedDates: React.Dispatch<DateType[]>;
+}
+
+export const Calendar = ({selectedDates, setSelectedDates}: ICalendar) => {
     const changeMonth = (offset : number) => {
         const newDate = new Date(selectedMonth.year, selectedMonth.month + offset + 1, 0)
         setSelectedMonth({month: newDate.getMonth(), year: newDate.getFullYear()})
     }
 
     const isDaySelected = (dateObject: DateType) => {
-        for (let i=0; i < selectedDays.length; i++) {
-            if (selectedDays[i].day === dateObject.day && selectedDays[i].month === dateObject.month && selectedDays[i].year === dateObject.year) {
+        for (let i=0; i < selectedDates.length; i++) {
+            if (selectedDates[i].day === dateObject.day && selectedDates[i].month === dateObject.month && selectedDates[i].year === dateObject.year) {
                 return true
             }
         }
@@ -68,13 +74,13 @@ export const Calendar = () => {
     }
 
     const handleDaySelection = (dateObject : DateType) => {
-        for (let i=0; i < selectedDays.length; i++) {
-            if (selectedDays[i].day === dateObject.day && selectedDays[i].month === dateObject.month && selectedDays[i].year === dateObject.year) {
-                setSelectedDays(selectedDays.filter((_, index) => index !== i)) // remove an already selected day
+        for (let i=0; i < selectedDates.length; i++) {
+            if (selectedDates[i].day === dateObject.day && selectedDates[i].month === dateObject.month && selectedDates[i].year === dateObject.year) {
+                setSelectedDates(selectedDates.filter((_, index) => index !== i)) // remove an already selected day
                 return true
             }
         }
-        setSelectedDays([...selectedDays, dateObject])
+        setSelectedDates([...selectedDates, dateObject])
         changeMonth(dateObject.month - selectedMonth.month) // change the month only if a date has not been selected
         return false
     }
@@ -90,7 +96,7 @@ export const Calendar = () => {
 
     var now = new Date() // current date
     const [selectedMonth, setSelectedMonth] = useState({month: now.getMonth(), year: now.getFullYear()}) // used for selected year and month
-    const [selectedDays, setSelectedDays] = useState<DateType[]>([]) // used for selected days
+    // const [selectedDates, setSelectedDates] = useState<DateType[]>([]) // used for selected days
     const [displayedDays, setDisplayedDays] = useState(getCurrentMonthDays(selectedMonth.month + 1, selectedMonth.year))
     const weekDays = ['M', 'Tu', 'W', 'Th', 'F', 'Sa', 'Su']
     

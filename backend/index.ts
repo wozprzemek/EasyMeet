@@ -6,9 +6,13 @@ import options from "./src/mikro-orm.config";
 import AvailabilityRoutes from "./src/routes/Availability.routes";
 import MeetingRoutes from "./src/routes/Meeting.routes";
 import MeetingDateRoutes from "./src/routes/MeetingDate.routes";
+import cors from "cors"
 
 const app = express()
 const port = 8000
+
+app.use(cors())
+
 
 export const DI = {} as {
     server: http.Server

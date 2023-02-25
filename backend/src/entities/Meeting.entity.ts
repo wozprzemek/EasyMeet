@@ -21,20 +21,20 @@ export class Meeting {
     availabilities = new Collection<Availability>(this);
 
     @Property({columnType: 'timestamp with time zone'})
-    @Check({ expression: '(EXTRACT (MINUTE FROM start_time) IN (0, 30)) AND (EXTRACT (SECOND FROM start_time) = 0)' })
-    start_time!: DateTimeType;
+    @Check({ expression: '(EXTRACT (MINUTE FROM "from") IN (0, 30)) AND (EXTRACT (SECOND FROM "from") = 0)' })
+    from!: DateTimeType;
 
     @Property({columnType: 'timestamp with time zone'})
-    @Check({ expression: '(EXTRACT (MINUTE FROM end_time) IN (0, 30)) AND (EXTRACT (SECOND FROM end_time) = 0) AND (end_time > start_time)' })
-    end_time!: DateTimeType;
+    @Check({ expression: '(EXTRACT (MINUTE FROM "to") IN (0, 30)) AND (EXTRACT (SECOND FROM "to") = 0) AND ("to" > "from")' })
+    to!: DateTimeType;
 
     @Property({default: true})
     active: boolean = true
 
-    constructor(name: string, start_time: DateTimeType, end_time: DateTimeType, active: boolean, password?: string) {
+    constructor(name: string, from: DateTimeType, to: DateTimeType, active: boolean, password?: string) {
       this.name = name;
-      this.start_time = start_time;
-      this.end_time = end_time;
+      this.from = from;
+      this.to = to;
       this.active = active;
       this.password = password
     }

@@ -85,11 +85,19 @@
     height: 2.25rem;
     width: 240px;
     text-align: left;
-    background-color: rgba(255,253,247,0.1);
     border-radius: 0.25rem;
-    color: #FFFDF7;
     padding: 0.125rem 0.75rem;
     font-size: 1rem;
+}
+
+.PasswordInput--disabled {
+    background-color: rgba(255,253,247,0.05);
+    color: #bbbbba;
+}
+
+.PasswordInput--enabled {
+    background-color: rgba(255,253,247,0.1);
+    color: #FFFDF7;
 }
 
 input::placeholder {

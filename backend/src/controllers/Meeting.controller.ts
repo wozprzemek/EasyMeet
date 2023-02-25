@@ -26,7 +26,7 @@ export const MeetingController = {
     },
     add: async (req: Request, res: Response) => {
         try {
-            const data : {name: string, password: string, dates: MeetingDate[], start_time: DateTimeType, end_time: DateTimeType, active: boolean} = req.body
+            const data : {name: string, password: string, dates: MeetingDate[], from: DateTimeType, to: DateTimeType, active: boolean} = req.body
             const meeting = DI.em.create(Meeting, data)
 
             await DI.em.persistAndFlush(meeting)
@@ -38,7 +38,7 @@ export const MeetingController = {
     },
     update: async (req: Request, res: Response) => {
         try {
-            const data: {name?: string, password?: string, dates?: MeetingDate[], availabilities?: Availability[], start_time?: DateTimeType, end_time?: DateTimeType, active?: boolean} = req.body
+            const data: {name?: string, password?: string, dates?: MeetingDate[], availabilities?: Availability[], from?: DateTimeType, to?: DateTimeType, active?: boolean} = req.body
             const meeting = await DI.em.findOneOrFail(Meeting, {id: req.params.id}, {populate: ['dates', 'availabilities']});
 
             wrap(meeting).assign(data);
