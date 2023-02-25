@@ -47,7 +47,6 @@ export const CreateMeeting = () => {
     [name, enablePassword, password, from, to, selectedDates],
   )
   
-  
   return (
     <ContentLayout>
         <div className='Wrapper'>

@@ -13,13 +13,10 @@ export const DetailsForm = ({from, setFrom, to, setTo} : IDetailsForm) => {
   return (
     <form className='DetailsForm'>
         <span>From</span>
-        <TimePicker defaultTime='09:00'></TimePicker>
+        <TimePicker selectedTime={from} setSelectedTime={setFrom}></TimePicker>
 
         <span>To</span>
-        <TimePicker defaultTime='09:00'></TimePicker>
-
-        {/* <label htmlFor='from'>Time Zone</label> */}
-        {/* <input name='from' type='time'></input> */}
+        <TimePicker selectedTime={to} setSelectedTime={setTo}></TimePicker>
     </form>
   )
 }

@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import './timePicker.scss'
 
 interface ITimePicker {
-    defaultTime: string;
+    selectedTime: string;
+    setSelectedTime: React.Dispatch<string>;
     fullHoursOnly?: boolean;
 }
 
-export const TimePicker = ({defaultTime, fullHoursOnly=false}: ITimePicker) => {
+export const TimePicker = ({selectedTime, setSelectedTime, fullHoursOnly=false}: ITimePicker) => {
     let times = []
 
     if (fullHoursOnly) {
@@ -21,7 +22,7 @@ export const TimePicker = ({defaultTime, fullHoursOnly=false}: ITimePicker) => {
     }
 
     const [showDropdown, setShowDropdown] = useState<boolean>(false)
-    const [selectedTime, setSelectedTime] = useState<string>(defaultTime)
+    // const [selectedTime, setSelectedTime] = useState<string>(defaultTime)
 
     const handleSelect = (time: string) => {
         setSelectedTime(time)
