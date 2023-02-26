@@ -1,4 +1,5 @@
 import { DateTimeType, wrap } from "@mikro-orm/core";
+import { DateType } from "@mikro-orm/core/types";
 import { Request, Response } from "express";
 import { DI } from "../..";
 import { Availability } from "../entities/Availability.entity";
@@ -30,7 +31,14 @@ export const MeetingController = {
             if (data.dates.length === 0) {
                 res.status(500).send('Meeting must have dates.')
                 return
-            }  
+            }
+
+            // data.dates.map((date) => {
+            //     // console.log(`${date}T${data.from}`);
+            //     date.date = `${date.date}T${data.from.toString().split(' ')[1]}` as any
+            // })
+            // console.log(data.dates);
+            
             const meeting = DI.em.create(Meeting, data)
 
             await DI.em.persistAndFlush(meeting)

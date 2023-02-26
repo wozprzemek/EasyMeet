@@ -66,7 +66,6 @@ export const CreateMeeting = () => {
                   <Calendar selectedDates={selectedDates} setSelectedDates={setSelectedDates}/>
                   <DetailsForm from={from} setFrom={setFrom} to={to} setTo={setTo}/>
                 </div>
-                {/* <Link to='/meetings/1'><Button ty pe={ButtonType.SOLID} size={ButtonSize.LG} text="Create" onClick={() => console.log('CREATE')}/></Link> */}
                 <Button type={ButtonType.SOLID} size={ButtonSize.LG} text="Create" onClick={handleCreate}/>
             </div>
         </div>

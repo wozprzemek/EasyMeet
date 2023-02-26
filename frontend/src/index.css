@@ -3,6 +3,10 @@
    License: none (public domain)
 */
 
+body {
+    background-color: #101319;
+}
+
 :root {
     color-scheme: dark;
 }

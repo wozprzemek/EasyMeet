@@ -1,8 +1,10 @@
 import { getMeeting } from 'api/getMeeting'
+import { Button } from 'components/Button/Button'
 import { ContentLayout } from 'components/ContentLayout/ContentLayout'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router'
+import { ButtonSize, ButtonType } from 'types'
 import { Meeting } from 'types/Meeting'
 import { AvailabilityGrid } from '../components/AvailabilityGrid/AvailabilityGrid'
 import './availability.scss'
@@ -29,6 +31,7 @@ export const Availability = () => {
                 </div>
                 <AvailabilityGrid meetingData={meetingData} availabilities={availabilities} setAvailabilities={setAvailabilities}/>
             </div>
+            <Button type={ButtonType.SOLID} size={ButtonSize.LG} text="Save" onClick={() => console.log('Save')}/>
         </div>
     </ContentLayout>
   )

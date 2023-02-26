@@ -1,6 +1,5 @@
 import moment from 'moment'
 import { useEffect, useState } from 'react'
-import { Availability } from 'types/Availability'
 import { Meeting } from 'types/Meeting'
 import './availabilityGrid.scss'
 
@@ -40,36 +39,18 @@ interface IAvailabilityGrid {
 
 export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities}: IAvailabilityGrid) => {
 
-  console.log('GRIIIIIIIIIIIIIIIIID');
-  useEffect(() => {
-    console.log('data changed');
-    
-  }, [meetingData])
-  
-  // const timeLabels = () => {
-  //   {Array.from({length: 17}, (_, i) => i).map((i) => {
-  //     return (
-  //       <div>
-  //         {i+8}:00
-  //       </div>
-  //     )
-  //   })}
-  // }
-
-  const initGrid = (meeting: Meeting) => {
-    console.log('MEETING', meeting);
-    
+  const initGrid = (meeting: Meeting) => {    
     // create a formatted time window array from fetched meeting data
-    const start_time = moment(meeting.from, 'YYYY-MM-DD h:mm:ss a');
-    const end_time = moment(meeting.to, 'YYYY-MM-DD h:mm:ss a');
-    const duration = Math.ceil(end_time.diff(start_time, 'hours', true))
+    const startTime = moment(meeting.from, 'YYYY-MM-DD h:mm:ss a');
+    const endTime = moment(meeting.to, 'YYYY-MM-DD h:mm:ss a');
+    const duration = Math.ceil(endTime.diff(startTime, 'hours', true))
 
     const initTimeWindows = Array.from(
       {length: meeting.dates.length},
       (_, i) => Array.from(
         {length: duration*2},
         (_, j) => ({
-          time: start_time.clone().add(j*30, 'minutes').toDate(),
+          time: moment(meeting.dates[i].date).clone().add(startTime.hour(), 'hours').add(j*30, 'minutes').toDate(),
           selected: false,
           position: {x: i, y: j},
           saved: false
@@ -77,12 +58,10 @@ export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities
       )
     )
 
-    console.log(initTimeWindows)
-
     const timeLabels = Array.from(
       {length: duration + 1},
       (_, i) => {
-        return `${start_time.clone().add(i, 'hours').toDate().getHours().toString().padStart(2, '0')}:00`
+        return `${startTime.clone().add(i, 'hours').toDate().getHours().toString().padStart(2, '0')}:00`
       }
     )
 
