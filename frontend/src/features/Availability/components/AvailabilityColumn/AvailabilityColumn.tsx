@@ -28,7 +28,7 @@ const formattedColumnHeader = (time: any) => {
 export const AvailabilityColumn = () => {
 
   const timeWindowsPlaceholder = Array.from(
-    {length: 16},
+    {length: 8},
     (_, i) => Array.from(
       {length: 32},
       (_, j) => ({
@@ -40,6 +40,8 @@ export const AvailabilityColumn = () => {
     )
   )
 
+  console.log(timeWindowsPlaceholder);
+  
   const handleGridSelect = () => {
     setTimeWindows(timeWindows.map((column: TimeWindow[], i: number) => 
       column.map((timeWindow: TimeWindow, j: number) => {
@@ -122,7 +124,6 @@ export const AvailabilityColumn = () => {
     return ''
   }
   
-
   const timeGrid = timeWindows.map((column : TimeWindow[]) => {
     return (
       <div className='AvailabilityColumn' onDragStart={(e) => e.preventDefault()}>
