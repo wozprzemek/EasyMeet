@@ -40,6 +40,12 @@ interface IAvailabilityGrid {
 
 export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities}: IAvailabilityGrid) => {
 
+  console.log('GRIIIIIIIIIIIIIIIIID');
+  useEffect(() => {
+    console.log('data changed');
+    
+  }, [meetingData])
+  
   // const timeLabels = () => {
   //   {Array.from({length: 17}, (_, i) => i).map((i) => {
   //     return (
@@ -51,6 +57,8 @@ export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities
   // }
 
   const initGrid = (meeting: Meeting) => {
+    console.log('MEETING', meeting);
+    
     // create a formatted time window array from fetched meeting data
     const start_time = moment(meeting.from, 'YYYY-MM-DD h:mm:ss a');
     const end_time = moment(meeting.to, 'YYYY-MM-DD h:mm:ss a');
@@ -59,7 +67,7 @@ export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities
     const initTimeWindows = Array.from(
       {length: meeting.dates.length},
       (_, i) => Array.from(
-        {length: duration*2 + 2},
+        {length: duration*2},
         (_, j) => ({
           time: start_time.clone().add(j*30, 'minutes').toDate(),
           selected: false,
@@ -72,7 +80,7 @@ export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities
     console.log(initTimeWindows)
 
     const timeLabels = Array.from(
-      {length: duration + 2},
+      {length: duration + 1},
       (_, i) => {
         return `${start_time.clone().add(i, 'hours').toDate().getHours().toString().padStart(2, '0')}:00`
       }
@@ -133,13 +141,20 @@ export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities
   }
 
   const {initTimeWindows, timeLabels} = initGrid(meetingData!)
-  console.log(timeLabels);
   
   const [timeWindows, setTimeWindows] = useState<TimeWindow[][]>(initTimeWindows)
+
+  useEffect(() => {
+    setTimeWindows(initTimeWindows)
+  }, [meetingData])
+  
 
   const [startCell, setStartCell] = useState<TimeWindow>() // saved position at mouse click
   const [currentCell, setCurrentCell] = useState<TimeWindow>() // current hover position
   const [isClicked, setIsClicked] = useState(false) // is mouse currently down
+
+  console.log(initTimeWindows, timeLabels);
+  console.log(timeWindows);
 
   useEffect(() => {
     if (isClicked) {
@@ -166,6 +181,9 @@ export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities
     return ''
   }
   
+  // useEffect(() => {
+
+  // }, [timeWindows])
   const timeGrid = timeWindows.map((column : TimeWindow[]) => {
     return (
       <div className='AvailabilityColumn' onDragStart={(e) => e.preventDefault()}>
@@ -180,6 +198,9 @@ export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities
       </div>
     )
   })
+
+  console.log(timeGrid, timeWindows);
+  
   
   return (
     <div className='AvailabilityGridWrapper'>

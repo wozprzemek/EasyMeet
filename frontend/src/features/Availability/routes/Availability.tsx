@@ -10,7 +10,7 @@ import './availability.scss'
 export const Availability = () => {
 
   const {id} = useParams()
-  const {data: meetingData, status: meetingStatus} = useQuery<Meeting>(['meeting'], () => getMeeting(id))
+  const {data: meetingData, status: meetingStatus} = useQuery<Meeting>(['meeting', id], () => getMeeting(id))
   const [availabilities, setAvailabilities] = useState<any[]>([])
   
   if (meetingStatus === 'loading' && meetingData === undefined) {
