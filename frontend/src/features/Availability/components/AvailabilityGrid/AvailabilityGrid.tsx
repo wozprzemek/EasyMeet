@@ -1,5 +1,6 @@
 import moment from 'moment'
 import { useEffect, useState } from 'react'
+import { Availability } from 'types/Availability'
 import { Meeting } from 'types/Meeting'
 import './availabilityGrid.scss'
 
@@ -13,6 +14,27 @@ type TimeWindow = {
   selected: boolean,
   position: Position,
   saved: boolean
+}
+
+const avail2TimeWindows = (availabilities: Availability[]) => {
+  
+}
+
+const timeWindows2Avail = (timeWindows: TimeWindow[][]) => {
+  const user = '' //placeholder
+
+  const selectedWindows = timeWindows.flat().filter((timeWindow) => timeWindow.selected).map((timeWindow) => {
+    return timeWindow
+  })
+
+  const availabilities = selectedWindows.map((timeWindow) => {
+    return {
+      user: user,
+      time: timeWindow.time.toISOString()
+    }
+  })
+
+  return availabilities
 }
 
 const isBetween = (n : number, a: number, b: number) => (n - a) * (n - b) <= 0
@@ -131,10 +153,7 @@ export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities
   const [startCell, setStartCell] = useState<TimeWindow>() // saved position at mouse click
   const [currentCell, setCurrentCell] = useState<TimeWindow>() // current hover position
   const [isClicked, setIsClicked] = useState(false) // is mouse currently down
-
-  console.log(initTimeWindows, timeLabels);
-  console.log(timeWindows);
-
+  
   useEffect(() => {
     if (isClicked) {
       handleGridSelect()
@@ -159,10 +178,11 @@ export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities
 
     return ''
   }
-  
-  // useEffect(() => {
 
-  // }, [timeWindows])
+  useEffect(() => {
+    setAvailabilities(timeWindows2Avail(timeWindows))
+  }, [timeWindows])
+  
   const timeGrid = timeWindows.map((column : TimeWindow[]) => {
     return (
       <div className='AvailabilityColumn' onDragStart={(e) => e.preventDefault()}>
@@ -177,9 +197,6 @@ export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities
       </div>
     )
   })
-
-  console.log(timeGrid, timeWindows);
-  
   
   return (
     <div className='AvailabilityGridWrapper'>

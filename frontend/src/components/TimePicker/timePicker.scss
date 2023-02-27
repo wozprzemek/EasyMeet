@@ -28,6 +28,10 @@
     &:hover {
         background-color: $grayHover;
     }
+
+    &:active {
+        background-color: $grayActive;
+    }
 }
 
 .TimePickerDropdown {

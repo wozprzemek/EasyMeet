@@ -12,6 +12,7 @@
     background-color: rgba(0,0,0,0);
     color: $textOnDarkColor;
     font-family: 'Inter', sans-serif;
+
 }
 
 .Button--large {
@@ -38,6 +39,15 @@
 .Button--solid {
     background: linear-gradient(90deg, $secondaryColor1 0%, $secondaryColor2 100%);
     border: none;
+
+    &:hover {
+        background: $primaryColorHover;
+        border: none;
+    }
+
+    &:active {
+        background-color: $primaryColorSelect;
+    }
 }
 
 .Button--text {
