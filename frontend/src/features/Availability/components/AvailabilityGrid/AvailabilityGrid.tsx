@@ -16,12 +16,13 @@ type TimeWindow = {
   saved: boolean
 }
 
+// const initTimeWindows
+
 const avail2TimeWindows = (availabilities: Availability[]) => {
-  
+
 }
 
-const timeWindows2Avail = (timeWindows: TimeWindow[][]) => {
-  const user = '' //placeholder
+const timeWindows2Avail = (meeting:string, user: string, timeWindows: TimeWindow[][]) => {
 
   const selectedWindows = timeWindows.flat().filter((timeWindow) => timeWindow.selected).map((timeWindow) => {
     return timeWindow
@@ -29,6 +30,7 @@ const timeWindows2Avail = (timeWindows: TimeWindow[][]) => {
 
   const availabilities = selectedWindows.map((timeWindow) => {
     return {
+      meeting: meeting,
       user: user,
       time: timeWindow.time.toISOString()
     }
@@ -54,12 +56,13 @@ const AvailabilityColumn = () => {
 }
 
 interface IAvailabilityGrid {
+  user: string;
   meetingData: Meeting | undefined;
   availabilities: any[];
   setAvailabilities: React.Dispatch<any[]>;  
 }
 
-export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities}: IAvailabilityGrid) => {
+export const AvailabilityGrid = ({user, meetingData, availabilities, setAvailabilities}: IAvailabilityGrid) => {
 
   const initGrid = (meeting: Meeting) => {    
     // create a formatted time window array from fetched meeting data
@@ -68,7 +71,7 @@ export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities
     const duration = Math.ceil(endTime.diff(startTime, 'hours', true))
 
     const initTimeWindows = Array.from(
-      {length: meeting.dates.length},
+      {length: meeting?.dates?.length ?? 0},
       (_, i) => Array.from(
         {length: duration*2},
         (_, j) => ({
@@ -180,7 +183,7 @@ export const AvailabilityGrid = ({meetingData, availabilities, setAvailabilities
   }
 
   useEffect(() => {
-    setAvailabilities(timeWindows2Avail(timeWindows))
+    meetingData?.id && setAvailabilities(timeWindows2Avail(meetingData.id, user, timeWindows))
   }, [timeWindows])
   
   const timeGrid = timeWindows.map((column : TimeWindow[]) => {

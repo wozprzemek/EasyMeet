@@ -1,19 +1,19 @@
-import { Cascade, Check, DateTimeType, Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { Check, DateTimeType, Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuidv4 } from 'uuid';
 import { Meeting } from './Meeting.entity';
 
 @Entity()
 export class Availability {
-    @PrimaryKey({columnType: 'uuid'})
+    @PrimaryKey({ columnType: 'uuid' })
     id = uuidv4();
 
-    @ManyToOne(() => Meeting, {cascade: [Cascade.ALL]})
+    @ManyToOne(() => Meeting)
     meeting!: Meeting;
 
-    @Property({length: 50})
+    @Property({ length: 50 })
     user!: string;
 
-    @Property({columnType: 'timestamp with time zone'})
+    @Property({ columnType: 'timestamp with time zone' })
     @Check({ expression: '(EXTRACT (MINUTE FROM "time") IN (0, 30)) AND (EXTRACT (SECOND FROM "time") = 0)' })
     time!: DateTimeType;
 
