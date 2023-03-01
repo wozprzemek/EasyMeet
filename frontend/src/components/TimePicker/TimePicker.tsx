@@ -1,3 +1,4 @@
+import { useClickOutside } from 'hooks/useClickOutside';
 import React, { useState } from 'react'
 import './timePicker.scss'
 
@@ -7,6 +8,7 @@ interface ITimePicker {
 }
 
 export const TimePicker = ({selectedTime, setSelectedTime}: ITimePicker) => {
+    const ref = useClickOutside(() => setShowDropdown(false));
     let times = [...Array(24).keys()].map(i => {
         return `${i.toString().padStart(2, '0')}:00`
     })
@@ -24,7 +26,7 @@ export const TimePicker = ({selectedTime, setSelectedTime}: ITimePicker) => {
             {selectedTime}
         </div>
         { showDropdown ? 
-            <div className='TimePickerDropdown'>
+            <div className='TimePickerDropdown' ref={ref}>
                 {
                     times.map(time => {
                         return (

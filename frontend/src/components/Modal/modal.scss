@@ -1,0 +1,61 @@
+@import '../../sassStyles/variables';
+
+.ModalWrapper {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    background-color: rgba(0,0,0,0.7);
+    font-family: 'Inter';
+    backdrop-filter: blur(10px);
+}
+
+.ModalWindow {
+    width: 40rem;
+    height: 30rem;
+    background-color: $backgroundDarkColor;
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    align-items: center;
+    padding: 2rem;
+    justify-content: start;
+    border-radius: 0.5rem;
+    max-height: 80vh;
+    max-width: 90vw;
+
+    label {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    div {
+        width: 100%;
+        padding: 5rem;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        // gap: 3rem;
+    }
+
+    input {
+        appearance: none;
+        font-weight: 400;
+        border: none;
+        height: 2.25rem;
+        color: #FFFDF7;
+        // width: 240px;
+        // width: 100%;
+        text-align: left;
+        border-radius: $radius_md;
+        padding: 0.125rem 0.75rem;
+        font-size: 1rem;
+        background-color: $gray;
+        margin-bottom: 3rem;
+    }
+}
