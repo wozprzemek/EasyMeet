@@ -1,3 +1,4 @@
+import { PlusIcon } from '@heroicons/react/24/outline'
 import { getMeeting } from 'api/getMeeting'
 import { updateAvailabilities } from 'api/updateUserAvailabilities'
 import { Button } from 'components/Button/Button'
@@ -26,6 +27,10 @@ export const Availability = () => {
     console.log(availabilities);
   }, [availabilities])
 
+  useEffect(() => {
+    console.log(user);
+  }, [user])
+
   const handleSave = async () => {
     try {
       const updateData = {
@@ -44,22 +49,19 @@ export const Availability = () => {
     return null
   }
 
-  console.log(meetingData, meetingStatus);
-  
-  
   return (
     <ContentLayout>
-        {showModal ? <Modal off={() => setShowModal(false)} setUser={setUser} setPassword={setPassword}/>: null }
+        {showModal ? <Modal setEditMode={setEditMode} user={user} password={password} off={() => setShowModal(false)} setUser={setUser} setPassword={setPassword}/>: null }
         <div className='Wrapper'>
             <div className='WrapperContent'>
                 <div className='TitleWrapper'>
                     <h1>{meetingData?.name}</h1>
                     <h2>5 participants</h2>
                 </div>
-                <AvailabilityGrid user={user} meetingData={meetingData} availabilities={availabilities} setAvailabilities={setAvailabilities}/>
+                <AvailabilityGrid editMode={editMode} user={user} meetingData={meetingData} availabilities={availabilities} setAvailabilities={setAvailabilities}/>
             </div>
-            { editMode ? <Button type={ButtonType.SOLID} size={ButtonSize.LG} text="Save" onClick={() => handleSave()}/> 
-              : <Button type={ButtonType.SOLID} size={ButtonSize.LG} text="New" onClick={() => setShowModal(true)}/> 
+            { editMode ? <Button type={ButtonType.SOLID} size={ButtonSize.LG} onClick={() => handleSave()}>Create</Button>
+              : <Button type={ButtonType.CIRCLE} size={ButtonSize.LG} onClick={() => setShowModal(true)}><PlusIcon/></Button> 
             }
         </div>
     </ContentLayout>

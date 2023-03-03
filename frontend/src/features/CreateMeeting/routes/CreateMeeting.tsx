@@ -66,7 +66,7 @@ export const CreateMeeting = () => {
                   <Calendar selectedDates={selectedDates} setSelectedDates={setSelectedDates}/>
                   <DetailsForm from={from} setFrom={setFrom} to={to} setTo={setTo}/>
                 </div>
-                <Button type={ButtonType.SOLID} size={ButtonSize.LG} text="Create" onClick={handleCreate}/>
+                <Button type={ButtonType.SOLID} size={ButtonSize.LG}onClick={handleCreate}>Create</Button>
             </div>
         </div>
     </ContentLayout>

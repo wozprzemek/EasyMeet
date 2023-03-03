@@ -56,13 +56,14 @@ const AvailabilityColumn = () => {
 }
 
 interface IAvailabilityGrid {
+  editMode: boolean;
   user: string;
   meetingData: Meeting | undefined;
   availabilities: any[];
   setAvailabilities: React.Dispatch<any[]>;  
 }
 
-export const AvailabilityGrid = ({user, meetingData, availabilities, setAvailabilities}: IAvailabilityGrid) => {
+export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, setAvailabilities}: IAvailabilityGrid) => {
 
   const initGrid = (meeting: Meeting) => {    
     // create a formatted time window array from fetched meeting data
@@ -158,7 +159,7 @@ export const AvailabilityGrid = ({user, meetingData, availabilities, setAvailabi
   const [isClicked, setIsClicked] = useState(false) // is mouse currently down
   
   useEffect(() => {
-    if (isClicked) {
+    if (isClicked && editMode) {
       handleGridSelect()
     }
   }, [currentCell, startCell])

@@ -1,7 +1,8 @@
 export enum ButtonType {
     TEXT,
     OUTLINE,
-    SOLID
+    SOLID,
+    CIRCLE
 }
 
 export enum ButtonSize {

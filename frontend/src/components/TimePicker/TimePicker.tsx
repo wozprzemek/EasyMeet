@@ -1,10 +1,10 @@
 import { useClickOutside } from 'hooks/useClickOutside';
-import React, { useState } from 'react'
-import './timePicker.scss'
+import { Dispatch, useState } from 'react';
+import './timePicker.scss';
 
 interface ITimePicker {
     selectedTime: string;
-    setSelectedTime: React.Dispatch<string>;
+    setSelectedTime: Dispatch<string>;
 }
 
 export const TimePicker = ({selectedTime, setSelectedTime}: ITimePicker) => {

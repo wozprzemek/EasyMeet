@@ -57,3 +57,11 @@
         color: #b1b1b1;
     }
 }
+
+.Button--circle {
+    width: 3rem;
+    border-radius: 50%;
+    background-color: $primaryColor1;
+    border: none;
+    padding: 0.5rem;
+}
