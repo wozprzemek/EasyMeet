@@ -20,29 +20,21 @@ export const MeetingController = {
         try {
             const query = await DI.em.findOne(Meeting, { id: req.params.id }, { populate: ['dates', 'availabilities'] })
 
-            let result = {
-                id: query?.id,
-                name: query?.name,
-                password: query?.password,
-                active: query?.active,
-                from: query?.from,
-                to: query?.to,
-                dates: query?.dates,
+            if (query) {
+                query.availabilities = query?.availabilities.toArray().reduce((groupedUsers: any, availability) => {
+                    const user = availability.user
+
+                    if (groupedUsers[user] === undefined) {
+                        console.log('null');
+
+                        groupedUsers[user] = []
+                    }
+                    groupedUsers[user].push(availability)
+                    return groupedUsers
+                }, {})
 
             }
-            const grouped = query?.availabilities.toArray().reduce((groupedUsers: any, availability) => {
-                const user = availability.user
 
-                if (groupedUsers[user] === undefined) {
-                    console.log('null');
-
-                    groupedUsers[user] = []
-                }
-                groupedUsers[user].push(availability)
-                return groupedUsers
-            }, {})
-
-            console.log(grouped);
             res.send(query)
         } catch (error) {
             console.error(error);

@@ -49,6 +49,8 @@ export const Availability = () => {
     return null
   }
 
+  console.log(meetingData && Object.keys(meetingData?.availabilities).length)
+  
   return (
     <ContentLayout>
         {showModal ? <Modal setEditMode={setEditMode} user={user} password={password} off={() => setShowModal(false)} setUser={setUser} setPassword={setPassword}/>: null }
@@ -56,11 +58,11 @@ export const Availability = () => {
             <div className='WrapperContent'>
                 <div className='TitleWrapper'>
                     <h1>{meetingData?.name}</h1>
-                    <h2>5 participants</h2>
+                    <h2>{meetingData && Object.keys(meetingData?.availabilities).length} participants</h2>
                 </div>
                 <AvailabilityGrid editMode={editMode} user={user} meetingData={meetingData} availabilities={availabilities} setAvailabilities={setAvailabilities}/>
             </div>
-            { editMode ? <Button type={ButtonType.SOLID} size={ButtonSize.LG} onClick={() => handleSave()}>Create</Button>
+            { editMode ? <Button type={ButtonType.SOLID} size={ButtonSize.LG} onClick={() => handleSave()}>Save</Button>
               : <Button type={ButtonType.CIRCLE} size={ButtonSize.LG} onClick={() => setShowModal(true)}><PlusIcon/></Button> 
             }
         </div>

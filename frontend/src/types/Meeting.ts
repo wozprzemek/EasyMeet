@@ -9,5 +9,5 @@ export interface Meeting {
     to: string;
     active: boolean;
     dates: MeetingDate[];
-    availabilities: Availability[];
+    availabilities: { [key: string]: Availability[] };
 }
