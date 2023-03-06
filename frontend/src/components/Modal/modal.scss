@@ -14,15 +14,16 @@
 }
 
 .ModalWindow {
-    width: 40rem;
-    height: 30rem;
+    width: 36rem;
+    min-height: 20rem;
     background-color: $backgroundDarkColor;
     z-index: 101;
     display: flex;
     flex-direction: column;
     font-size: 20px;
+    font-weight: 600;
     align-items: center;
-    padding: 2rem;
+    padding: 3rem;
     justify-content: start;
     border-radius: 0.5rem;
     max-height: 80vh;
@@ -30,16 +31,17 @@
 
     label {
         font-size: 1rem;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
     }
 
     div {
         width: 100%;
-        padding: 5rem;
+        padding: 5rem 6rem;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
         justify-content: start;
+        align-items: center;
         // gap: 3rem;
     }
 
@@ -49,13 +51,17 @@
         border: none;
         height: 2.25rem;
         color: #FFFDF7;
-        // width: 240px;
-        // width: 100%;
+        width: 100%;
         text-align: left;
         border-radius: $radius_md;
         padding: 0.125rem 0.75rem;
         font-size: 1rem;
         background-color: $gray;
         margin-bottom: 3rem;
+    }
+
+    span {
+        font-size: 1rem;
+        font-weight: 300;
     }
 }

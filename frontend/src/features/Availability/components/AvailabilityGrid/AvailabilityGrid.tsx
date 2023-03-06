@@ -1,5 +1,7 @@
+import { updateAvailabilities } from 'api/updateUserAvailabilities'
+import { queryClient } from 'config/react-query'
 import moment from 'moment'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Availability } from 'types/Availability'
 import { Meeting } from 'types/Meeting'
 import './availabilityGrid.scss'
@@ -9,38 +11,19 @@ type Position = {
   y: number
 }
 
-type TimeWindow = {
+type TimeCell = {
   time: Date,
+  markedBy: string[],
+  currentUser: boolean,
   selected: boolean,
   position: Position,
   saved: boolean
 }
 
-// const initTimeWindows
-
-const avail2TimeWindows = (availabilities: Availability[]) => {
-
-}
-
-const timeWindows2Avail = (meeting:string, user: string, timeWindows: TimeWindow[][]) => {
-
-  const selectedWindows = timeWindows.flat().filter((timeWindow) => timeWindow.selected).map((timeWindow) => {
-    return timeWindow
-  })
-
-  const availabilities = selectedWindows.map((timeWindow) => {
-    return {
-      meeting: meeting,
-      user: user,
-      time: timeWindow.time.toISOString()
-    }
-  })
-
-  return availabilities
-}
-
+// Check if time cell is between starting and current cell
 const isBetween = (n : number, a: number, b: number) => (n - a) * (n - b) <= 0
 
+// Format column header containing month, day and week day
 const formattedColumnHeader = (time: any) => {
   const dateSplit = time.time.toString().split(' ').slice(0, 3)
   return (
@@ -49,10 +32,6 @@ const formattedColumnHeader = (time: any) => {
       <h2>{dateSplit[1]} {dateSplit[2]}</h2>
     </span>
   )
-}
-
-const AvailabilityColumn = () => {
-  
 }
 
 interface IAvailabilityGrid {
@@ -64,26 +43,88 @@ interface IAvailabilityGrid {
 }
 
 export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, setAvailabilities}: IAvailabilityGrid) => {
+  console.log('AvailabilityGrid');
+  
+  const [timeLabels, setTimeLabels] = useState<string[]>([]) // Time labels for the grid
+  const [timeCells, setTimeCells] = useState<any[][]>([]) // TODO Change to TimeCell[][] type
+  const [startCell, setStartCell] = useState<TimeCell>() // Saved position at mouse click
+  const [currentCell, setCurrentCell] = useState<TimeCell>() // Current hover position
+  const [isClicked, setIsClicked] = useState(false) // Is mouse currently down
+  // const [curentUserCells, setCurrentUserCells] = useState<any[][]>([]) // Cells saved/selected by current user (editable)
+  // const [otherUserCells, _] = useState<any[][]>([]) // Cells saved by other users (non-editable)
+  
+  // Run grid selection on current or start cell change
+  useEffect(() => {
+    if (isClicked && editMode) {
+      handleGridSelect()
+    }
+  }, [currentCell, startCell])
 
-  const initGrid = (meeting: Meeting) => {    
-    // create a formatted time window array from fetched meeting data
-    const startTime = moment(meeting.from, 'YYYY-MM-DD h:mm:ss a');
-    const endTime = moment(meeting.to, 'YYYY-MM-DD h:mm:ss a');
+  // Persists time cells on change
+  useEffect(() => {
+    meetingData?.id && setAvailabilities(timeCells2Avail())
+  }, [timeCells])
+
+  // const avail2TimeCells = (availabilities: Availability[]) => {
+
+  // }
+  
+  // Converts time cells to availability array
+  const timeCells2Avail = () => {
+  
+    const selectedCells = timeCells.flat().filter((timeCell) => timeCell.selected).map((timeCell) => {
+      return timeCell
+    })
+  
+    const availabilities = selectedCells.map((timeCell) => {
+      return {
+        meeting: meetingData?.id,
+        user: user,
+        time: timeCell.time.toISOString()
+      }
+    })
+  
+    return availabilities
+  }
+
+  // Initializes the availability grid
+  useEffect(() => {
+    const startTime = moment(meetingData?.from, 'YYYY-MM-DD h:mm:ss a');
+    const endTime = moment(meetingData?.to, 'YYYY-MM-DD h:mm:ss a');
     const duration = Math.ceil(endTime.diff(startTime, 'hours', true))
 
-    const initTimeWindows = Array.from(
-      {length: meeting?.dates?.length ?? 0},
+    // Initialize empty time grid
+    const initTimeCells = Array.from(
+      {length: meetingData?.dates?.length ?? 0},
       (_, i) => Array.from(
         {length: duration*2},
         (_, j) => ({
-          time: moment(meeting.dates[i].date).clone().add(startTime.hour(), 'hours').add(j*30, 'minutes').toDate(),
+          time: moment(meetingData?.dates[i].date).clone().add(startTime.hour(), 'hours').add(j*30, 'minutes'),
           selected: false,
           position: {x: i, y: j},
-          saved: false
+          saved: false,
+          markedBy: [] as string[]
         })
       )
     )
 
+    // Loop over all marked user availabilities and display them
+    initTimeCells.flat().map(timeCell => {
+      for (let usr of Object.entries(meetingData!.availabilities)) {
+        for (let av of usr[1]) {
+          if (timeCell.time.isSame(moment(av.time))) {
+            timeCell.markedBy.push(user[0])
+            if (usr[0] === user) {
+              timeCell.saved = true
+              timeCell.selected = true
+            }
+          }
+        }
+      }
+      timeCell.time.toDate() 
+    });  
+
+    // Format time labels
     const timeLabels = Array.from(
       {length: duration + 1},
       (_, i) => {
@@ -91,110 +132,115 @@ export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, s
       }
     )
 
-    return {initTimeWindows, timeLabels}
-  }
-  
+    setTimeCells(initTimeCells)
+    setTimeLabels(timeLabels)
+  }, [meetingData, user])
+    
+  // Handles time cell selection
   const handleGridSelect = () => {
-    setTimeWindows(timeWindows.map((column: TimeWindow[], i: number) => 
-      column.map((timeWindow: TimeWindow, j: number) => {
+    setTimeCells(timeCells.map((column: TimeCell[], i: number) => 
+      column.map((timeCell: TimeCell, j: number) => {
         if (isBetween(i, currentCell!.position.x, startCell!.position.x) && isBetween(j, currentCell!.position.y, startCell!.position.y)) {
-          return { ...timeWindow, selected: !startCell?.selected}
+          return { ...timeCell, selected: !startCell?.selected}
         } 
         else {
-          if (timeWindow.saved){
-            return {...timeWindow, selected: true}
+          if (timeCell.saved){
+            return {...timeCell, selected: true}
           }
           else {
-            return { ...timeWindow, selected: false}
+            return { ...timeCell, selected: false}
           }
         }
       })
     ))
   }
 
+  // Handles saving selected time cells and persisting them in the database
   const saveCells = () => {
-    setTimeWindows(timeWindows.map((column: TimeWindow[]) => 
-      column.map((timeWindow: TimeWindow, j: number) => {
-        if (timeWindow.selected) {
-          return {...timeWindow, saved: true}
+    setTimeCells(timeCells.map((column: TimeCell[]) => 
+      column.map((timeCell: TimeCell, j: number) => {
+        if (timeCell.selected) {
+          return {...timeCell, saved: true}
         }
         else {
-          return {...timeWindow, saved: false}
+          return {...timeCell, saved: false}
         }
       })
     ))
   }
 
-  const gridSelect = (event: any, timeWindow: TimeWindow) => {
+  const persistCells = async () => {
+    try {
+      const updateData = {
+        meeting: meetingData!.id,
+        user: user,
+        availabilities: availabilities
+      }
+      await updateAvailabilities(updateData)
+      // queryClient.refetchQueries(['meeting'])
+    }
+    catch(error){ 
+      console.error(error)
+    }
+  }
+
+  // Handles grid actions based on mouse events
+  const gridSelect = (event: any, timeCell: TimeCell) => {
     if (event.type === 'mousedown') {
       setIsClicked(true)
-      setStartCell(timeWindow)
+      setStartCell(timeCell)
     }
     else if (event.type === 'mouseup') {
       setIsClicked(false)
       saveCells()
+      persistCells()
     }
 
     if (event.type === 'mouseenter') {
-      setCurrentCell(timeWindow)
+      setCurrentCell(timeCell)
     }
   }
 
+
+  // Handles mouse leaving the grid
   const handleMouseLeave = () => {
     setIsClicked(false)
     saveCells()
   }
 
-  const {initTimeWindows, timeLabels} = initGrid(meetingData!)
-  
-  const [timeWindows, setTimeWindows] = useState<TimeWindow[][]>(initTimeWindows)
-
-  useEffect(() => {
-    setTimeWindows(initTimeWindows)
-  }, [meetingData])
-  
-
-  const [startCell, setStartCell] = useState<TimeWindow>() // saved position at mouse click
-  const [currentCell, setCurrentCell] = useState<TimeWindow>() // current hover position
-  const [isClicked, setIsClicked] = useState(false) // is mouse currently down
-  
-  useEffect(() => {
-    if (isClicked && editMode) {
-      handleGridSelect()
+  // Handles time cell appearance based on the state
+  const selectTimeCellClass = (timeCell: TimeCell) => {
+    // select the class based on the timeCell cell state
+    if (timeCell.markedBy.length !== 0 && !editMode) {
+      return 'TimeCell--others'
     }
-  }, [currentCell, startCell])
 
-  const selectTimeWindowClass = (timeWindow: TimeWindow) => {
-    // select the class based on the timeWindow cell state
-    if (timeWindow.saved) {
-      if (timeWindow.selected) {
-        return 'TimeWindow--saved'
+    if (timeCell.saved) {
+      if (timeCell.selected) {
+        return 'TimeCell--saved'
       }
       else {
-        return 'TimeWindow--deselected'
+        return 'TimeCell--deselected'
       }
     }
     else {
-      if (timeWindow.selected) {
-        return 'TimeWindow--selected'
+      if (timeCell.selected) {
+        return 'TimeCell--selected'
       }
     }
 
     return ''
   }
-
-  useEffect(() => {
-    meetingData?.id && setAvailabilities(timeWindows2Avail(meetingData.id, user, timeWindows))
-  }, [timeWindows])
   
-  const timeGrid = timeWindows.map((column : TimeWindow[]) => {
+  // Main time grid component
+  const timeGrid = timeCells.map((column : TimeCell[]) => {
     return (
       <div className='AvailabilityColumn' onDragStart={(e) => e.preventDefault()}>
         {formattedColumnHeader(column[0])}
-        {column.map((timeWindow: TimeWindow) => {
+        {column.map((timeCell: TimeCell) => {
           return (
-            <div className={`TimeWindow ${selectTimeWindowClass(timeWindow)}`}
-            onMouseEnter={e => gridSelect(e, timeWindow)} onMouseDown={e => gridSelect(e, timeWindow)} onMouseUp={e => gridSelect(e, timeWindow)}>
+            <div className={`TimeCell ${selectTimeCellClass(timeCell)}`}
+            onMouseEnter={e => gridSelect(e, timeCell)} onMouseDown={e => gridSelect(e, timeCell)} onMouseUp={e => gridSelect(e, timeCell)}>
             </div>
           )
         })}

@@ -14,24 +14,28 @@ import { AvailabilityGrid } from '../components/AvailabilityGrid/AvailabilityGri
 import './availability.scss'
 
 export const Availability = () => {
-
   const {id} = useParams()
-  const {data: meetingData, status: meetingStatus} = useQuery<Meeting>(['meeting', id], () => getMeeting(id))
-  const [user, setUser] = useState('test')
+  const {data: meetingData, status: meetingStatus, refetch: meetingRefetch} = useQuery<Meeting>(['meeting', id], () => getMeeting(id))
+  const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
   const [availabilities, setAvailabilities] = useState<TAvailability[]>([])
   const [editMode, setEditMode] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
-  useEffect(() => {
-    console.log(availabilities);
-  }, [availabilities])
+  console.log('AVAILABILITY');
+  
+  const handleModalOff = () => {
+    setShowModal(false)
+  }
 
-  useEffect(() => {
-    console.log(user);
-  }, [user])
+  const handleModalOn = () => {
+    setShowModal(true)
+    setUser('')
+    setPassword('')
+  }
 
   const handleSave = async () => {
+    setEditMode(false)
     try {
       const updateData = {
         meeting: id!,
@@ -39,6 +43,7 @@ export const Availability = () => {
         availabilities: availabilities
       }
       await updateAvailabilities(updateData)
+      meetingRefetch()
     }
     catch(error){ 
       console.error(error)
@@ -49,11 +54,12 @@ export const Availability = () => {
     return null
   }
 
-  console.log(meetingData && Object.keys(meetingData?.availabilities).length)
+  // console.log(meetingData && Object.keys(meetingData?.availabilities).length)
   
   return (
     <ContentLayout>
-        {showModal ? <Modal setEditMode={setEditMode} user={user} password={password} off={() => setShowModal(false)} setUser={setUser} setPassword={setPassword}/>: null }
+        {showModal ? <Modal setEditMode={setEditMode} user={user} password={meetingData?.password ? password : undefined}
+        off={() => handleModalOff()} setUser={setUser} setPassword={meetingData?.password ? setPassword : undefined}/>: null }
         <div className='Wrapper'>
             <div className='WrapperContent'>
                 <div className='TitleWrapper'>
@@ -62,8 +68,8 @@ export const Availability = () => {
                 </div>
                 <AvailabilityGrid editMode={editMode} user={user} meetingData={meetingData} availabilities={availabilities} setAvailabilities={setAvailabilities}/>
             </div>
-            { editMode ? <Button type={ButtonType.SOLID} size={ButtonSize.LG} onClick={() => handleSave()}>Save</Button>
-              : <Button type={ButtonType.CIRCLE} size={ButtonSize.LG} onClick={() => setShowModal(true)}><PlusIcon/></Button> 
+            { editMode ? null
+              : <Button type={ButtonType.CIRCLE} size={ButtonSize.LG} onClick={() => handleModalOn()}><PlusIcon/></Button> 
             }
         </div>
     </ContentLayout>

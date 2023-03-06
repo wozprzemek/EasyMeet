@@ -42,7 +42,7 @@ export const AvailabilityController = {
     },
     updateUserAvailabilities: async (req: Request, res: Response) => {
         const data: { meeting: string, user: string, availabilities: Availability[] } = req.body
-        console.log(data.user);
+        console.log('UPDATE DATA', data);
 
         try {
             const query = await DI.em.find(Availability, { user: data.user, meeting: data.meeting }) // FIX MEETING NULL!

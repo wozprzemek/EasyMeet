@@ -24,19 +24,19 @@
     box-sizing: border-box;
 
     // &:first-of-type {
-    //     .TimeWindow {
+    //     .TimeCell {
     //         border-left: 1px solid $textOnDarkColor;
     //     } 
     // }
 
     // &:last-of-type {
-    //     .TimeWindow {
+    //     .TimeCell {
     //         border-right: 1px solid $textOnDarkColor;
     //     } 
     // }
 }
 
-.TimeWindow{
+.TimeCell{
     width: 100%;
     height: 1.125rem;
     box-sizing: border-box;
@@ -56,7 +56,15 @@
     }
 }
 
-.TimeWindow--selected {
+.TimeCell--others {
+    background-color: $primaryColorOther;
+
+    &:hover {
+        background-color: $primaryColorOther;
+    }
+}
+
+.TimeCell--selected {
     background-color: $primaryColorHover;
 
     &:hover {
@@ -64,7 +72,7 @@
     }
 }
 
-.TimeWindow--deselected {
+.TimeCell--deselected {
     background-color: $primaryColorDeselect;
 
     &:hover {
@@ -72,7 +80,7 @@
     }
 }
 
-.TimeWindow--saved {
+.TimeCell--saved {
     background-color: $primaryColor1;
 
     &:hover {
