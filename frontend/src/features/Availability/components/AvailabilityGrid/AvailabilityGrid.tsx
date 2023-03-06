@@ -1,10 +1,13 @@
 import { updateAvailabilities } from 'api/updateUserAvailabilities'
 import { queryClient } from 'config/react-query'
 import moment from 'moment'
-import { useEffect, useMemo, useState } from 'react'
-import { Availability } from 'types/Availability'
+import { useEffect, useState } from 'react'
 import { Meeting } from 'types/Meeting'
+import { Availability as TAvailability } from 'types/Availability'
 import './availabilityGrid.scss'
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
+import { Button } from 'components/Button/Button'
+import { ButtonSize, ButtonType } from 'types'
 
 type Position = {
   x: number,
@@ -38,18 +41,18 @@ interface IAvailabilityGrid {
   editMode: boolean;
   user: string;
   meetingData: Meeting | undefined;
-  availabilities: any[];
-  setAvailabilities: React.Dispatch<any[]>;  
 }
 
-export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, setAvailabilities}: IAvailabilityGrid) => {
+export const AvailabilityGrid = ({editMode, user, meetingData}: IAvailabilityGrid) => {
   console.log('AvailabilityGrid');
   
+  const [availabilities, setAvailabilities] = useState<TAvailability[]>([])
   const [timeLabels, setTimeLabels] = useState(['']) // Time labels for the grid
   const [timeCells, setTimeCells] = useState<any[][]>([]) // TODO Change to TimeCell[][] type
   const [startCell, setStartCell] = useState<TimeCell>() // Saved position at mouse click
   const [currentCell, setCurrentCell] = useState<TimeCell>() // Current hover position
   const [isClicked, setIsClicked] = useState(false) // Is mouse currently down
+  const [showAllAvailabilities, setShowAllAvailabilities] = useState(false) // Is mouse currently down
 
   // Run grid selection on current or start cell change
   useEffect(() => {
@@ -71,7 +74,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, s
   
     const availabilities = selectedCells.map((timeCell) => {
       return {
-        meeting: meetingData?.id,
+        meeting: meetingData!.id,
         user: user,
         time: timeCell.time.toISOString()
       }
@@ -85,6 +88,8 @@ export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, s
     const startTime = moment(meetingData?.from, 'YYYY-MM-DD h:mm:ss a');
     const endTime = moment(meetingData?.to, 'YYYY-MM-DD h:mm:ss a');
     const duration = Math.ceil(endTime.diff(startTime, 'hours', true))
+    console.log('init use effect');
+    
 
     // Initialize empty time grid
     const initTimeCells = Array.from(
@@ -108,6 +113,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, s
           if (timeCell.time.isSame(moment(av.time))) {
             timeCell.markedBy.push(user[0])
             if (usr[0] === user) {
+              console.log('HERE');
               timeCell.saved = true
               timeCell.selected = true
             }
@@ -116,6 +122,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, s
       }
       timeCell.time.toDate() 
     });  
+
 
     // Format time labels
     const timeLabels = Array.from(
@@ -162,6 +169,12 @@ export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, s
     ))
   }
 
+  useEffect(() => {
+    queryClient.refetchQueries(['meeting'])
+    console.log('new user');
+    
+  }, [user])
+
   const persistCells = async () => {
     try {
       const updateData = {
@@ -170,7 +183,6 @@ export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, s
         availabilities: availabilities
       }
       await updateAvailabilities(updateData)
-      queryClient.refetchQueries(['meeting'])
     }
     catch(error){ 
       console.error(error)
@@ -194,7 +206,6 @@ export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, s
     }
   }
 
-
   // Handles mouse leaving the grid
   const handleMouseLeave = () => {
     setIsClicked(false)
@@ -204,7 +215,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, s
   // Handles time cell appearance based on the state
   const selectTimeCellClass = (timeCell: TimeCell) => {
     // select the class based on the timeCell cell state
-    if (timeCell.markedBy.length !== 0 && !editMode) {
+    if (timeCell.markedBy.length !== 0 && showAllAvailabilities) {
       return 'TimeCell--others'
     }
 
@@ -226,9 +237,9 @@ export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, s
   }
   
   // Main time grid component
-  const timeGrid = timeCells.map((column : TimeCell[]) => {
+  const timeGrid = timeCells.map((column : TimeCell[], index) => {
     return (
-      <div className='AvailabilityColumn' onDragStart={(e) => e.preventDefault()}>
+      <div key={index} className='AvailabilityColumn' onDragStart={(e) => e.preventDefault()}>
         {formattedColumnHeader(column[0])}
         {column.map((timeCell: TimeCell) => {
           return (
@@ -245,16 +256,21 @@ export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, s
   
   return (
     <div className='AvailabilityGridWrapper'>
+      <Button type={ButtonType.CIRCLE} size={ButtonSize.LG} onClick={() => setShowAllAvailabilities(!showAllAvailabilities)}>
+        {
+          showAllAvailabilities ? <EyeSlashIcon className='Icon'/> : <EyeIcon className='Icon'/>
+        }
+      </Button> 
       <div className='TimesColumn'>
         {
           timeLabels.map(label => {
             return (
-              <div>{label}</div>
+              <div key={label}>{label}</div>
             )
           })
         }
       </div>
-      <div className='AvailabilityGrid' onMouseEnter={() => handleMouseLeave()}>
+      <div className='AvailabilityGrid' onMouseEnter={editMode ? () => handleMouseLeave() : undefined}>
         {timeGrid}
       </div>
     </div>

@@ -61,7 +61,13 @@
 .Button--circle {
     width: 3rem;
     border-radius: 50%;
-    background-color: $primaryColor1;
+    // background-color: $primaryColor1;
+    background-color: rgba(255,255,255,0.1);
     border: none;
     padding: 0.5rem;
+
+    &:hover {
+        background-color: rgba(255,255,255,0.15);
+   
+    }
 }

@@ -53,7 +53,7 @@ export const AvailabilityController = {
                 await DI.em.remove(availability).flush();
             })
             data.availabilities.forEach(async (availability) => {
-                console.log(availability);
+                console.log('here?', availability);
 
                 const newAvailability = DI.em.create(Availability, availability)
                 await DI.em.persistAndFlush(newAvailability)

@@ -34,7 +34,8 @@ export const MeetingController = {
                 }, {})
 
             }
-
+            console.log(query);
+            
             res.send(query)
         } catch (error) {
             console.error(error);

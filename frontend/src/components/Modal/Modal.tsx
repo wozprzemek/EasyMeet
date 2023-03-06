@@ -1,4 +1,5 @@
 import { Button } from 'components/Button/Button';
+import { queryClient } from 'config/react-query';
 import { useClickOutside } from 'hooks/useClickOutside';
 import { Dispatch, useState } from 'react';
 import { ButtonSize, ButtonType } from 'types';
@@ -6,20 +7,21 @@ import './modal.scss';
 
 interface IModal {
     off: () => void;
-    user: string;
     setUser: Dispatch<string>;
     password?: string;
     setPassword?: Dispatch<string>;
     setEditMode: Dispatch<boolean>;
 }
 
-export const Modal = ({off, user, setUser, password, setPassword, setEditMode} : IModal) => {
+export const Modal = ({off, setUser, password, setPassword, setEditMode} : IModal) => {
     const ref = useClickOutside(off);
     const [localUser, setLocalUser] = useState('')
     
     const handleSubmit = async () => {
-        off()
+        setUser(localUser)
+        // await queryClient.refetchQueries(['meeting'])
         setEditMode(true)
+        off()
     }
 
     return (
@@ -28,7 +30,7 @@ export const Modal = ({off, user, setUser, password, setPassword, setEditMode} :
             Mark your availability
             <div>
                 <label htmlFor='user'>Your name</label>
-                <input type='text' name='user' value={user} onChange={(e) => setUser(e.target.value)} ></input>
+                <input type='text' name='user' value={localUser} onChange={(e) => setLocalUser(e.target.value)} ></input>
 
                 {
                     password !== undefined      ?
