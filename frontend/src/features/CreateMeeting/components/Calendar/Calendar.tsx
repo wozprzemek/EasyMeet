@@ -96,7 +96,6 @@ export const Calendar = ({selectedDates, setSelectedDates}: ICalendar) => {
 
     var now = new Date() // current date
     const [selectedMonth, setSelectedMonth] = useState({month: now.getMonth(), year: now.getFullYear()}) // used for selected year and month
-    // const [selectedDates, setSelectedDates] = useState<DateType[]>([]) // used for selected days
     const [displayedDays, setDisplayedDays] = useState(getCurrentMonthDays(selectedMonth.month + 1, selectedMonth.year))
     const weekDays = ['M', 'Tu', 'W', 'Th', 'F', 'Sa', 'Su']
     

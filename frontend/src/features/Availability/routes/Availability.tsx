@@ -34,22 +34,6 @@ export const Availability = () => {
     setPassword('')
   }
 
-  const handleSave = async () => {
-    setEditMode(false)
-    try {
-      const updateData = {
-        meeting: id!,
-        user: user,
-        availabilities: availabilities
-      }
-      await updateAvailabilities(updateData)
-      meetingRefetch()
-    }
-    catch(error){ 
-      console.error(error)
-    }
-  }
-
   if (meetingStatus === 'loading' && meetingData === undefined) {
     return null
   }

@@ -2,8 +2,8 @@ import { createMeeting } from 'api/createMeeting'
 import { Button } from 'components/Button/Button'
 import { ContentLayout } from 'components/ContentLayout/ContentLayout'
 import { DateType } from 'features/CreateMeeting/types'
-import { useCallback, useEffect, useState } from 'react'
-import { Navigate, useNavigate } from 'react-router'
+import { useCallback, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { ButtonSize, ButtonType } from 'types'
 import { Calendar } from '../components/Calendar/Calendar'
 import { DetailsForm } from '../components/DetailsForm/DetailsForm'
@@ -11,11 +11,11 @@ import './createMeeting.scss'
 
 export const CreateMeeting = () => {
   const navigate = useNavigate()
-  const [name, setName] = useState<string>(``)
-  const [enablePassword, setEnablePassword] = useState<boolean>(false)
-  const [password, setPassword] = useState<string>(``)
-  const [from, setFrom] = useState<string>(`09:00`)
-  const [to, setTo] = useState<string>(`17:00`)
+  const [name, setName] = useState(``)
+  const [enablePassword, setEnablePassword] = useState(false)
+  const [password, setPassword] = useState(``)
+  const [from, setFrom] = useState(`09:00`)
+  const [to, setTo] = useState(`17:00`)
   const [selectedDates, setSelectedDates] = useState<DateType[]>([])
 
   const handleCreate = async () => {

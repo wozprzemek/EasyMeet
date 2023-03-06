@@ -45,14 +45,12 @@ interface IAvailabilityGrid {
 export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, setAvailabilities}: IAvailabilityGrid) => {
   console.log('AvailabilityGrid');
   
-  const [timeLabels, setTimeLabels] = useState<string[]>([]) // Time labels for the grid
+  const [timeLabels, setTimeLabels] = useState(['']) // Time labels for the grid
   const [timeCells, setTimeCells] = useState<any[][]>([]) // TODO Change to TimeCell[][] type
   const [startCell, setStartCell] = useState<TimeCell>() // Saved position at mouse click
   const [currentCell, setCurrentCell] = useState<TimeCell>() // Current hover position
   const [isClicked, setIsClicked] = useState(false) // Is mouse currently down
-  // const [curentUserCells, setCurrentUserCells] = useState<any[][]>([]) // Cells saved/selected by current user (editable)
-  // const [otherUserCells, _] = useState<any[][]>([]) // Cells saved by other users (non-editable)
-  
+
   // Run grid selection on current or start cell change
   useEffect(() => {
     if (isClicked && editMode) {
@@ -65,13 +63,8 @@ export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, s
     meetingData?.id && setAvailabilities(timeCells2Avail())
   }, [timeCells])
 
-  // const avail2TimeCells = (availabilities: Availability[]) => {
-
-  // }
-  
   // Converts time cells to availability array
   const timeCells2Avail = () => {
-  
     const selectedCells = timeCells.flat().filter((timeCell) => timeCell.selected).map((timeCell) => {
       return timeCell
     })
@@ -177,7 +170,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, s
         availabilities: availabilities
       }
       await updateAvailabilities(updateData)
-      // queryClient.refetchQueries(['meeting'])
+      queryClient.refetchQueries(['meeting'])
     }
     catch(error){ 
       console.error(error)
@@ -240,7 +233,9 @@ export const AvailabilityGrid = ({editMode, user, meetingData, availabilities, s
         {column.map((timeCell: TimeCell) => {
           return (
             <div className={`TimeCell ${selectTimeCellClass(timeCell)}`}
-            onMouseEnter={e => gridSelect(e, timeCell)} onMouseDown={e => gridSelect(e, timeCell)} onMouseUp={e => gridSelect(e, timeCell)}>
+              onMouseEnter={editMode ? e => gridSelect(e, timeCell) : undefined}
+              onMouseDown={editMode ? e => gridSelect(e, timeCell) : undefined}
+              onMouseUp={editMode ? e => gridSelect(e, timeCell) : undefined}>
             </div>
           )
         })}

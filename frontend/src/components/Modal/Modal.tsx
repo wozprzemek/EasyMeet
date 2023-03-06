@@ -1,6 +1,6 @@
 import { Button } from 'components/Button/Button';
 import { useClickOutside } from 'hooks/useClickOutside';
-import { Dispatch } from 'react';
+import { Dispatch, useState } from 'react';
 import { ButtonSize, ButtonType } from 'types';
 import './modal.scss';
 
@@ -15,6 +15,7 @@ interface IModal {
 
 export const Modal = ({off, user, setUser, password, setPassword, setEditMode} : IModal) => {
     const ref = useClickOutside(off);
+    const [localUser, setLocalUser] = useState('')
     
     const handleSubmit = async () => {
         off()

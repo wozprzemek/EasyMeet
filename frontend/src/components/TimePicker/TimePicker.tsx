@@ -13,7 +13,7 @@ export const TimePicker = ({selectedTime, setSelectedTime}: ITimePicker) => {
         return `${i.toString().padStart(2, '0')}:00`
     })
 
-    const [showDropdown, setShowDropdown] = useState<boolean>(false)
+    const [showDropdown, setShowDropdown] = useState(false)
 
     const handleSelect = (time: string) => {
         setSelectedTime(time)
