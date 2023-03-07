@@ -14,6 +14,13 @@ type Position = {
   y: number
 }
 
+type Color = {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+}
+
 type TimeCell = {
   time: Date,
   markedBy: string[],
@@ -21,6 +28,39 @@ type TimeCell = {
   selected: boolean,
   position: Position,
   saved: boolean
+}
+
+// allows for easy cell color scaling
+// source: https://stackoverflow.com/questions/21576092/convert-rgba-to-hex/21576659#21576659
+const rgba2rgb = (background: Color, rgba: Color) : Color => {
+    const alpha = rgba.a;
+
+    return (
+      {
+          r: (1 - alpha) * background.r + alpha * rgba.r,
+          g: (1 - alpha) * background.g + alpha * rgba.g,
+          b: (1 - alpha) * background.b + alpha * rgba.b,
+          a: 1
+      }
+    )
+}
+
+// get a css style string for cells based on the number of users 
+const getCellColor = (cellUsers: number, totalUsers: number, background: Color, selectedCellColor: Color, baseCellColor: Color) => {
+  if (cellUsers === 0) {
+    return baseCellColor
+  }
+  else if (cellUsers === totalUsers) {
+    return selectedCellColor
+  }
+  else {
+    const alpha = cellUsers/totalUsers // cells with less users appear more transparent
+    let cellColorRGBA = selectedCellColor 
+    cellColorRGBA.a = alpha
+    const cellColorRGB = rgba2rgb(background, cellColorRGBA)
+
+    return cellColorRGB
+  }
 }
 
 // Check if time cell is between starting and current cell
@@ -52,7 +92,17 @@ export const AvailabilityGrid = ({editMode, user, meetingData}: IAvailabilityGri
   const [startCell, setStartCell] = useState<TimeCell>() // Saved position at mouse click
   const [currentCell, setCurrentCell] = useState<TimeCell>() // Current hover position
   const [isClicked, setIsClicked] = useState(false) // Is mouse currently down
-  const [showAllAvailabilities, setShowAllAvailabilities] = useState(false) // Is mouse currently down
+  const [showAllAvailabilities, setShowAllAvailabilities] = useState(true) // Show all marked availabilities
+
+  const [userNumber, setUserNumber] = useState(Object.keys((meetingData && meetingData.availabilities) ?? {}).length)
+  
+  const baseCellColor: Color = {r: 50, g: 53, b: 58, a: 1}
+  const selectedCellColor: Color = {r: 224, g: 100, b: 97, a: 1}
+  const backgroundColor: Color = {r: 16, g: 19, b: 25, a: 1}
+
+  useEffect(() => {
+    setUserNumber(Object.keys((meetingData && meetingData.availabilities) ?? {}).length)
+  }, [meetingData])
 
   // Run grid selection on current or start cell change
   useEffect(() => {
@@ -81,6 +131,11 @@ export const AvailabilityGrid = ({editMode, user, meetingData}: IAvailabilityGri
     })
   
     return availabilities
+  }
+
+  const visibilityToggle = async () => {
+    await queryClient.refetchQueries(['meeting'])
+    setShowAllAvailabilities(!showAllAvailabilities)
   }
 
   // Initializes the availability grid
@@ -218,7 +273,6 @@ export const AvailabilityGrid = ({editMode, user, meetingData}: IAvailabilityGri
     if (timeCell.markedBy.length !== 0 && showAllAvailabilities) {
       return 'TimeCell--others'
     }
-
     if (timeCell.saved) {
       if (timeCell.selected) {
         return 'TimeCell--saved'
@@ -242,8 +296,10 @@ export const AvailabilityGrid = ({editMode, user, meetingData}: IAvailabilityGri
       <div key={index} className='AvailabilityColumn' onDragStart={(e) => e.preventDefault()}>
         {formattedColumnHeader(column[0])}
         {column.map((timeCell: TimeCell) => {
+          const cellColorRGB = getCellColor(timeCell.markedBy.length, userNumber, backgroundColor, selectedCellColor, baseCellColor)
+          
           return (
-            <div className={`TimeCell ${selectTimeCellClass(timeCell)}`}
+            <div className={`TimeCell ${selectTimeCellClass(timeCell)}`} style={showAllAvailabilities? {backgroundColor: `rgb(${cellColorRGB.r}, ${cellColorRGB.g}, ${cellColorRGB.b})`}: {}}
               onMouseEnter={editMode ? e => gridSelect(e, timeCell) : undefined}
               onMouseDown={editMode ? e => gridSelect(e, timeCell) : undefined}
               onMouseUp={editMode ? e => gridSelect(e, timeCell) : undefined}>
@@ -256,7 +312,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData}: IAvailabilityGri
   
   return (
     <div className='AvailabilityGridWrapper'>
-      <Button type={ButtonType.CIRCLE} size={ButtonSize.LG} onClick={() => setShowAllAvailabilities(!showAllAvailabilities)}>
+      <Button type={ButtonType.CIRCLE} size={ButtonSize.LG} onClick={() => visibilityToggle()}>
         {
           showAllAvailabilities ? <EyeSlashIcon className='Icon'/> : <EyeIcon className='Icon'/>
         }
