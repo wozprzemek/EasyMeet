@@ -39,8 +39,6 @@ export const AvailabilityColumn = () => {
       })
     )
   )
-
-  console.log(timeWindowsPlaceholder);
   
   const handleGridSelect = () => {
     setTimeWindows(timeWindows.map((column: TimeWindow[], i: number) => 

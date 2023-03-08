@@ -6,13 +6,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.75rem;
     font-size: 1rem;
     font-weight: 600;
     border-radius: $radius_xl;
     background-color: rgba(0,0,0,0);
     color: $textOnDarkColor;
     font-family: 'Inter', sans-serif;
-
 }
 
 .Button--large {
@@ -26,12 +26,24 @@
 }
 
 .Button--outline {
-    border: 1px $secondaryColor3 solid;
+    border: 1px $secondaryColor1 solid;
     color: $textOnDarkColor;
     transition: cubic-bezier(0.39, 0.575, 0.565, 1);
 
     &:hover {
-        background: linear-gradient(90deg, $secondaryColor1 0%, $secondaryColor2 100%);
+        background: linear-gradient(45deg, $secondaryColor1 0%, $secondaryColor2 100%);
+        border: none;
+    }
+}
+
+.Button--outlineGray {
+    border: none;
+    background-color: $gray2;
+    color: $textOnDarkColor;
+    transition: cubic-bezier(0.39, 0.575, 0.565, 1);
+
+    &:hover {
+        background-color: $grayHover;
         border: none;
     }
 }
@@ -52,7 +64,6 @@
 
 .Button--text {
     border: none;
-
     &:hover {
         color: #b1b1b1;
     }
@@ -61,13 +72,11 @@
 .Button--circle {
     width: 3rem;
     border-radius: 50%;
-    // background-color: $primaryColor1;
-    background-color: rgba(255,255,255,0.1);
+    background-color: $gray2;
     border: none;
     padding: 0.5rem;
 
     &:hover {
-        background-color: rgba(255,255,255,0.15);
-   
+        background-color: $grayHover
     }
 }

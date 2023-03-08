@@ -1,6 +1,7 @@
 export enum ButtonType {
     TEXT,
     OUTLINE,
+    OUTLINE_GRAY,
     SOLID,
     CIRCLE
 }

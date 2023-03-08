@@ -81,7 +81,6 @@ export const MeetingController = {
     delete: async (req: Request, res: Response) => {
         try {
             const meeting = DI.em.getReference(Meeting, req.params.id);
-            console.log(meeting);
             await DI.em.remove(meeting).flush();
             res.send('deleted a meeting')
         } catch (error) {

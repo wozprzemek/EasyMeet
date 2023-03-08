@@ -13,6 +13,7 @@ export const Button = ({type, size, onClick, children} : IButton) => {
   return (
     <button onClick={onClick} className={`Button 
       ${type===ButtonType.OUTLINE ? 'Button--outline' :
+          type===ButtonType.OUTLINE_GRAY ? 'Button--outlineGray' :
           type===ButtonType.SOLID ? 'Button--solid' :
           type===ButtonType.TEXT ? 'Button--text' :
           type===ButtonType.CIRCLE ? 'Button--circle' : ''}

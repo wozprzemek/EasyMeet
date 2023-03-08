@@ -1,0 +1,51 @@
+@import 'sassStyles/variables';
+
+.DetailsWrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    width: 100%;
+    padding-top: 4rem;
+    box-sizing: border-box;
+    // gap: 2rem;
+}
+
+.DetailsColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex;
+    gap: 1rem;
+
+    div {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+    h1 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+    }
+
+    h3 {
+        font-weight: 800;
+        font-size: 1.25rem;
+        background: linear-gradient(0deg, $secondaryColor1 0%, $secondaryColor2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1.25rem;
+    }
+
+    h4 {
+        font-size: 1rem;
+        font-weight: 300;
+        margin-bottom: 0.5rem;
+    }
+}

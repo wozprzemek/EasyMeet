@@ -11,9 +11,10 @@ interface IModal {
     password?: string;
     setPassword?: Dispatch<string>;
     setEditMode: Dispatch<boolean>;
+    setShowAllAvailabilities: Dispatch<boolean>
 }
 
-export const Modal = ({off, setUser, password, setPassword, setEditMode} : IModal) => {
+export const Modal = ({off, setUser, password, setPassword, setEditMode, setShowAllAvailabilities} : IModal) => {
     const ref = useClickOutside(off);
     const [localUser, setLocalUser] = useState('')
     
@@ -21,6 +22,7 @@ export const Modal = ({off, setUser, password, setPassword, setEditMode} : IModa
         setUser(localUser)
         // await queryClient.refetchQueries(['meeting'])
         setEditMode(true)
+        setShowAllAvailabilities(false)
         off()
     }
 

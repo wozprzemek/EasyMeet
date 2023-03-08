@@ -8,8 +8,6 @@ interface IUpdateAvailabilities {
 }
 
 export const updateAvailabilities = async (data: IUpdateAvailabilities) => {
-    console.log(data);
-
     const response = await axios.put(`/availabilities`, data, {
         params: {
             meeting: data.meeting,
