@@ -2,13 +2,9 @@
    v2.0-modified | 20110126
    License: none (public domain)
 */
-
-body {
-    background-color: #101319;
-}
-
 :root {
     color-scheme: dark;
+    background-color: rgb(16, 19, 25);
 }
 
 html, body, div, span, applet, object, iframe,
@@ -45,6 +41,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
 	line-height: 1;
+    background-color: rgb(16, 19, 25);
 }
 
 ol, ul {

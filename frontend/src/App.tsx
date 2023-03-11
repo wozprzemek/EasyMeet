@@ -1,10 +1,8 @@
-import React from 'react';
-import logo from './logo.svg';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import './App.css';
-import { AppRoutes } from 'routes';
+import { queryClient } from 'config/react-query';
 import { QueryClientProvider } from 'react-query';
-import { queryClient } from 'config/react-query'
+import { BrowserRouter } from 'react-router-dom';
+import { AppRoutes } from 'routes';
+import './App.css';
 
 function App() {
   return (

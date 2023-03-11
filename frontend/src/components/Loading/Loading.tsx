@@ -31,7 +31,7 @@ const Spinner = () => {
 export const Loading = () => {
     return (
         <div className='Loading'>
-        <Spinner />
+          <Spinner />
         </div>
     )
 }
