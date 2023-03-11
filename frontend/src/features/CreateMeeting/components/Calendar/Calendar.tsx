@@ -86,6 +86,8 @@ export const Calendar = ({selectedDates, setSelectedDates}: ICalendar) => {
     }
 
     const handleDayCheckboxClick = (day : {date: Date, current: boolean}) => {
+        console.log(day.date.getMonth());
+        
         const dateObject = {
             day: day.date.getDate(),
             month: day.date.getMonth(),

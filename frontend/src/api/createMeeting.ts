@@ -1,5 +1,6 @@
 import { axios } from "config/axios";
 import { Meeting } from "features/CreateMeeting/types";
+import moment from "moment";
 
 export const createMeeting = async (meeting: Meeting) => {
     const dates = meeting.dates.map((date) => {
@@ -7,6 +8,12 @@ export const createMeeting = async (meeting: Meeting) => {
             date: `${date.year}-${date.month}-${date.day}`
         }
     })
+    console.log(dates);
+    
+    dates.sort((a, b) => moment(a.date).isAfter(moment(b.date)) ? 1 : 0)
+
+    console.log(dates);
+    
 
     const data = {
         name: meeting.name,

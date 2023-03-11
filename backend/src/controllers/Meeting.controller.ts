@@ -25,8 +25,6 @@ export const MeetingController = {
                     const user = availability.user
 
                     if (groupedUsers[user] === undefined) {
-                        console.log('null');
-
                         groupedUsers[user] = []
                     }
                     groupedUsers[user].push(availability)

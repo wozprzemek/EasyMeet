@@ -42,19 +42,14 @@ export const AvailabilityController = {
     },
     updateUserAvailabilities: async (req: Request, res: Response) => {
         const data: { meeting: string, user: string, availabilities: Availability[] } = req.body
-        console.log('UPDATE DATA', data);
-
         try {
             const query = await DI.em.find(Availability, { user: data.user, meeting: data.meeting }) // FIX MEETING NULL!
-            console.log('query', query);
-
             // remove all user availabilities in a meeting
             query.forEach(async (availability) => {
+                console.log(availability);
                 await DI.em.remove(availability).flush();
             })
             data.availabilities.forEach(async (availability) => {
-                console.log('here?', availability);
-
                 const newAvailability = DI.em.create(Availability, availability)
                 await DI.em.persistAndFlush(newAvailability)
             })

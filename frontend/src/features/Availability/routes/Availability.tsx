@@ -2,6 +2,7 @@ import { EyeIcon, EyeSlashIcon, LinkIcon, PlusIcon, UserPlusIcon } from '@heroic
 import { getMeeting } from 'api/getMeeting'
 import { Button } from 'components/Button/Button'
 import { ContentLayout } from 'components/ContentLayout/ContentLayout'
+import { Loading } from 'components/Loading/Loading'
 import { Modal } from 'components/Modal/Modal'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
@@ -39,9 +40,15 @@ export const Availability = () => {
     setPassword('')
   }
 
+  const handleInvite = async () => {
+    const message = `Meeting: ${meetingData?.name}\n${meetingData?.password ? `Password: ${meetingData.password}\n` : ''}localhost:3000/meetings/${id}`
+    await navigator.clipboard.writeText(message)
+  }
+
 
   if (meetingStatus === 'loading' && meetingData === undefined) {
-    return null
+    console.log('LOADING..');
+    return <Loading />
   }
   
   
@@ -54,7 +61,7 @@ export const Availability = () => {
                   <div className='AvailabilityHeader'>
                       <h1>{meetingData?.name}</h1>
                       <h2>{userCount} participants</h2>
-                      <Button type={ButtonType.OUTLINE_GRAY} size={ButtonSize.LG} onClick={() => console.log('invite')}>
+                      <Button type={ButtonType.OUTLINE_GRAY} size={ButtonSize.LG} onClick={() => handleInvite()}>
                         <UserPlusIcon width='1.25rem'/>
                         Invite
                       </Button>

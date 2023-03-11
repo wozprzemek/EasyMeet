@@ -14,7 +14,7 @@ export const AvailabilityDetails = ({currentCell, userCount, setUserNumber} : IA
       <div className='DetailsColumn'>
         <h1>Selected Availability</h1>
         <h2>{currentCell?.time.toString().split('GMT')[0]}</h2>
-        <h3>{currentCell?.markedBy.length ?? 0}/{userCount} ({Math.round((currentCell?.markedBy.length ?? 0) / userCount * 100)}%)</h3>
+        <h3>{currentCell?.markedBy.length ?? 0}/{userCount} ({userCount ? Math.round((currentCell?.markedBy.length ?? 0) / userCount * 100) : 0}%)</h3>
         <div className=''>
           {currentCell?.markedBy.length ?
           currentCell?.markedBy.map((user) => {
