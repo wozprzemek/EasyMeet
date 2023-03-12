@@ -46,7 +46,6 @@ export const AvailabilityController = {
             const query = await DI.em.find(Availability, { user: data.user, meeting: data.meeting }) // FIX MEETING NULL!
             // remove all user availabilities in a meeting
             query.forEach(async (availability) => {
-                console.log(availability);
                 await DI.em.remove(availability).flush();
             })
             data.availabilities.forEach(async (availability) => {

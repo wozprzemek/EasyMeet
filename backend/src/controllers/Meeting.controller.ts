@@ -31,9 +31,7 @@ export const MeetingController = {
                     return groupedUsers
                 }, {})
 
-            }
-            console.log(query);
-            
+            }            
             res.send(query)
         } catch (error) {
             console.error(error);
@@ -47,12 +45,6 @@ export const MeetingController = {
                 res.status(500).send('Meeting must have dates.')
                 return
             }
-
-            // data.dates.map((date) => {
-            //     // console.log(`${date}T${data.from}`);
-            //     date.date = `${date.date}T${data.from.toString().split(' ')[1]}` as any
-            // })
-            // console.log(data.dates);
 
             const meeting = DI.em.create(Meeting, data)
 

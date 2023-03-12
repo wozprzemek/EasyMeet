@@ -234,6 +234,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   const gridSelect = (event: any, timeCell: TimeCell) => {
     if (event.type === 'mouseenter') {
       setCurrentCell(timeCell)
+      console.log(currentCell);
     }
     else if (event.type === 'mousedown') {
       setIsClicked(true)
@@ -243,7 +244,25 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
       setIsClicked(false)
       saveCells()
       persistCells()
-    } 
+    }
+
+    else if (event.type === 'touchstart') {
+      setCurrentCell(timeCell)
+      console.log(currentCell);
+      
+    }
+    else if (event.type === 'touchmove') {
+      setCurrentCell(timeCell)
+      setIsClicked(true)
+      setStartCell(timeCell)
+    }
+    else if (event.type === 'touchend') {
+      setIsClicked(false)
+      saveCells()
+      persistCells()
+      console.log('touchend');
+      
+    }
   }
 
   // Handles mouse leaving the grid
@@ -287,7 +306,9 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
             <div className={`TimeCell ${selectTimeCellClass(timeCell)}`} style={showAllAvailabilities? {backgroundColor: `rgb(${cellColorRGB.r}, ${cellColorRGB.g}, ${cellColorRGB.b})`}: {}}
               onMouseEnter={e => gridSelect(e, timeCell)}
               onMouseDown={editMode ? e => gridSelect(e, timeCell) : undefined}
-              onMouseUp={editMode ? e => gridSelect(e, timeCell) : undefined}>
+              onMouseUp={editMode ? e => gridSelect(e, timeCell) : undefined}
+              onTouchStart={editMode ? e => gridSelect(e, timeCell) : undefined}
+              onTouchEnd={editMode ? e => gridSelect(e, timeCell) : undefined}>
             </div>
           )
         })}

@@ -7,7 +7,14 @@
     width: 100%;
     padding-top: 4rem;
     box-sizing: border-box;
-    // gap: 2rem;
+
+    @media (max-width: 767px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 0;
+    }
 }
 
 .DetailsColumn {
