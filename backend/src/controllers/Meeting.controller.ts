@@ -1,5 +1,4 @@
 import { DateTimeType, wrap } from "@mikro-orm/core";
-import { DateType } from "@mikro-orm/core/types";
 import { Request, Response } from "express";
 import { DI } from "../..";
 import { Availability } from "../entities/Availability.entity";
@@ -17,6 +16,8 @@ export const MeetingController = {
         }
     },
     getOne: async (req: Request, res: Response) => {
+        console.log('NDOEMON');
+        
         try {
             const query = await DI.em.findOne(Meeting, { id: req.params.id }, { populate: ['dates', 'availabilities'] })
 

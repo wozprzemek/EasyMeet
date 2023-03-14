@@ -1,1 +1,2 @@
-export const API_URL = "http://localhost:8000/" // TODO: change the hardcoded URL
+export const API_URL = process.env.REACT_APP_API_BASE_URL
+console.log(API_URL);

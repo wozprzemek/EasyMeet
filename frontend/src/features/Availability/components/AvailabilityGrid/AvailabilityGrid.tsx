@@ -246,13 +246,20 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
       persistCells()
     }
 
+    
     else if (event.type === 'touchstart') {
+      setIsClicked(true)
       setCurrentCell(timeCell)
-      console.log(currentCell);
+      setStartCell(timeCell)
+      // window.addEventListener('touchmove', e => {
+      //   e.preventDefault()
+      // }, {passive: false})
       
     }
     else if (event.type === 'touchmove') {
       setCurrentCell(timeCell)
+      console.log(currentCell?.time);
+      
       setIsClicked(true)
       setStartCell(timeCell)
     }
@@ -260,7 +267,10 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
       setIsClicked(false)
       saveCells()
       persistCells()
-      console.log('touchend');
+      console.log('end'); 
+      // window.removeEventListener('touchmove', e => {
+      //   e.preventDefault()
+      // })
       
     }
   }
@@ -308,6 +318,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
               onMouseDown={editMode ? e => gridSelect(e, timeCell) : undefined}
               onMouseUp={editMode ? e => gridSelect(e, timeCell) : undefined}
               onTouchStart={editMode ? e => gridSelect(e, timeCell) : undefined}
+              onTouchMove={editMode ? e => gridSelect(e, timeCell) : undefined}
               onTouchEnd={editMode ? e => gridSelect(e, timeCell) : undefined}>
             </div>
           )

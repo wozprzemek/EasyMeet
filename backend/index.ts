@@ -9,7 +9,10 @@ import MeetingDateRoutes from "./src/routes/MeetingDate.routes";
 import cors from "cors"
 
 const app = express()
-const port = 8000
+
+const PORT = 8000
+const HOST = '0.0.0.0';
+const BASE_URL = '/api'
 
 app.use(cors())
 
@@ -25,15 +28,15 @@ export const DI = {} as {
     DI.em = DI.orm.em as EntityManager;
     app.use(bodyParser.json())
     app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
-    app.use('/availabilities', AvailabilityRoutes)
-    app.use('/meetings', MeetingRoutes)
-    app.use('/meetingdates', MeetingDateRoutes)
+    app.use(`${BASE_URL}/availabilities`, AvailabilityRoutes)
+    app.use(`${BASE_URL}/meetings`, MeetingRoutes)
+    app.use(`${BASE_URL}/meetingdates`, MeetingDateRoutes)
 
     app.use('*', (req, res) => {
         res.send('SORRY')
     })
     
-    DI.server = app.listen(port, () => {
-        console.log(`listening on ${port}`);
+    DI.server = app.listen(PORT, HOST, () => {
+        console.log(`listening on ${PORT}`);
     })
 })();

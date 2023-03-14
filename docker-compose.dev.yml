@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  backend:
+      build:
+        context: ./backend
+        args:
+          - mode=dev
+      command: sh -c "npx mikro-orm schema:create -r && npx mikro-orm migration:up && npm run dev"
+      volumes:
+       - ./backend:/backend
+       - /backend/node_modules
+
+  frontend:
+      build:
+        context: ./frontend
+        args:
+          - REACT_APP_API_BASE_URL=http://$MACHINE_HOST:8000/api/
+          - mode=dev
+      volumes:
+       - ./frontend:/frontend
+       - /frontend/node_modules
