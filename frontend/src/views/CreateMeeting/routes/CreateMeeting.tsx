@@ -1,7 +1,7 @@
 import { createMeeting } from 'api/createMeeting'
 import { Button } from 'components/Button/Button'
 import { ContentLayout } from 'components/ContentLayout/ContentLayout'
-import { DateType } from 'features/CreateMeeting/types'
+import { DateType } from 'views/CreateMeeting/types'
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { ButtonSize, ButtonType } from 'types'

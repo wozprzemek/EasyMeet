@@ -1,5 +1,5 @@
 import { axios } from "config/axios";
-import { Meeting } from "features/CreateMeeting/types";
+import { Meeting } from "views/CreateMeeting/types";
 import moment from "moment";
 
 export const createMeeting = async (meeting: Meeting) => {

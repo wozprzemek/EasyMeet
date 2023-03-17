@@ -1,4 +1,4 @@
-import { Availability } from "features/CreateMeeting/types";
+import { Availability } from "views/CreateMeeting/types";
 import { MeetingDate } from "./MeetingDate";
 
 export interface Meeting {

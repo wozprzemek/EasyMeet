@@ -15,7 +15,6 @@ services:
           - REACT_APP_API_BASE_URL=http://$MACHINE_HOST:8000/api/
           - mode=prod
 
-  # # nginx
   nginx:
     image: nginx:latest
     ports:

@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import { DateType } from 'features/CreateMeeting/types';
+import { DateType } from 'views/CreateMeeting/types';
 import { useEffect, useState } from 'react';
 import { DayCheckbox } from '../DayCheckBox/DayCheckbox';
 import './calendar.scss';

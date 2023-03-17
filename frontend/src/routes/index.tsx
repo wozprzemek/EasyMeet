@@ -1,7 +1,7 @@
 import { MainLayout } from "components/MainLayout/MainLayout";
 import { StartPage } from "components/StartPage/StartPage";
-import { Availability } from "features/Availability/routes/Availability";
-import { CreateMeeting } from "features/CreateMeeting/routes/CreateMeeting";
+import { Availability } from "views/Availability/routes/Availability";
+import { CreateMeeting } from "views/CreateMeeting/routes/CreateMeeting";
 import { Outlet, useRoutes } from "react-router";
 
 const App = () => {
