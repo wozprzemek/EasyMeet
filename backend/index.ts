@@ -33,9 +33,9 @@ export const DI = {} as {
     app.use(`${BASE_URL}/meetingdates`, MeetingDateRoutes)
 
     app.use('*', (req, res) => {
-        res.send('SORRY')
+        res.send('sY')
     })
-    
+
     DI.server = app.listen(PORT, HOST, () => {
         console.log(`listening on ${PORT}`);
     })

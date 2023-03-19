@@ -1,0 +1,6 @@
+FROM node:18-alpine AS front
+
+WORKDIR /frontend
+COPY . .
+RUN npm install
+EXPOSE 3000

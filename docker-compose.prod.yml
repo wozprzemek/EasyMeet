@@ -1,29 +1,48 @@
 version: "3.9"
 
 services:
+  postgres:
+    image: postgres:14.5
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 50
+
   backend:
       build:
         context: ./backend
         args:
-          - mode=prod
-      command: sh -c "npx mikro-orm schema:create -r && npx mikro-orm migration:up && npm run prod"
+          - mode=dev
+      environment:
+        - NODE_ENV=production
+      ports:
+        - 8000:8000
+      volumes:
+        - ./backend/node_modules:/backend/node_modules
+        - ./backend/package.json:/backend/package.json
+        - ./backend/tsconfig.json:/backend/tsconfig.json
+        - ./backend/src:/backend/src
+        - ./backend/index.ts:/backend/index.ts
+      command: sh -c "npx mikro-orm schema:update -r && npx mikro-orm migration:up && npx tsc && node dist/index.js"
 
   frontend:
       build:
         context: ./frontend
         args:
-          - REACT_APP_API_BASE_URL=http://$MACHINE_HOST:8000/api/
-          - mode=prod
-
+          - mode=dev
+        dockerfile: Dockerfile.prod
   nginx:
-    image: nginx:latest
+    build:
+      context: ./nginx
     ports:
       - 80:8080
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - frontend_build:/var/www/react
     depends_on:
       - backend
       - frontend
-volumes:
-  frontend_build:

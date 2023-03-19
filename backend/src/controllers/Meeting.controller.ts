@@ -16,8 +16,8 @@ export const MeetingController = {
         }
     },
     getOne: async (req: Request, res: Response) => {
-        console.log('NDOEMON');
-        
+        console.log('NDOEMsdON');
+
         try {
             const query = await DI.em.findOne(Meeting, { id: req.params.id }, { populate: ['dates', 'availabilities'] })
 
@@ -32,7 +32,7 @@ export const MeetingController = {
                     return groupedUsers
                 }, {})
 
-            }            
+            }
             res.send(query)
         } catch (error) {
             console.error(error);
