@@ -18,26 +18,15 @@ services:
   backend:
       build:
         context: ./backend
-        args:
-          - mode=dev
-      environment:
-        - NODE_ENV=production
       ports:
         - 8000:8000
-      volumes:
-        - ./backend/node_modules:/backend/node_modules
-        - ./backend/package.json:/backend/package.json
-        - ./backend/tsconfig.json:/backend/tsconfig.json
-        - ./backend/src:/backend/src
-        - ./backend/index.ts:/backend/index.ts
       command: sh -c "npx mikro-orm schema:update -r && npx mikro-orm migration:up && npx tsc && node dist/index.js"
 
   frontend:
       build:
         context: ./frontend
-        args:
-          - mode=dev
         dockerfile: Dockerfile.prod
+        
   nginx:
     build:
       context: ./nginx
