@@ -38,12 +38,15 @@ services:
         args:
           - mode=dev
         dockerfile: Dockerfile.dev
+      environment:
+        - CHOKIDAR_USEPOLLING=true # create-ui-app <= 5.x
+        - WATCHPACK_POLLING=true # create-ui-app >= 5.x
+        - FAST_REFRESH=false
       ports:
         - 3000:3000
       volumes:
        - ./frontend:/frontend
        - /frontend/node_modules
-       - frontend_build:/frontend/build
       command: sh -c "npm start"
   nginx:
     build:
@@ -53,6 +56,3 @@ services:
     depends_on:
       - backend
       - frontend
-      
-volumes:
-  frontend_build:
