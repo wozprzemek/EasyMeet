@@ -5,6 +5,7 @@
 :root {
     color-scheme: dark;
     background-color: rgb(16, 19, 25);
+    /* overflow: hidden; */
 }
 
 html, body, div, span, applet, object, iframe,

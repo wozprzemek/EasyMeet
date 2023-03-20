@@ -16,6 +16,7 @@
 .AvailabilityGrid {
     display: flex;
     justify-self: center;
+    touch-action: none;
 }
 
 .AvailabilityColumn {

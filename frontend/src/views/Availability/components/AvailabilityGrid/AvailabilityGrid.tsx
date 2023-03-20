@@ -166,7 +166,6 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
       timeCell.time.toDate() 
     });  
 
-
     // Format time labels
     const timeLabels = Array.from(
       {length: duration + 1},
@@ -230,11 +229,38 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
     }
   }
 
+  function preventDefault(e: any) {
+    e.preventDefault();
+  }
+
+  function disableScroll() {
+    window.addEventListener('touchmove', preventDefault, {passive: false}); // mobile;
+  }
+  
+  // call this to Enable
+  function enableScroll() {
+    window.removeEventListener('touchmove', preventDefault); // mobile;
+  }
+
+  const onTouchStart = (event: any) => {
+    if (event.touches.length==1) {
+      event.preventDefault()
+    }
+  }
+
+  const onTouchMove = (event: any) => {
+    if (event.touches.length==1) {
+      event.preventDefault()
+    }
+  }
+
   // Handles grid actions based on mouse events
   const gridSelect = (event: any, timeCell: TimeCell) => {
+    setCurrentCell(timeCell)
+    console.log(timeCell.time);
+    
     if (event.type === 'mouseenter') {
-      setCurrentCell(timeCell)
-      console.log(currentCell);
+      
     }
     else if (event.type === 'mousedown') {
       setIsClicked(true)
@@ -245,33 +271,20 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
       saveCells()
       persistCells()
     }
-
     
     else if (event.type === 'touchstart') {
       setIsClicked(true)
-      setCurrentCell(timeCell)
       setStartCell(timeCell)
-      // window.addEventListener('touchmove', e => {
-      //   e.preventDefault()
-      // }, {passive: false})
-      
+       
     }
     else if (event.type === 'touchmove') {
-      setCurrentCell(timeCell)
-      console.log(currentCell?.time);
-      
-      setIsClicked(true)
-      setStartCell(timeCell)
+      var touch = event.touches[0];
+      // console.log(document.elementFromPoint(touch.clientX, touch.clientY));
     }
     else if (event.type === 'touchend') {
       setIsClicked(false)
       saveCells()
       persistCells()
-      console.log('end'); 
-      // window.removeEventListener('touchmove', e => {
-      //   e.preventDefault()
-      // })
-      
     }
   }
 
