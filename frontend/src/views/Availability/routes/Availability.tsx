@@ -32,9 +32,11 @@ export const Availability = () => {
   const handleModalOff = async () => {
     await meetingRefetch()
     setShowModal(false)
+    document.body.style.overflow = 'visible';
   }
 
   const handleModalOn = () => {
+    document.body.style.overflow = 'hidden';
     setShowModal(true)
     setUser('')
     setPassword('')

@@ -103,11 +103,11 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   }, [meetingData])
 
   // Run grid selection on current or start cell change
-  useEffect(() => {
-    if (isClicked && editMode) {
-      handleGridSelect()
-    }
-  }, [currentCell, startCell])
+  // useEffect(() => {
+  //   if (isClicked && editMode) {
+  //     handleGridSelect()
+  //   }
+  // }, [currentCell, startCell])
 
   // Persists time cells on change
   useEffect(() => {
@@ -237,7 +237,29 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   }
 
   const onCellEnter = (event: any, timeCell: TimeCell) => {
-    setCurrentCell(timeCell)
+    // setCurrentCell(timeCell)
+    let currentCell = document.elementFromPoint(event.pageX, event.pageY)
+    if (isClicked && currentCell?.classList.contains('TimeCell') && startCell) {
+      let x = parseInt(currentCell.getAttribute('data-x') || "0")
+      let y = parseInt(currentCell.getAttribute('data-y') || "0")
+
+      setTimeCells(timeCells.map((column: TimeCell[], i: number) => 
+      column.map((timeCell: TimeCell, j: number) => {
+        if (isBetween(i, x, startCell.position.x) && isBetween(j, y, startCell.position.y)) {
+          return { ...timeCell, selected: !startCell?.selected}
+        } 
+        else {
+          if (timeCell.saved){
+            return {...timeCell, selected: true}
+          }
+          else {
+            return { ...timeCell, selected: false}
+          }
+        }
+      })
+    ))
+    }
+    
   }
 
   const startSelect = (event: any, timeCell: TimeCell) => {
