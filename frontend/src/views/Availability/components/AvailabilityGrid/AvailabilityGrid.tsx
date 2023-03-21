@@ -1,5 +1,6 @@
 import { updateAvailabilities } from 'api/updateUserAvailabilities'
 import { queryClient } from 'config/react-query'
+import { time } from 'console'
 import moment from 'moment'
 import { Dispatch, useEffect, useState } from 'react'
 import { Availability as TAvailability } from 'types/Availability'
@@ -92,6 +93,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   const [startCell, setStartCell] = useState<TimeCell>() // Saved position at mouse click
   const [isClicked, setIsClicked] = useState(false) // Is mouse currently down
   
+  // Color definitions for time cell coloring
   const baseCellColor: Color = {r: 50, g: 53, b: 58, a: 1}
   const selectedCellColor: Color = {r: 224, g: 100, b: 97, a: 1}
   const backgroundColor: Color = {r: 16, g: 19, b: 25, a: 1}
@@ -164,7 +166,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
         }
       }
       timeCell.time.toDate() 
-    });  
+    });
 
     // Format time labels
     const timeLabels = Array.from(
@@ -195,10 +197,15 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
         }
       })
     ))
+
+    console.log(timeCells);
+    
   }
 
   // Handles saving selected time cells and persisting them in the database
   const saveCells = () => {
+    console.log('save cells', timeCells);
+    
     setTimeCells(timeCells.map((column: TimeCell[]) => 
       column.map((timeCell: TimeCell, j: number) => {
         if (timeCell.selected) {
@@ -229,63 +236,60 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
     }
   }
 
-  function preventDefault(e: any) {
-    e.preventDefault();
-  }
-
-  function disableScroll() {
-    window.addEventListener('touchmove', preventDefault, {passive: false}); // mobile;
-  }
-  
-  // call this to Enable
-  function enableScroll() {
-    window.removeEventListener('touchmove', preventDefault); // mobile;
-  }
-
-  const onTouchStart = (event: any) => {
-    if (event.touches.length==1) {
-      event.preventDefault()
-    }
-  }
-
-  const onTouchMove = (event: any) => {
-    if (event.touches.length==1) {
-      event.preventDefault()
-    }
-  }
-
-  // Handles grid actions based on mouse events
-  const gridSelect = (event: any, timeCell: TimeCell) => {
+  const onCellEnter = (event: any, timeCell: TimeCell) => {
     setCurrentCell(timeCell)
-    console.log(timeCell.time);
+  }
+
+  const startSelect = (event: any, timeCell: TimeCell) => {
+    setIsClicked(true)
+    setStartCell(timeCell)
+    setCurrentCell(timeCell)
+  }
+
+  const startTouchSelect = (event: any, timeCell: TimeCell) => {
+    setCurrentCell(timeCell)
+    setIsClicked(true)
+    setStartCell(timeCell)
+  }
+
+  const touchDrag = (event: any, timeCell: TimeCell) => {
+    let touch = event.touches[0];
+    let currentCell = document.elementFromPoint(touch.clientX, touch.clientY)
+    if (currentCell?.classList.contains('TimeCell')) {
+      let x = parseInt(currentCell.getAttribute('data-x') || "0")
+      let y = parseInt(currentCell.getAttribute('data-y') || "0")
+
+      setTimeCells(timeCells.map((column: TimeCell[], i: number) => 
+      column.map((timeCell: TimeCell, j: number) => {
+        if (isBetween(i, x, startCell!.position.x) && isBetween(j, y, startCell!.position.y)) {
+          return { ...timeCell, selected: !startCell?.selected}
+        } 
+        else {
+          if (timeCell.saved){
+            return {...timeCell, selected: true}
+          }
+          else {
+            return { ...timeCell, selected: false}
+          }
+        }
+      })
+    ))
+    }
+  }
+
+  const endSelect = (event: any, timeCell: TimeCell) => {
+    setIsClicked(false)
+    saveCells()
+    persistCells()
+  }
+
+  const endTouchSelect = (event: any, timeCell: TimeCell) => {
+    console.log('END', timeCell.time);
     
-    if (event.type === 'mouseenter') {
-      
-    }
-    else if (event.type === 'mousedown') {
-      setIsClicked(true)
-      setStartCell(timeCell)
-    }
-    else if (event.type === 'mouseup') {
-      setIsClicked(false)
-      saveCells()
-      persistCells()
-    }
-    
-    else if (event.type === 'touchstart') {
-      setIsClicked(true)
-      setStartCell(timeCell)
-       
-    }
-    else if (event.type === 'touchmove') {
-      var touch = event.touches[0];
-      // console.log(document.elementFromPoint(touch.clientX, touch.clientY));
-    }
-    else if (event.type === 'touchend') {
-      setIsClicked(false)
-      saveCells()
-      persistCells()
-    }
+    setCurrentCell(timeCell)
+    setIsClicked(false)
+    saveCells()
+    persistCells()
   }
 
   // Handles mouse leaving the grid
@@ -318,21 +322,21 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   }
   
   // Main time grid component
-  const timeGrid = timeCells.map((column : TimeCell[], index) => {
+  const timeGrid = timeCells.map((column : TimeCell[], col) => {
     return (
-      <div key={index} className='AvailabilityColumn' onDragStart={(e) => e.preventDefault()}>
+      <div key={col} className='AvailabilityColumn' onDragStart={(e) => e.preventDefault()}>
         {formattedColumnHeader(column[0])}
-        {column.map((timeCell: TimeCell) => {
+        {column.map((timeCell: TimeCell, row) => {
           const cellColorRGB = calculateCellColor(timeCell.markedBy.length, userCount, backgroundColor, selectedCellColor, baseCellColor)
           
           return (
-            <div className={`TimeCell ${selectTimeCellClass(timeCell)}`} style={showAllAvailabilities? {backgroundColor: `rgb(${cellColorRGB.r}, ${cellColorRGB.g}, ${cellColorRGB.b})`}: {}}
-              onMouseEnter={e => gridSelect(e, timeCell)}
-              onMouseDown={editMode ? e => gridSelect(e, timeCell) : undefined}
-              onMouseUp={editMode ? e => gridSelect(e, timeCell) : undefined}
-              onTouchStart={editMode ? e => gridSelect(e, timeCell) : undefined}
-              onTouchMove={editMode ? e => gridSelect(e, timeCell) : undefined}
-              onTouchEnd={editMode ? e => gridSelect(e, timeCell) : undefined}>
+            <div data-x={timeCell.position.x} data-y={timeCell.position.y} className={`TimeCell ${selectTimeCellClass(timeCell)}`} style={showAllAvailabilities? {backgroundColor: `rgb(${cellColorRGB.r}, ${cellColorRGB.g}, ${cellColorRGB.b})`}: {}}
+              onMouseEnter={e => onCellEnter(e, timeCell)}
+              onMouseDown={editMode ? e => startSelect(e, timeCell) : undefined}
+              onMouseUp={editMode ? e => endSelect(e, timeCell) : undefined}
+              onTouchStart={editMode ? e => startTouchSelect(e, timeCell) : undefined}
+              onTouchMove={editMode ? e => touchDrag(e, timeCell) : undefined}
+              onTouchEnd={editMode ? e => endTouchSelect(e, timeCell) : undefined}>
             </div>
           )
         })}
