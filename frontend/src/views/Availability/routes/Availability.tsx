@@ -32,9 +32,11 @@ export const Availability = () => {
   const handleModalOff = async () => {
     await meetingRefetch()
     setShowModal(false)
+    document.body.style.overflow = 'visible';
   }
 
   const handleModalOn = () => {
+    document.body.style.overflow = 'hidden';
     setShowModal(true)
     setUser('')
     setPassword('')
@@ -45,12 +47,10 @@ export const Availability = () => {
     await navigator.clipboard.writeText(message)
   }
 
-
   if (meetingStatus === 'loading' && meetingData === undefined) {
     console.log('LOADING..');
     return <Loading />
   }
-  
   
   return (
     <ContentLayout>

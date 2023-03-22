@@ -3,58 +3,149 @@
 .ModalWrapper {
     width: 100vw;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 100;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.4);
     font-family: 'Inter';
     backdrop-filter: blur(10px);
 }
 
+// .ModalWindow {
+//     width: 36rem;
+//     max-width: 90vw;
+//     min-height: 20rem;
+//     max-height: 80vh;
+//     background-color: $backgroundDarkColor;
+//     z-index: 101;
+//     display: flex;
+//     flex-direction: column;
+//     box-sizing: border-box;
+//     font-size: 20px;
+//     font-weight: 600;
+//     align-items: center;
+//     padding: 2rem;
+//     justify-content: start;
+//     border-radius: 0.5rem;
+//     max-height: 80vh;
+//     max-width: 90vw;
+
+//     label {
+//         font-size: 1rem;
+//         margin-bottom: 1.5rem;
+//     }
+
+//     div {
+//         width: 100%;
+//         padding: 5rem 3rem;
+//         box-sizing: border-box;
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: start;
+//         align-items: center;
+//         // gap: 3rem;
+//     }
+
+//     @media (max-width: 767px) {
+//         div {
+//             padding: 5rem 1rem;
+//         }
+//       }
+      
+
+//     input {
+//         appearance: none;
+//         font-weight: 400;
+//         border: none;
+//         height: 2.25rem;
+//         color: #FFFDF7;
+//         width: 100%;
+//         text-align: left;
+//         border-radius: $radius_md;
+//         padding: 0.125rem 0.75rem;
+//         font-size: 1rem;
+//         background-color: $gray;
+//         margin-bottom: 3rem;
+//     }
+
+//     span {
+//         font-size: 1rem;
+//         font-weight: 300;
+//     }
+// }
+
 .ModalWindow {
     width: 36rem;
     max-width: 90vw;
-    min-height: 20rem;
     max-height: 80vh;
     background-color: $backgroundDarkColor;
     z-index: 101;
     display: flex;
+    margin: auto;
     flex-direction: column;
+    justify-content: space-between;
     box-sizing: border-box;
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 600;
-    align-items: center;
-    padding: 2rem;
-    justify-content: start;
+    // padding: 2rem;
     border-radius: 0.5rem;
-    max-height: 80vh;
-    max-width: 90vw;
+    gap: 3rem;
+
+    span {
+        font-size: 1rem;
+        font-weight: 300;
+    }
+
+    header {
+        display: flex;
+        justify-content: center;
+        padding: 2rem 0rem;
+    }
+
+    footer {
+        display: flex;
+        justify-content: center;
+        padding: 2rem 0rem;
+    }
+}
+
+.ModalContent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    justify-content: start;
+    align-items: center;
+    flex-grow: 1;
+    gap: 2rem;
+
+    div {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        padding: 0rem 6rem;
+        box-sizing: border-box;
+    }
 
     label {
         font-size: 1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    div {
-        width: 100%;
-        padding: 5rem 3rem;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        justify-content: start;
-        align-items: center;
-        // gap: 3rem;
+        margin-bottom: 1rem;
     }
 
     @media (max-width: 767px) {
         div {
-            padding: 5rem 1rem;
+            padding: 0rem 3.5rem;
         }
-      }
+    }
       
-
     input {
         appearance: none;
         font-weight: 400;
@@ -68,10 +159,5 @@
         font-size: 1rem;
         background-color: $gray;
         margin-bottom: 3rem;
-    }
-
-    span {
-        font-size: 1rem;
-        font-weight: 300;
     }
 }

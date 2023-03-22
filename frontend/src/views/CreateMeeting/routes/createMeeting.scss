@@ -22,7 +22,15 @@
 .TitleInputWrapper {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 1.5rem;
+
+    div {
+        display: grid;
+        grid-template-rows: 1fr 1.25rem;
+        gap: 1rem;
+        font-size: 1rem;
+        font-weight: 400;
+    }
 }
 
 .TitleInput {
@@ -41,6 +49,18 @@
     @media only screen and (max-width: 640px) {
         width: 90vw;
     }
+}
+
+.ErrorInput {
+    // border: 1px solid $errorBorderColor;
+    background-color: $errorBackgroundColor;
+    color: $errorTextColor;
+}
+
+.ErrorMsg {
+    color: $errorBorderColor;
+    width: 100%;
+    text-align: center;
 }
 
 .SetPasswordContainer {
@@ -106,7 +126,7 @@ input::placeholder {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 6rem;
+    gap: 4rem;
 
     @media only screen and (max-width: 640px) {
         flex-direction: column;

@@ -4,18 +4,20 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    // align-items: ;
+    align-items: center;
     width: 312px;
-    gap: 3rem;
+    gap: 1rem;
 }
 
 .MonthHeader {
     display: flex;
+    width: 100%;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     font-size: 1.125rem;
     font-weight: 600;
+    margin-bottom: 2rem;
     height: 1.5rem;
 }
 
