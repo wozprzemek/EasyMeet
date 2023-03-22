@@ -5,10 +5,11 @@
     flex-direction: column;
     align-items: center;
     // justify-content: space-between;
+    width: 16rem;
     justify-content: center;
     gap: 3rem;
 
-    div {
+    .TimePickerContainer {
         display: flex;
         flex-direction: column;
         align-items: center;

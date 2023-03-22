@@ -1,32 +1,5 @@
 @import 'sassStyles/variables';
 
-// .DayCheckbox {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     width: 2.125rem;
-//     height: 2.125rem;
-//     border: 1px solid rgba(255,255,255,0.5);
-//     // border: 1px solid $textOnDarkColor;
-//     font-size: 1rem;
-//     font-weight: 300;
-//     box-sizing: border-box;
-//     position: relative;
-//     cursor: pointer;
-//     -webkit-touch-callout: none; /* iOS Safari */
-//     -webkit-user-select: none; /* Safari */
-//      -khtml-user-select: none; /* Konqueror HTML */
-//        -moz-user-select: none; /* Old versions of Firefox */
-//         -ms-user-select: none; /* Internet Explorer/Edge */
-//             user-select: none; /* Non-prefixed version, currently
-//                                   supported by Chrome, Edge, Opera and Firefox */
-
-//     &:hover {
-//         background-color: rgba(255,255,255, 0.2);
-//         color: white;
-//     }
-// }
-
 .DayCheckbox {
     display: flex;
     align-items: center;
@@ -52,8 +25,7 @@
                                   supported by Chrome, Edge, Opera and Firefox */
 
     &:hover {
-        background-color: $grayHover;
-        color: white;
+        opacity: 0.9;
     }
 }
 
@@ -69,6 +41,11 @@
 }
 
 .DayCheckbox-selected {
-    background-color: $primaryColor1 !important;
+    background-color: $primaryColor1;
     border: none;
+}
+
+.DayCheckbox--error {
+    background-color: $errorBackgroundColor;
+    color: $errorTextColor;
 }

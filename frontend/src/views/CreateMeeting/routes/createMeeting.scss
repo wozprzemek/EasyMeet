@@ -26,8 +26,8 @@
 
     div {
         display: grid;
-        grid-template-rows: 1fr 1rem;
-        gap: 0.5rem;
+        grid-template-rows: 1fr 1.25rem;
+        gap: 1rem;
         font-size: 1rem;
         font-weight: 400;
     }
@@ -52,13 +52,15 @@
 }
 
 .ErrorInput {
-    border: 1px solid $errorBorderColor;
+    // border: 1px solid $errorBorderColor;
     background-color: $errorBackgroundColor;
     color: $errorTextColor;
 }
 
 .ErrorMsg {
     color: $errorBorderColor;
+    width: 100%;
+    text-align: center;
 }
 
 .SetPasswordContainer {
@@ -124,7 +126,7 @@ input::placeholder {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 6rem;
+    gap: 4rem;
 
     @media only screen and (max-width: 640px) {
         flex-direction: column;

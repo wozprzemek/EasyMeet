@@ -2,7 +2,7 @@ import { createMeeting } from 'api/createMeeting'
 import { Button } from 'components/Button/Button'
 import { ContentLayout } from 'components/ContentLayout/ContentLayout'
 import { DateType } from 'views/CreateMeeting/types'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { ButtonSize, ButtonType } from 'types'
 import { Calendar } from '../components/Calendar/Calendar'
@@ -19,7 +19,7 @@ export const CreateMeeting = () => {
   const [to, setTo] = useState(`17:00`)
   const [selectedDates, setSelectedDates] = useState<DateType[]>([])
 
-  const defaultErrorMsg = { name: '', password: '', to: '', from: '', selectedDates: ''}
+  const defaultErrorMsg = { name: '', password: '', to: '', from: '', dates: ''}
   const [errorMsg, setErrorMsg] = useState(defaultErrorMsg);
 
   const handleCreate = useCallback(async () => {
@@ -63,10 +63,31 @@ export const CreateMeeting = () => {
       setErrorMsg(errorMsg => ({ ...errorMsg, 'to': 'End time must be after start time' }));
       correct = false;
     }
+    
+    if (selectedDates.length === 0) {
+      setErrorMsg(errorMsg => ({ ...errorMsg, 'dates': 'You must select at least one date' }));
+      correct = false;
+    }
 
     return correct;
-  }, [name, password, from, to, enablePassword])
+  }, [name, password, from, to, enablePassword, selectedDates])
   
+  
+  useEffect(() => {
+    if (selectedDates.length > 0) setErrorMsg(errorMsg => ({ ...errorMsg, 'dates': '' }));
+  }, [selectedDates])
+
+  useEffect(() => {
+    if (name.length > 0) setErrorMsg(errorMsg => ({ ...errorMsg, 'name': '' }));
+  }, [name])
+
+  useEffect(() => {
+    if (moment(to, "hh:mm").isAfter(moment(from, "hh:mm"))) {
+      setErrorMsg(errorMsg => ({ ...errorMsg, 'to': '' }));
+    }
+  }, [to])
+  
+
   return (
     <ContentLayout>
         <div className='Wrapper'>
@@ -86,7 +107,7 @@ export const CreateMeeting = () => {
                   </span>
                 </div>
                 <div className='ColumnWrapper'>
-                  <Calendar errorMsg={''} selectedDates={selectedDates} setSelectedDates={setSelectedDates}/>
+                  <Calendar errorMsg={errorMsg.dates} selectedDates={selectedDates} setSelectedDates={setSelectedDates}/>
                   <TimeForm from={from} setFrom={setFrom} to={to} setTo={setTo} errorMsg={{from: errorMsg.from, to: errorMsg.to}}/>
                 </div>
                 <Button type={ButtonType.SOLID} size={ButtonSize.LG} onClick={handleCreate}>Create</Button>

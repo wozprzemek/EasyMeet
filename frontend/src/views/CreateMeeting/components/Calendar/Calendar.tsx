@@ -56,10 +56,12 @@ const getDayKey = (day: Date) => {
 interface ICalendar {
     selectedDates: DateType[];
     setSelectedDates: React.Dispatch<DateType[]>;
-    errorMsg: any;
+    errorMsg: string;
 }
 
-export const Calendar = ({selectedDates, setSelectedDates}: ICalendar) => {
+export const Calendar = ({selectedDates, setSelectedDates, errorMsg}: ICalendar) => {
+    console.log(errorMsg);
+    
     const changeMonth = (offset : number) => {
         const newDate = new Date(selectedMonth.year, selectedMonth.month + offset + 1, 0)
         setSelectedMonth({month: newDate.getMonth(), year: newDate.getFullYear()})
@@ -124,10 +126,11 @@ export const Calendar = ({selectedDates, setSelectedDates}: ICalendar) => {
                 })}
                 {displayedDays.map((day) => {   
                     return (
-                        <DayCheckbox key={getDayKey(day.date)} day={day} selected={isDaySelected({day: day.date.getDate(), month: day.date.getMonth(), year: day.date.getFullYear()})} handleClick={() => handleDayCheckboxClick(day)} /> //????????????????????????????
+                        <DayCheckbox errorMsg={errorMsg} key={getDayKey(day.date)} day={day} selected={isDaySelected({day: day.date.getDate(), month: day.date.getMonth(), year: day.date.getFullYear()})} handleClick={() => handleDayCheckboxClick(day)} />
                     )
                 })}
             </div>
+            {errorMsg.length > 0 ? <span className='ErrorMsg'>{errorMsg}</span> : <span></span>}
         </div>
     ) 
 }
