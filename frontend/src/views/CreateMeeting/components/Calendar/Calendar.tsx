@@ -56,6 +56,7 @@ const getDayKey = (day: Date) => {
 interface ICalendar {
     selectedDates: DateType[];
     setSelectedDates: React.Dispatch<DateType[]>;
+    errorMsg: any;
 }
 
 export const Calendar = ({selectedDates, setSelectedDates}: ICalendar) => {

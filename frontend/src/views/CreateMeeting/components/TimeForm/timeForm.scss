@@ -1,11 +1,19 @@
 @import 'sassStyles/variables';
 
-.DetailsForm {
+.TimeForm {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: 1.25rem;
+    // justify-content: space-between;
+    justify-content: center;
+    gap: 3rem;
+
+    div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.25rem;
+    }
 
     input {
         appearance: none;

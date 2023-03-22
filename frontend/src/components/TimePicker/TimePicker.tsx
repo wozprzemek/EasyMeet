@@ -5,9 +5,10 @@ import './timePicker.scss';
 interface ITimePicker {
     selectedTime: string;
     setSelectedTime: Dispatch<string>;
+    errorMsg: string;
 }
 
-export const TimePicker = ({selectedTime, setSelectedTime}: ITimePicker) => {
+export const TimePicker = ({selectedTime, setSelectedTime, errorMsg}: ITimePicker) => {
     const ref = useClickOutside(() => setShowDropdown(false));
     let times = [...Array(24).keys()].map(i => {
         return `${i.toString().padStart(2, '0')}:00`
@@ -22,7 +23,7 @@ export const TimePicker = ({selectedTime, setSelectedTime}: ITimePicker) => {
 
     return (
     <div className='TimePickerContainer'>
-        <div className='TimePickerButton' onClick={() => setShowDropdown(!showDropdown)}>
+        <div className={`TimePickerButton ${errorMsg.length > 0 ? 'TimePickerButton--error': ''}`} onClick={() => setShowDropdown(!showDropdown)}>
             {selectedTime}
         </div>
         { showDropdown ? 

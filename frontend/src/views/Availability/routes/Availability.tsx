@@ -47,12 +47,10 @@ export const Availability = () => {
     await navigator.clipboard.writeText(message)
   }
 
-
   if (meetingStatus === 'loading' && meetingData === undefined) {
     console.log('LOADING..');
     return <Loading />
   }
-  
   
   return (
     <ContentLayout>

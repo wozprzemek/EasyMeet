@@ -34,6 +34,14 @@
     }
 }
 
+.TimePickerButton--error {
+    border: 1px solid $errorBorderColor;
+    background-color: $errorBackgroundColor;
+    color: $errorTextColor;
+}
+
+
+
 .TimePickerDropdown {
     margin-top: 3rem;
     width: 100%;
