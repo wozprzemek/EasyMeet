@@ -60,8 +60,6 @@ interface ICalendar {
 }
 
 export const Calendar = ({selectedDates, setSelectedDates, errorMsg}: ICalendar) => {
-    console.log(errorMsg);
-    
     const changeMonth = (offset : number) => {
         const newDate = new Date(selectedMonth.year, selectedMonth.month + offset + 1, 0)
         setSelectedMonth({month: newDate.getMonth(), year: newDate.getFullYear()})
@@ -89,8 +87,6 @@ export const Calendar = ({selectedDates, setSelectedDates, errorMsg}: ICalendar)
     }
 
     const handleDayCheckboxClick = (day : {date: Date, current: boolean}) => {
-        console.log(day.date.getMonth());
-        
         const dateObject = {
             day: day.date.getDate(),
             month: day.date.getMonth(),

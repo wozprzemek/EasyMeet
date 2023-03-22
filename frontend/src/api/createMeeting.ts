@@ -8,12 +8,8 @@ export const createMeeting = async (meeting: Meeting) => {
             date: `${date.year}-${date.month}-${date.day}`
         }
     })
-    console.log(dates);
-    
-    dates.sort((a, b) => moment(a.date).isAfter(moment(b.date)) ? 1 : 0)
 
-    console.log(dates);
-    
+    dates.sort((a, b) => moment(a.date).isAfter(moment(b.date)) ? 1 : 0)
 
     const data = {
         name: meeting.name,
@@ -25,8 +21,8 @@ export const createMeeting = async (meeting: Meeting) => {
     }
 
     const response = await axios.post("/meetings/", data)
-    .then((e) => { return e })
-    .catch((e) => { return e })
+        .then((e) => { return e })
+        .catch((e) => { return e })
 
 
     return response.data

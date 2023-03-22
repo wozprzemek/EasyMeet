@@ -1,5 +1,4 @@
 import { Button } from 'components/Button/Button';
-import { queryClient } from 'config/react-query';
 import { useClickOutside } from 'hooks/useClickOutside';
 import { Dispatch, useCallback, useEffect, useState } from 'react';
 import { ButtonSize, ButtonType } from 'types';

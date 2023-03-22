@@ -5,7 +5,7 @@ import './button.scss'
 interface IButton {
     type: ButtonType,
     size: ButtonSize,
-    onClick: () => void,
+    onClick?: () => void,
     children: React.ReactNode,
 }
 

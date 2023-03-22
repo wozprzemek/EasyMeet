@@ -11,8 +11,6 @@ interface ITimeForm {
 }
 
 export const TimeForm = ({from, setFrom, to, setTo, errorMsg} : ITimeForm) => {
-  console.log(errorMsg);
-  
   return (
     <form className='TimeForm'>
         <div className='TimePickerContainer'>

@@ -16,8 +16,6 @@ export const MeetingController = {
         }
     },
     getOne: async (req: Request, res: Response) => {
-        console.log('NDOEMsdON');
-
         try {
             const query = await DI.em.findOne(Meeting, { id: req.params.id }, { populate: ['dates', 'availabilities'] })
 

@@ -196,16 +196,11 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
           }
         }
       })
-    ))
-
-    console.log(timeCells);
-    
+    ))   
   }
 
   // Handles saving selected time cells and persisting them in the database
-  const saveCells = () => {
-    console.log('save cells', timeCells);
-    
+  const saveCells = () => {    
     setTimeCells(timeCells.map((column: TimeCell[]) => 
       column.map((timeCell: TimeCell, j: number) => {
         if (timeCell.selected) {
@@ -306,8 +301,6 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   }
 
   const endTouchSelect = (event: any, timeCell: TimeCell) => {
-    console.log('END', timeCell.time);
-    
     setCurrentCell(timeCell)
     setIsClicked(false)
     saveCells()
