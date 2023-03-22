@@ -47,8 +47,7 @@ export const CreateMeeting = () => {
 
   const validate = useCallback(() => {
     let correct = true;
-    console.log('validate');
-
+    
     if (name.length === 0) {
       setErrorMsg(errorMsg => ({ ...errorMsg, 'name': 'Enter the meeting name' }));
       correct = false;
