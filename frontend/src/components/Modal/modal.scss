@@ -13,69 +13,6 @@
     backdrop-filter: blur(10px);
 }
 
-// .ModalWindow {
-//     width: 36rem;
-//     max-width: 90vw;
-//     min-height: 20rem;
-//     max-height: 80vh;
-//     background-color: $backgroundDarkColor;
-//     z-index: 101;
-//     display: flex;
-//     flex-direction: column;
-//     box-sizing: border-box;
-//     font-size: 20px;
-//     font-weight: 600;
-//     align-items: center;
-//     padding: 2rem;
-//     justify-content: start;
-//     border-radius: 0.5rem;
-//     max-height: 80vh;
-//     max-width: 90vw;
-
-//     label {
-//         font-size: 1rem;
-//         margin-bottom: 1.5rem;
-//     }
-
-//     div {
-//         width: 100%;
-//         padding: 5rem 3rem;
-//         box-sizing: border-box;
-//         display: flex;
-//         flex-direction: column;
-//         justify-content: start;
-//         align-items: center;
-//         // gap: 3rem;
-//     }
-
-//     @media (max-width: 767px) {
-//         div {
-//             padding: 5rem 1rem;
-//         }
-//       }
-      
-
-//     input {
-//         appearance: none;
-//         font-weight: 400;
-//         border: none;
-//         height: 2.25rem;
-//         color: #FFFDF7;
-//         width: 100%;
-//         text-align: left;
-//         border-radius: $radius_md;
-//         padding: 0.125rem 0.75rem;
-//         font-size: 1rem;
-//         background-color: $gray;
-//         margin-bottom: 3rem;
-//     }
-
-//     span {
-//         font-size: 1rem;
-//         font-weight: 300;
-//     }
-// }
-
 .ModalWindow {
     width: 36rem;
     max-width: 90vw;
@@ -91,7 +28,6 @@
     font-weight: 600;
     // padding: 2rem;
     border-radius: 0.5rem;
-    gap: 3rem;
 
     span {
         font-size: 1rem;
@@ -125,19 +61,19 @@
     gap: 2rem;
 
     div {
+        // min-height: 8rem;
         display: flex;
         justify-content: center;
-        gap: 0.5rem;
+        gap: 1rem;
         align-items: center;
         flex-direction: column;
         width: 100%;
-        padding: 0rem 6rem;
+        padding: 3rem 6rem;
         box-sizing: border-box;
     }
 
     label {
         font-size: 1rem;
-        margin-bottom: 1rem;
     }
 
     @media (max-width: 767px) {
@@ -158,6 +94,11 @@
         padding: 0.125rem 0.75rem;
         font-size: 1rem;
         background-color: $gray;
-        margin-bottom: 3rem;
+    }
+
+    .ErrorInput {
+        // border: 1px solid $errorBorderColor;
+        background-color: $errorBackgroundColor;
+        color: $errorTextColor;
     }
 }
