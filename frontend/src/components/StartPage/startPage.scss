@@ -177,6 +177,10 @@
     justify-content: center;
     color: #505f70;
 
+    a {
+        all: unset;
+    }
+
     span {
         height: 2rem;
         display: flex;

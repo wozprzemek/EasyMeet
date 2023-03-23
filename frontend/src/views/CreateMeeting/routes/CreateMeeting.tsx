@@ -71,9 +71,10 @@ export const CreateMeeting = () => {
     return correct;
   }, [name, password, from, to, enablePassword, selectedDates])
   
-  
   useEffect(() => {
     if (selectedDates.length > 0) setErrorMsg(errorMsg => ({ ...errorMsg, 'dates': '' }));
+    // console.log(selectedDates.map(date => `${date.month}-${date.day}`));
+    
   }, [selectedDates])
 
   useEffect(() => {

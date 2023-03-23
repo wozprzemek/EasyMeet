@@ -1,6 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { DateType } from 'views/CreateMeeting/types';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { DayCheckbox } from '../DayCheckBox/DayCheckbox';
 import './calendar.scss';
 
@@ -38,20 +38,9 @@ const getNextMonthDays = (month : number, year : number, previousMonthDays : Dat
     )
 }
 
-const getAllDays = (month : number, year : number) => {
-    const previousMonthDays = getPreviousMonthDays(month, year)
-    const currentMonthDays = getCurrentMonthDays(month+1, year)
-    const nextMonthDays = getNextMonthDays(month, year, Array.from(previousMonthDays, x => x.date), Array.from(currentMonthDays, x => x.date))
-
-    const allDays = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays]
-    return allDays
-
-}
-
 const getDayKey = (day: Date) => {
     return day.getDate().toString() + day.getMonth() + day.getFullYear()
 }
-
 
 interface ICalendar {
     selectedDates: DateType[];
@@ -60,6 +49,11 @@ interface ICalendar {
 }
 
 export const Calendar = ({selectedDates, setSelectedDates, errorMsg}: ICalendar) => {
+    const  now = new Date() // current date
+    const [selectedMonth, setSelectedMonth] = useState({month: now.getMonth(), year: now.getFullYear()}) // used for selected year and month
+    const [displayedDays, setDisplayedDays] = useState(getCurrentMonthDays(selectedMonth.month + 1, selectedMonth.year))
+    const weekDays = ['M', 'Tu', 'W', 'Th', 'F', 'Sa', 'Su']
+    
     const changeMonth = (offset : number) => {
         const newDate = new Date(selectedMonth.year, selectedMonth.month + offset + 1, 0)
         setSelectedMonth({month: newDate.getMonth(), year: newDate.getFullYear()})
@@ -95,13 +89,23 @@ export const Calendar = ({selectedDates, setSelectedDates, errorMsg}: ICalendar)
         handleDaySelection(dateObject) // select/deselect day and handle month change if clicked on a part off different month
     }
 
-    var now = new Date() // current date
-    const [selectedMonth, setSelectedMonth] = useState({month: now.getMonth(), year: now.getFullYear()}) // used for selected year and month
-    const [displayedDays, setDisplayedDays] = useState(getCurrentMonthDays(selectedMonth.month + 1, selectedMonth.year))
-    const weekDays = ['M', 'Tu', 'W', 'Th', 'F', 'Sa', 'Su']
+    const getAllDays = useCallback(
+        () => {
+            const [month, year] = [selectedMonth.month, selectedMonth.year]
+            const previousMonthDays = getPreviousMonthDays(month, year)
+            const currentMonthDays = getCurrentMonthDays(month+1, year)
+            const nextMonthDays = getNextMonthDays(month, year, Array.from(previousMonthDays, x => x.date), Array.from(currentMonthDays, x => x.date))
+        
+            const allDays = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays]
+            console.log(allDays);
+            
+            return allDays
+        },
+        [selectedMonth],
+    )
     
     useEffect(() => {
-        setDisplayedDays(getAllDays(selectedMonth.month, selectedMonth.year))
+        setDisplayedDays(getAllDays())
     }, [selectedMonth])
     
     return (

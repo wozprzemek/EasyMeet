@@ -48,7 +48,7 @@ export const StartPage = () => {
           </div>
       </div>
       <div className='Footer'>
-        <span>By Przemysław Woźniak</span>
+        <span><a href='https://github.com/wozprzemek'>By Przemysław Woźniak</a></span>
       </div>
     </ContentLayout>
   )

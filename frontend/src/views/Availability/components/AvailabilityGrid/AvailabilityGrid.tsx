@@ -239,22 +239,19 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
       let y = parseInt(currentCell.getAttribute('data-y') || "0")
 
       setTimeCells(timeCells.map((column: TimeCell[], i: number) => 
-      column.map((timeCell: TimeCell, j: number) => {
-        if (isBetween(i, x, startCell.position.x) && isBetween(j, y, startCell.position.y)) {
-          return { ...timeCell, selected: !startCell?.selected}
-        } 
-        else {
-          if (timeCell.saved){
-            return {...timeCell, selected: true}
-          }
+        column.map((timeCell: TimeCell, j: number) => {
+          if (isBetween(i, x, startCell.position.x) && isBetween(j, y, startCell.position.y)) {
+            return { ...timeCell, selected: !startCell?.selected}
+          } 
           else {
-            return { ...timeCell, selected: false}
+            if (timeCell.saved)
+              return {...timeCell, selected: true}
+            else
+              return { ...timeCell, selected: false}
           }
-        }
-      })
-    ))
+        })
+      ))
     }
-    
   }
 
   const startSelect = (event: any, timeCell: TimeCell) => {
@@ -277,20 +274,18 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
       let y = parseInt(currentCell.getAttribute('data-y') || "0")
 
       setTimeCells(timeCells.map((column: TimeCell[], i: number) => 
-      column.map((timeCell: TimeCell, j: number) => {
-        if (isBetween(i, x, startCell!.position.x) && isBetween(j, y, startCell!.position.y)) {
-          return { ...timeCell, selected: !startCell?.selected}
-        } 
-        else {
-          if (timeCell.saved){
-            return {...timeCell, selected: true}
-          }
+        column.map((timeCell: TimeCell, j: number) => {
+          if (isBetween(i, x, startCell!.position.x) && isBetween(j, y, startCell!.position.y)) {
+            return { ...timeCell, selected: !startCell?.selected}
+          } 
           else {
-            return { ...timeCell, selected: false}
+            if (timeCell.saved)
+              return {...timeCell, selected: true}
+            else
+              return { ...timeCell, selected: false}
           }
-        }
-      })
-    ))
+        })
+      ))
     }
   }
 
