@@ -3,6 +3,9 @@
 .AvailabilityGridWrapper {
     display: flex;
     padding-right: 10rem;
+    overflow-y: hidden;
+    height: 100%;
+    overflow-x: scroll;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -14,7 +17,6 @@
 
 .AvailabilityGrid {
     display: flex;
-
 }
 
 .AvailabilityColumn {

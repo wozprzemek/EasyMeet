@@ -4,4 +4,8 @@
     display: flex;
     flex-direction: column;
     background-color: $backgroundDarkColor;
+    
+    // @media only screen and (max-width: 640px) {
+    //     overflow-x: scroll;
+    // }
 }
