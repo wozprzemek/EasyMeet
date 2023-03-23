@@ -38,6 +38,18 @@ const getNextMonthDays = (month : number, year : number, previousMonthDays : Dat
     )
 }
 
+// const getAllDays = () => {
+//     const [month, year] = [selectedMonth.month, selectedMonth.year]
+//     const previousMonthDays = getPreviousMonthDays(month, year)
+//     const currentMonthDays = getCurrentMonthDays(month+1, year)
+//     const nextMonthDays = getNextMonthDays(month, year, Array.from(previousMonthDays, x => x.date), Array.from(currentMonthDays, x => x.date))
+
+//     const allDays = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays]
+//     return allDays
+
+// }
+
+
 const getDayKey = (day: Date) => {
     return day.getDate().toString() + day.getMonth() + day.getFullYear()
 }
@@ -97,7 +109,7 @@ export const Calendar = ({selectedDates, setSelectedDates, errorMsg}: ICalendar)
             const nextMonthDays = getNextMonthDays(month, year, Array.from(previousMonthDays, x => x.date), Array.from(currentMonthDays, x => x.date))
         
             const allDays = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays]
-            console.log(allDays);
+            console.log(allDays.map(date => `${date.date} ${date.date.getMonth()}`));
             
             return allDays
         },
