@@ -6,6 +6,7 @@
     grid-template-columns: 2fr 2fr 2fr;
     width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -18,7 +19,7 @@
 .AvailabilityGrid {
     display: flex;
     justify-self: center;
-    touch-action: none;
+    // touch-action: none;
 }
 
 .AvailabilityColumn {

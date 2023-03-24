@@ -1,8 +1,7 @@
 import { updateAvailabilities } from 'api/updateUserAvailabilities'
 import { queryClient } from 'config/react-query'
-import { time } from 'console'
 import moment from 'moment'
-import { Dispatch, useEffect, useRef, useState } from 'react'
+import { Dispatch, useCallback, useEffect, useRef, useState } from 'react'
 import { Availability as TAvailability } from 'types/Availability'
 import { Meeting } from 'types/Meeting'
 import './availabilityGrid.scss'
@@ -75,6 +74,10 @@ const formattedColumnHeader = (time: any) => {
   )
 }
 
+const preventDefault = (event: any) => {
+  event.preventDefault()
+}
+
 interface IAvailabilityGrid {
   editMode: boolean;
   user: string;
@@ -93,6 +96,10 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   const [startCell, setStartCell] = useState<TimeCell>() // Saved position at mouse click
   const [isClicked, setIsClicked] = useState(false) // Is mouse currently down
   const gridHTMLElement = useRef<HTMLDivElement>(null)
+  const [timer, setTimer] = useState<number|undefined>(undefined)
+  const longTouchDuration = 100 // Duration for long touch in ms
+  const [dragEnabled, setDragEnabled] = useState(false) // Is drag enabled
+  const clearTimerRef = useRef<number|undefined>(undefined)
 
   // Color definitions for time cell coloring
   const baseCellColor: Color = {r: 50, g: 53, b: 58, a: 1}
@@ -207,6 +214,8 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   }
 
   const onCellEnter = (event: any, timeCell: TimeCell) => {
+    console.log('onCellEnter', clearTimerRef.current);
+    
     let currentCell = document.elementFromPoint(event.pageX, event.pageY)
     if (isClicked && currentCell?.classList.contains('TimeCell') && startCell) {
       let x = parseInt(currentCell.getAttribute('data-x') || "0")
@@ -229,33 +238,36 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   }
 
   const startSelect = (event: any, timeCell: TimeCell) => {
+    console.log('start select');
+    
     setIsClicked(true)
     setStartCell(timeCell)
     setCurrentCell(timeCell)
   }
 
   const startTouchSelect = (event: any, timeCell: TimeCell) => {
+    console.log('start touch select');
+    clearTimerRef.current = window.setTimeout(() => {enableDrag(event)}, longTouchDuration)
     setCurrentCell(timeCell)
     setIsClicked(true)
     setStartCell(timeCell)
   }
 
-  const touchDrag = (event: any, timeCell: TimeCell) => {
-    let touch = event.touches[0];
-    // Allow horizontal scrolling with two fingers
-    console.log('gridHTMLElement', gridHTMLElement);
-    
-    // if (gridHTMLElement.current && event.touches.length === 2) {
-    //   console.log('2finger');
-      
-    //   gridHTMLElement.current.style.touchAction = 'pan-x'
-    // }
-    // Allow availability selection with one finger
-    if (gridHTMLElement.current && event.touches.length === 1) {
-      console.log('1finger');
-      gridHTMLElement.current.style.touchAction = 'none'
+  const enableDrag = (event: any) => {
+    console.log('enable drag');
+    gridHTMLElement.current?.addEventListener('touchmove', preventDefault, {passive: false})
+    setDragEnabled(true)
+  }
 
-      let currentCell = document.elementFromPoint(touch.clientX, touch.clientY)
+  const touchDragSelect = (event: any, timeCell: TimeCell) => {
+    const touch = event && event.touches[0];
+    console.log('dragEnabled', dragEnabled);
+    window.clearTimeout(clearTimerRef.current)
+
+    if (touch && dragEnabled) {
+      console.log('touch drag select');
+      event.preventDefault()
+      const currentCell = document.elementFromPoint(touch.clientX, touch.clientY)
       if (currentCell?.classList.contains('TimeCell')) {
         let x = parseInt(currentCell.getAttribute('data-x') || "0")
         let y = parseInt(currentCell.getAttribute('data-y') || "0")
@@ -284,10 +296,18 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   }
 
   const endTouchSelect = (event: any, timeCell: TimeCell) => {
-    setCurrentCell(timeCell)
-    setIsClicked(false)
-    saveCells()
-    persistCells()
+    gridHTMLElement.current?.removeEventListener('touchmove', preventDefault, false)
+    console.log('REMOVED???');
+    
+    if (clearTimerRef.current) {
+      console.log('clearing timer');
+      window.clearTimeout(clearTimerRef.current)
+      clearTimerRef.current = undefined
+      setDragEnabled(false)
+      // document.body.style.overflow = 'visible'
+    }
+    console.log('cleaned?', clearTimerRef.current);
+    endSelect(event, timeCell)
   }
 
   // Handles mouse leaving the grid
@@ -333,7 +353,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
               onMouseDown={editMode ? e => startSelect(e, timeCell) : undefined}
               onMouseUp={editMode ? e => endSelect(e, timeCell) : undefined}
               onTouchStart={editMode ? e => startTouchSelect(e, timeCell) : undefined}
-              onTouchMove={editMode ? e => touchDrag(e, timeCell) : undefined}
+              onTouchMove={editMode ? e => touchDragSelect(e, timeCell) : undefined}
               onTouchEnd={editMode ? e => endTouchSelect(e, timeCell) : undefined}>
             </div>
           )
