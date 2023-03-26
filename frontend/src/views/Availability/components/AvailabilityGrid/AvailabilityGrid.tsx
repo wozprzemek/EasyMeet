@@ -4,6 +4,7 @@ import moment from 'moment'
 import { Dispatch, useCallback, useEffect, useRef, useState } from 'react'
 import { Availability as TAvailability } from 'types/Availability'
 import { Meeting } from 'types/Meeting'
+import { AvailabilityDetails } from '../AvailabilityDetails/AvailabilityDetails'
 import './availabilityGrid.scss'
 
 export interface Position {
@@ -304,7 +305,6 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
       window.clearTimeout(clearTimerRef.current)
       clearTimerRef.current = undefined
       setDragEnabled(false)
-      // document.body.style.overflow = 'visible'
     }
     console.log('cleaned?', clearTimerRef.current);
     endSelect(event, timeCell)
@@ -376,6 +376,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
       <div ref={gridHTMLElement} className='AvailabilityGrid' onMouseEnter={editMode ? () => handleMouseLeave() : undefined}>
         {timeGrid}
       </div>
+      <AvailabilityDetails userCount={userCount} setUserNumber={setUserNumber} currentCell={currentCell} />
     </div>
   )
 }

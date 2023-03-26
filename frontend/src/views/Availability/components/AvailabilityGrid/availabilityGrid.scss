@@ -3,10 +3,15 @@
 .AvailabilityGridWrapper {
     display: grid;
     gap: 0.75rem;
-    grid-template-columns: 2fr 2fr 2fr;
+    grid-template-columns: 1fr min-content 1fr;
     width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
+
+    @media (max-width: 767px) {
+        overflow-x: auto;
+        overflow-y: hidden;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */

@@ -16,16 +16,16 @@
 }
 
 .AvailabilityWrapperContent {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    max-width: 100vw;
-    // overflow-x: auto;
-    // display: flex;
-    // flex-wrap: wrap;
-    // flex-grow: 1;
+    // display: grid;
+    // grid-template-columns: 1fr 1fr 1fr;
+    // max-width: 100vw;
+    width: 100%;
+    display: flex;
+    // flex: 1;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 4rem;
+    gap: 3rem;
     padding-top: 5rem;
     padding-bottom: 5rem;
 
@@ -40,22 +40,35 @@
 .GridButtonWrapper {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
+    @media (max-width: 767px) {
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
 }
+
+// .AvailabilityHeaderWrapper {
+//     display: flex;
+//     justify-content: space-between;
+//     width: 40rem;
+//     // gap: 2rem;
+// }
 
 .AvailabilityHeader {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     gap: 1.5rem;
-    width: 100%;
+    // width: 100%;
+    width: 40rem;
+    max-width: 90%;
     height: 100%;
-    padding-top: 4rem;
+    // padding-top: 4rem;
     box-sizing: border-box;
-    align-items: end;
+    // align-items: end;
 
     @media (max-width: 767px) {
         display: flex;
@@ -69,6 +82,13 @@
         font-size: 2.5rem;
         font-weight: 600;
         color: $textOnDarkColor;
+        // word-wrap: break-word;
+        max-width: 90%;
+        text-align: center;
+
+        // @media (max-width: 767px) {
+        //     font-size: 2rem;
+        // }
     }
 
     h2 {

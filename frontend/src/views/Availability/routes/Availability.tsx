@@ -57,14 +57,17 @@ export const Availability = () => {
         off={() => handleModalOff()} setUser={setUser} setPassword={meetingData?.password ? setPassword : undefined}/>: null }
           <div className='AvailabilityWrapper'>
               <div className='AvailabilityWrapperContent'>
-                  <div className='AvailabilityHeader'>
-                      <h1>{meetingData?.name}</h1>
-                      <h2>{userCount} participants</h2>
-                      <Button type={ButtonType.OUTLINE_GRAY} size={ButtonSize.LG} onClick={() => handleInvite()}>
-                        <UserPlusIcon width='1.25rem'/>
-                        Invite
-                      </Button>
-                  </div>
+                  {/* <div className='AvailabilityHeaderWrapper'> */}
+                    <div className='AvailabilityHeader'>
+                        <h1>{meetingData?.name}</h1>
+                        <h2>{userCount} participants</h2>
+                        <Button type={ButtonType.OUTLINE_GRAY} size={ButtonSize.LG} onClick={() => handleInvite()}>
+                          <UserPlusIcon width='1.25rem'/>
+                          Invite
+                        </Button>
+                    </div>
+                    {/* <AvailabilityDetails userCount={userCount} setUserNumber={setUserNumber} currentCell={currentCell} /> */}
+                  {/* </div>       */}
                   <div className='GridButtonWrapper'>
                     <AvailabilityGrid userCount={userCount} setUserNumber={setUserNumber} currentCell={currentCell} setCurrentCell={setCurrentCell} 
                     editMode={editMode} user={user} meetingData={meetingData} showAllAvailabilities={showAllAvailabilities}/>
@@ -77,7 +80,6 @@ export const Availability = () => {
                       : <Button type={ButtonType.CIRCLE} size={ButtonSize.LG} onClick={() => handleModalOn()}><PlusIcon/></Button> 
                     }
                   </div>
-                  <AvailabilityDetails userCount={userCount} setUserNumber={setUserNumber} currentCell={currentCell} />
               </div>
           </div>
     </ContentLayout>

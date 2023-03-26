@@ -1,19 +1,15 @@
 @import 'sassStyles/variables';
 
 .DetailsWrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     height: 100%;
     width: 100%;
     padding-top: 4rem;
     box-sizing: border-box;
+    justify-content: center;
 
     @media (max-width: 767px) {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding-top: 0;
+        display: none;
     }
 }
 
@@ -22,6 +18,7 @@
     flex-direction: column;
     align-items: flex;
     gap: 1rem;
+    // justify-content: center;
 
     div {
         display: flex;
