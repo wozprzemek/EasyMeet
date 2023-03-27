@@ -216,7 +216,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
 
   const onCellEnter = (event: any, timeCell: TimeCell) => {
     console.log('onCellEnter', clearTimerRef.current);
-    
+    setCurrentCell(timeCell)
     let currentCell = document.elementFromPoint(event.pageX, event.pageY)
     if (isClicked && currentCell?.classList.contains('TimeCell') && startCell) {
       let x = parseInt(currentCell.getAttribute('data-x') || "0")

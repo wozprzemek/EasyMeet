@@ -9,6 +9,9 @@ import rect6 from 'assets/rect6.svg'
 import './startPage.scss'
 import createMeetingImage from 'assets/createMeeting.svg'
 import selectAvailabilityImage from 'assets/selectAvailability.svg'
+import { Button } from 'components/Button/Button'
+import { ButtonSize, ButtonType } from 'types'
+import { Link } from 'react-router-dom'
 
 export const StartPage = () => {
   const bannerRects = [rect1, rect2, rect3, rect4, rect5, rect6]
@@ -19,6 +22,7 @@ export const StartPage = () => {
             <div className='HeroSectionText'>
               <h1>Schedule meetings with ease</h1>
               <h2>Organize your meetings easily with the help of simple availability polls.</h2>
+              <Link to='/create/'><Button size={ButtonSize.LG} type={ButtonType.SOLID}>Create</Button></Link>
             </div>
         </div>
         <div className='BannerImageContainer'>

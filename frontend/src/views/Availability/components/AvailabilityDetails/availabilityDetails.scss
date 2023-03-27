@@ -4,9 +4,9 @@
     display: flex;
     height: 100%;
     width: 100%;
-    padding-top: 4rem;
+    padding: 4rem;
     box-sizing: border-box;
-    justify-content: center;
+    justify-content: start;
 
     @media (max-width: 767px) {
         display: none;
@@ -16,9 +16,8 @@
 .DetailsColumn {
     display: flex;
     flex-direction: column;
-    align-items: flex;
     gap: 1rem;
-    // justify-content: center;
+
 
     div {
         display: flex;
