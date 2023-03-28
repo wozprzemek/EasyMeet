@@ -60,7 +60,7 @@ export const CreateMeeting = () => {
       correct = false;
     }
     
-    if (moment(to, "hh:mm").isBefore(moment(from, "hh:mm"))) {
+    if (moment(to, "hh:mm").isSameOrBefore(moment(from, "hh:mm"))) {
       setErrorMsg(errorMsg => ({ ...errorMsg, 'to': 'End time must be after start time' }));
       correct = false;
     }
