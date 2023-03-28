@@ -13,7 +13,6 @@ export const createMeeting = async (meeting: Meeting) => {
 
     const data = {
         name: meeting.name,
-        password: meeting.password,
         from: meeting.from,
         to: meeting.to,
         dates: dates,

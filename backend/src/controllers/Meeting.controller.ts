@@ -39,7 +39,7 @@ export const MeetingController = {
     },
     add: async (req: Request, res: Response) => {
         try {
-            const data: { name: string, password: string, dates: MeetingDate[], from: DateTimeType, to: DateTimeType, active: boolean } = req.body
+            const data: { name: string, dates: MeetingDate[], from: DateTimeType, to: DateTimeType, active: boolean } = req.body
             if (data.dates.length === 0) {
                 res.status(500).send('Meeting must have dates.')
                 return
@@ -56,7 +56,7 @@ export const MeetingController = {
     },
     update: async (req: Request, res: Response) => {
         try {
-            const data: { name?: string, password?: string, dates?: MeetingDate[], availabilities?: Availability[], from?: DateTimeType, to?: DateTimeType, active?: boolean } = req.body
+            const data: { name?: string, dates?: MeetingDate[], availabilities?: Availability[], from?: DateTimeType, to?: DateTimeType, active?: boolean } = req.body
             const meeting = await DI.em.findOneOrFail(Meeting, { id: req.params.id }, { populate: ['dates', 'availabilities'] });
 
             wrap(meeting).assign(data);

@@ -27,10 +27,10 @@ export const Modal = ({off, setUser, password, setPassword, setEditMode, setShow
           correct = false;
         }
     
-        if (password && password.length === 0) {
-          setErrorMsg(errorMsg => ({ ...errorMsg, 'password': 'Enter the password' }));
-          correct = false;
-        }
+        // if (password && password.length === 0) {
+        //   setErrorMsg(errorMsg => ({ ...errorMsg, 'password': 'Enter the password' }));
+        //   correct = false;
+        // }
     
         return correct;
       }, [localUser, password])

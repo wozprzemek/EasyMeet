@@ -13,20 +13,17 @@ import moment from 'moment'
 export const CreateMeeting = () => {
   const navigate = useNavigate()
   const [name, setName] = useState(``)
-  const [enablePassword, setEnablePassword] = useState(false)
-  const [password, setPassword] = useState(``)
   const [from, setFrom] = useState(`09:00`)
   const [to, setTo] = useState(`17:00`)
   const [selectedDates, setSelectedDates] = useState<DateType[]>([])
 
-  const defaultErrorMsg = { name: '', password: '', to: '', from: '', dates: ''}
+  const defaultErrorMsg = { name: '', to: '', from: '', dates: ''}
   const [errorMsg, setErrorMsg] = useState(defaultErrorMsg);
 
   const handleCreate = useCallback(async () => {
     const today = new Date().toISOString().split('T')[0]
     const meeting = {
       name,
-      password,
       from: `${today} ${from}`,
       to: `${today} ${to}`,
       dates: selectedDates.map(date => {
@@ -45,18 +42,13 @@ export const CreateMeeting = () => {
     catch (error) {
       console.error(error)
     }
-  }, [name, enablePassword, password, from, to, selectedDates])
+  }, [name, from, to, selectedDates])
 
   const validate = useCallback(() => {
     let correct = true;
     
     if (name.length === 0) {
       setErrorMsg(errorMsg => ({ ...errorMsg, 'name': 'Enter the meeting name' }));
-      correct = false;
-    }
-
-    if (enablePassword && password.length === 0) {
-      setErrorMsg(errorMsg => ({ ...errorMsg, 'password': 'Enter the meeting password' }));
       correct = false;
     }
     
@@ -71,7 +63,7 @@ export const CreateMeeting = () => {
     }
 
     return correct;
-  }, [name, password, from, to, enablePassword, selectedDates])
+  }, [name, from, to, selectedDates])
   
   useEffect(() => {
     if (selectedDates.length > 0) setErrorMsg(errorMsg => ({ ...errorMsg, 'dates': '' }));
@@ -89,7 +81,6 @@ export const CreateMeeting = () => {
     }
   }, [to])
   
-
   return (
     <ContentLayout>
         <div className='Wrapper'>
@@ -99,14 +90,6 @@ export const CreateMeeting = () => {
                     <input type="text" placeholder='New Meeting Name' className={`TitleInput ${errorMsg.name.length > 0 ? 'ErrorInput' : ''}`} value={name} onChange={e => setName(e.target.value)}></input>
                     {errorMsg.name.length > 0 ? <span className='ErrorMsg'>{errorMsg.name}</span> : <span></span>}
                   </div>
-                  <span className='SetPasswordContainer'>
-                    <span>
-                      <input type="checkbox" className='PasswordCheckbox' checked={enablePassword} onChange={e => setEnablePassword(e.target.checked)}/>
-                      <span>Set Password</span>
-                    </span>
-                      <input type='text' placeholder='Enter password' className={`PasswordInput ${enablePassword ? 'PasswordInput--enabled' : 'PasswordInput--disabled'}`}
-                        value={password} disabled={!enablePassword} onChange={e => setPassword(e.target.value)}></input>
-                  </span>
                 </div>
                 <div className='ColumnWrapper'>
                   <Calendar errorMsg={errorMsg.dates} selectedDates={selectedDates} setSelectedDates={setSelectedDates}/>

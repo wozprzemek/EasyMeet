@@ -11,9 +11,6 @@ export class Meeting {
   @Property({ length: 100 })
   name!: string;
 
-  @Property({ length: 100 })
-  password?: string;
-
   @OneToMany(() => MeetingDate, md => md.meeting, { cascade: [Cascade.ALL], orphanRemoval: true })
   dates = new Collection<MeetingDate>(this);
 
@@ -31,11 +28,10 @@ export class Meeting {
   @Property({ default: true })
   active: boolean = true
 
-  constructor(name: string, from: DateTimeType, to: DateTimeType, active: boolean, password?: string) {
+  constructor(name: string, from: DateTimeType, to: DateTimeType, active: boolean) {
     this.name = name;
     this.from = from;
     this.to = to;
     this.active = active;
-    this.password = password
   }
 }

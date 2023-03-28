@@ -63,60 +63,6 @@
     text-align: center;
 }
 
-.SetPasswordContainer {
-    display: flex;
-    align-items: center;
-    font-size: 1rem;
-    justify-content: space-between;
-
-    @media only screen and (max-width: 640px) {
-        flex-direction: column;
-        justify-content: center;
-        gap: 1rem;
-    }
-
-    & > span {
-        display: flex;
-        gap: 1rem;
-    }
-}
-
-.PasswordCheckbox {
-    appearance: none;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 0.125rem;
-    background-color: #32353a;
-    // border: 1px solid #FFFDF7;
-    cursor: pointer;
-
-    &:checked {
-        background-color: $primaryColor1;
-        border: none;
-    }
-}
-
-.PasswordInput {
-    appearance: none;
-    font-weight: 400;
-    border: none;
-    height: 2.25rem;
-    width: 240px;
-    text-align: left;
-    border-radius: $radius_md;
-    padding: 0.125rem 0.75rem;
-    font-size: 1rem;
-    background-color: $gray;
-}
-
-.PasswordInput--disabled {
-    opacity: 0.7;
-}
-
-.PasswordInput--enabled {
-    color: #FFFDF7;
-}
-
 input::placeholder {
     color: #b8b8b8;
     opacity: 1;

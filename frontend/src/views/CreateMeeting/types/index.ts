@@ -6,7 +6,6 @@ export interface DateType {
 
 export interface Meeting {
     name: string;
-    password?: string;
     from: string;
     to: string;
     dates: DateType[];

@@ -38,7 +38,7 @@ export const StartPage = () => {
           <img src={createMeetingImage} className='InfoSectionImage' />
           <div className='InfoSectionText'>
             <h1>Create a meeting first</h1>
-            <h2>Select the possible date(s) for the meeting. You can limit availability hours for the dates and even set the password for the participants.</h2>
+            <h2>Select the possible date(s) for the meeting. You can limit availability hours for the selected dates.</h2>
           </div>
         </div>
       </div>
