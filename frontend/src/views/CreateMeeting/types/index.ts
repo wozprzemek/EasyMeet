@@ -9,11 +9,17 @@ export interface Meeting {
     from: string;
     to: string;
     dates: DateType[];
-    availabilities?: Availability[];
+    users: User[];
 }
 
 export interface Availability {
     user: string;
     time: string;
     meeting_id: string;
+}
+
+export interface User {
+    name: string;
+    meeting_id: string;
+    availabilities?: Availability[];
 }

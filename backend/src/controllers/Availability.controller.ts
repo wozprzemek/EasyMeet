@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { DI } from "../..";
 import { Availability } from "../entities/Availability.entity";
 import { Meeting } from "../entities/Meeting.entity";
+import { User } from "../entities/User.entity";
 
 export const AvailabilityController = {
     getMany: async (req: Request, res: Response) => {
@@ -41,10 +42,12 @@ export const AvailabilityController = {
         }
     },
     updateUserAvailabilities: async (req: Request, res: Response) => {
-        const data: { meeting: string, user: string, availabilities: Availability[] } = req.body
+        const data: { user: User, availabilities: Availability[] } = req.body
         try {
-            const query = await DI.em.find(Availability, { user: data.user, meeting: data.meeting }) // FIX MEETING NULL!
+            const query = await DI.em.find(Availability, { user: data.user }) // FIX MEETING NULL!
             // remove all user availabilities in a meeting
+            console.log('query', query);
+
             query.forEach(async (availability) => {
                 await DI.em.remove(availability).flush();
             })

@@ -28,7 +28,8 @@ export const CreateMeeting = () => {
       to: `${today} ${to}`,
       dates: selectedDates.map(date => {
         return {...date, month: date.month + 1} // adjust month
-      })
+      }),
+      users: []
     }
     let createdMeeting = undefined
     try {
@@ -39,6 +40,7 @@ export const CreateMeeting = () => {
         }
       }
     }
+    
     catch (error) {
       console.error(error)
     }

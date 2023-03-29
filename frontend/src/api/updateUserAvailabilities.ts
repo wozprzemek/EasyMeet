@@ -2,18 +2,12 @@ import { axios } from "config/axios"
 import { Availability } from "types/Availability"
 
 interface IUpdateAvailabilities {
-    meeting: string;
     user: string;
     availabilities: Availability[];
 }
 
 export const updateAvailabilities = async (data: IUpdateAvailabilities) => {
-    const response = await axios.put(`/availabilities`, data, {
-        params: {
-            meeting: data.meeting,
-            user: data.user
-        }
-    })
+    const response = await axios.put(`/availabilities/`, data)
         .then(e => e)
         .catch(e => e)
 

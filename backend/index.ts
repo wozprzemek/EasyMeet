@@ -7,6 +7,7 @@ import AvailabilityRoutes from "./src/routes/Availability.routes";
 import MeetingRoutes from "./src/routes/Meeting.routes";
 import MeetingDateRoutes from "./src/routes/MeetingDate.routes";
 import cors from "cors"
+import UserRoutes from "./src/routes/User.routes";
 
 const app = express()
 
@@ -31,6 +32,7 @@ export const DI = {} as {
     app.use(`${BASE_URL}/availabilities`, AvailabilityRoutes)
     app.use(`${BASE_URL}/meetings`, MeetingRoutes)
     app.use(`${BASE_URL}/meetingdates`, MeetingDateRoutes)
+    app.use(`${BASE_URL}/users`, UserRoutes)
 
     app.use('*', (req, res) => {
         res.send('sY')

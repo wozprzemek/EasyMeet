@@ -2,6 +2,7 @@ import { Cascade, Check, Collection, DateTimeType, Entity, OneToMany, PrimaryKey
 import { v4 as uuidv4 } from 'uuid';
 import { Availability } from './Availability.entity';
 import { MeetingDate } from './MeetingDate.entity';
+import { User } from './User.entity';
 
 @Entity()
 export class Meeting {
@@ -14,8 +15,8 @@ export class Meeting {
   @OneToMany(() => MeetingDate, md => md.meeting, { cascade: [Cascade.ALL], orphanRemoval: true })
   dates = new Collection<MeetingDate>(this);
 
-  @OneToMany(() => Availability, a => a.meeting, { cascade: [Cascade.ALL], orphanRemoval: true })
-  availabilities = new Collection<Availability>(this);
+  @OneToMany(() => User, u => u.meeting, { cascade: [Cascade.ALL], orphanRemoval: true })
+  users = new Collection<User>(this);
 
   @Property({ columnType: 'timestamp with time zone' })
   @Check({ expression: '(EXTRACT (MINUTE FROM "from") IN (0, 30)) AND (EXTRACT (SECOND FROM "from") = 0)' })

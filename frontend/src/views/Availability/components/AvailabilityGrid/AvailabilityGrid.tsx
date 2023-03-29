@@ -4,6 +4,7 @@ import moment from 'moment'
 import { Dispatch, useCallback, useEffect, useRef, useState } from 'react'
 import { Availability as TAvailability } from 'types/Availability'
 import { Meeting } from 'types/Meeting'
+import { User } from 'views/CreateMeeting/types'
 import { AvailabilityDetails } from '../AvailabilityDetails/AvailabilityDetails'
 import './availabilityGrid.scss'
 
@@ -81,7 +82,7 @@ const preventDefault = (event: any) => {
 
 interface IAvailabilityGrid {
   editMode: boolean;
-  user: string;
+  user: User | {} | undefined;
   meetingData: Meeting | undefined;
   showAllAvailabilities: boolean;
   currentCell?: TimeCell;
@@ -108,13 +109,13 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   const backgroundColor: Color = {r: 16, g: 19, b: 25, a: 1}
 
   useEffect(() => {
-    setUserNumber(Object.keys((meetingData && meetingData.availabilities) ?? {}).length)
+    setUserNumber(Object.keys((meetingData && meetingData.users) ?? {}).length)
   }, [meetingData])
 
   // Persists time cells on change
-  useEffect(() => {
-    meetingData?.id && setAvailabilities(timeCells2Avail())
-  }, [timeCells])
+  // useEffect(() => {
+  //   meetingData?.id && setAvailabilities(timeCells2Avail())
+  // }, [timeCells])
 
   // Converts time cells to availability array
   const timeCells2Avail = () => {
@@ -153,22 +154,22 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
         })
       )
     )
-
+    
     // Loop over all marked user availabilities and display them
-    initTimeCells.flat().map(timeCell => {
-      for (let usr of Object.entries(meetingData!.availabilities)) {
-        for (let av of usr[1]) {
-          if (timeCell.time.isSame(moment(av.time))) {
-            timeCell.markedBy.push(usr[0])            
-            if (usr[0] === user) {
-              timeCell.saved = true
-              timeCell.selected = true
-            }
-          }
-        }
-      }
-      timeCell.time.toDate() 
-    });
+    // initTimeCells.flat().map(timeCell => {
+    //   for (let usr of Object.entries(meetingData!.availabilities)) {
+    //     for (let av of usr[1]) {
+    //       if (timeCell.time.isSame(moment(av.time))) {
+    //         timeCell.markedBy.push(usr[0])            
+    //         if (usr[0] === user) {
+    //           timeCell.saved = true
+    //           timeCell.selected = true
+    //         }
+    //       }
+    //     }
+    //   }
+    //   timeCell.time.toDate() 
+    // });
 
     // Format time labels
     const timeLabels = Array.from(
@@ -207,7 +208,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
         user: user,
         availabilities: availabilities
       }
-      await updateAvailabilities(updateData)
+      // await updateAvailabilities(updateData)
     }
     catch(error){ 
       console.error(error)
