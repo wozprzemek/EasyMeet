@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { DI } from "../..";
 import { Availability } from "../entities/Availability.entity";
-import { Meeting } from "../entities/Meeting.entity";
 import { User } from "../entities/User.entity";
 
 export const AvailabilityController = {
