@@ -170,6 +170,21 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
     //   timeCell.time.toDate() 
     // });
 
+    initTimeCells.flat().map(timeCell => {
+      for (const usr of meetingData!.users) {
+        console.log(usr);
+        for (const av of usr!.availabilities!) {
+          if (timeCell.time.isSame(moment(av.time))) {
+            timeCell.markedBy.push(usr.id)            
+            if (usr.id === user?.id) {
+              timeCell.saved = true
+              timeCell.selected = true
+            }
+          }
+        }
+      }
+    });
+
     // Format time labels
     const timeLabels = Array.from(
       {length: duration + 1},

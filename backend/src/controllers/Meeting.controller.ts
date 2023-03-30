@@ -18,7 +18,7 @@ export const MeetingController = {
     },
     getOne: async (req: Request, res: Response) => {
         try {
-            const query = await DI.em.findOne(Meeting, { id: req.params.id }, { populate: ['dates.date', 'users', 'users.availabilities'] })
+            const query = await DI.em.findOne(Meeting, { id: req.params.id }, { populate: ['dates.date', 'users.availabilities.time'] })
             res.send(query)
         } catch (error) {
             console.error(error);

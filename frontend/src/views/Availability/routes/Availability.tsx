@@ -50,6 +50,9 @@ export const Availability = () => {
   if (meetingStatus === 'loading' && meetingData === undefined) {
     return <Loading />
   }
+
+  console.log(meetingData);
+  
   
   return (
     <ContentLayout>
