@@ -10,7 +10,7 @@ export const AvailabilityLegend = ({ userCount }: IAvailabilityLegend) => {
   const [colors, setColors] = useState<Color[]>([])
 
   const getAllColors = useCallback(() => {
-    const colors = [...Array(userCount).keys()].map((i) => {
+    const colors = [...Array(userCount + 1).keys()].map((i) => {
       return calculateCellColor(i, userCount, backgroundColor, selectedCellColor, baseCellColor)
     })
     setColors(colors)
