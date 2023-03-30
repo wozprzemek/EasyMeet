@@ -28,7 +28,8 @@ export const CreateMeeting = () => {
       to: `${today} ${to}`,
       dates: selectedDates.map(date => {
         return {...date, month: date.month + 1} // adjust month
-      })
+      }),
+      users: []
     }
     let createdMeeting = undefined
     try {
@@ -39,6 +40,7 @@ export const CreateMeeting = () => {
         }
       }
     }
+    
     catch (error) {
       console.error(error)
     }
@@ -67,8 +69,6 @@ export const CreateMeeting = () => {
   
   useEffect(() => {
     if (selectedDates.length > 0) setErrorMsg(errorMsg => ({ ...errorMsg, 'dates': '' }));
-    console.log(selectedDates.map(date => `${date.month}-${date.day}`));
-    
   }, [selectedDates])
 
   useEffect(() => {

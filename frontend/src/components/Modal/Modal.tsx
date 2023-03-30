@@ -1,50 +1,57 @@
+import { loginOrCreateUser } from 'api/loginOrCreateUser';
 import { Button } from 'components/Button/Button';
 import { useClickOutside } from 'hooks/useClickOutside';
 import { Dispatch, useCallback, useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import { ButtonSize, ButtonType } from 'types';
+import { User } from 'views/CreateMeeting/types';
 import './modal.scss';
 
 interface IModal {
     off: () => void;
-    setUser: Dispatch<string>;
-    password?: string;
-    setPassword?: Dispatch<string>;
+    setUser: Dispatch<User>;
     setEditMode: Dispatch<boolean>;
     setShowAllAvailabilities: Dispatch<boolean>
 }
 
-export const Modal = ({off, setUser, password, setPassword, setEditMode, setShowAllAvailabilities} : IModal) => {
+export const Modal = ({off, setUser, setEditMode, setShowAllAvailabilities} : IModal) => {
+
+    const { id } = useParams()
     const ref = useClickOutside(off);
-    const [localUser, setLocalUser] = useState('')
-    const defaultErrorMsg = { localUser: '', password: ''}
+    const [name, setName] = useState('')
+    const [password, setPassword] = useState('')
+    const defaultErrorMsg = { name: '', password: ''}
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg);
 
     const validate = useCallback(() => {
         let correct = true;
 
-        if (localUser.length === 0) {
-          setErrorMsg(errorMsg => ({ ...errorMsg, 'localUser': 'Enter the username' }));
+        if (name.length === 0) {
+          setErrorMsg(errorMsg => ({ ...errorMsg, 'name': 'Enter the username' }));
           correct = false;
         }
     
-        // if (password && password.length === 0) {
-        //   setErrorMsg(errorMsg => ({ ...errorMsg, 'password': 'Enter the password' }));
-        //   correct = false;
-        // }
-    
         return correct;
-      }, [localUser, password])
+      }, [name, password])
 
     useEffect(() => {
-        if (localUser.length > 0) setErrorMsg(errorMsg => ({ ...errorMsg, 'localUser': '' }));
-    }, [localUser])
+        if (name.length > 0) setErrorMsg(errorMsg => ({ ...errorMsg, 'name': '' }));
+    }, [name])
 
     const handleSubmit = async () => {
         if (validate()) {
-            setUser(localUser)
-            setEditMode(true)
-            setShowAllAvailabilities(false)
-            off()
+            const user: User = await loginOrCreateUser(name, password, id)
+            // Successful login or creation
+            if (user) {
+                setUser(user)
+                setEditMode(true)
+                setShowAllAvailabilities(false)
+                off()
+            }
+            // Unsuccessful login
+            else {
+                setErrorMsg(errorMsg => ({ ...errorMsg, 'password': 'Wrong password' }));
+            }
         }
     }
 
@@ -57,17 +64,12 @@ export const Modal = ({off, setUser, password, setPassword, setEditMode, setShow
             <div className='ModalContent'>
                 <div>
                     <label htmlFor='user'>Your name</label>
-                    <input type='text' name='user' value={localUser} className={`${errorMsg.localUser.length > 0 ? 'ErrorInput' : ''}`} onChange={(e) => setLocalUser(e.target.value)}></input>
-                    {errorMsg.localUser.length > 0 ? <span className='ErrorMsg'>{errorMsg.localUser}</span> : <span></span>}
-                    {
-                        password !== undefined ?
-                        <>
-                            <label htmlFor='password'>Pasword</label>
-                            <input type='text' name='password' value={password} onChange={(e) => setPassword && setPassword(e.target.value)}></input>
-                            <span>This meeting is protected by a password.</span>
-                        </>
-                        : null
-                    }
+                    <input type='text' name='user' value={name} className={`${errorMsg.name.length > 0 ? 'ErrorInput' : ''}`} onChange={(e) => setName(e.target.value)}></input>
+                    {errorMsg.name.length > 0 ? <span className='ErrorMsg'>{errorMsg.name}</span> : <span></span>}
+
+                    <label htmlFor='password'>Password (optional)</label>
+                    <input type='text' name='password' value={password} className={`${errorMsg.password.length > 0 ? 'ErrorInput' : ''}`} onChange={(e) => setPassword && setPassword(e.target.value)}></input>
+                    {errorMsg.password.length > 0 ? <span className='ErrorMsg'>{errorMsg.password}</span> : <span></span>}
                 </div>
             </div>
             <footer>

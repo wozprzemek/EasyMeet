@@ -1,13 +1,14 @@
-import { Availability } from "views/CreateMeeting/types";
+import { Availability, User } from "views/CreateMeeting/types";
 import { MeetingDate } from "./MeetingDate";
 
 export interface Meeting {
     id: string;
     name: string;
-    password: string;
     from: string;
     to: string;
     active: boolean;
     dates: MeetingDate[];
-    availabilities: { [key: string]: Availability[] };
+    users: User[];
+    // availabilities: { [key: string]: Availability[] };
+
 }

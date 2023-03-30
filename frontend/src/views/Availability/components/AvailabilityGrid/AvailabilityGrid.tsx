@@ -4,6 +4,7 @@ import moment from 'moment'
 import { Dispatch, useCallback, useEffect, useRef, useState } from 'react'
 import { Availability as TAvailability } from 'types/Availability'
 import { Meeting } from 'types/Meeting'
+import { User } from 'views/CreateMeeting/types'
 import { AvailabilityDetails } from '../AvailabilityDetails/AvailabilityDetails'
 import './availabilityGrid.scss'
 
@@ -81,7 +82,7 @@ const preventDefault = (event: any) => {
 
 interface IAvailabilityGrid {
   editMode: boolean;
-  user: string;
+  user: User | undefined;
   meetingData: Meeting | undefined;
   showAllAvailabilities: boolean;
   currentCell?: TimeCell;
@@ -108,7 +109,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   const backgroundColor: Color = {r: 16, g: 19, b: 25, a: 1}
 
   useEffect(() => {
-    setUserNumber(Object.keys((meetingData && meetingData.availabilities) ?? {}).length)
+    setUserNumber(Object.keys((meetingData && meetingData.users) ?? {}).length)
   }, [meetingData])
 
   // Persists time cells on change
@@ -124,8 +125,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   
     const availabilities = selectedCells.map((timeCell) => {
       return {
-        meeting: meetingData!.id,
-        user: user,
+        // user: user!.id,
         time: timeCell.time.toISOString()
       }
     })
@@ -153,21 +153,21 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
         })
       )
     )
-
-    // Loop over all marked user availabilities and display them
+      
+    // Loop through users and mark time cells
     initTimeCells.flat().map(timeCell => {
-      for (let usr of Object.entries(meetingData!.availabilities)) {
-        for (let av of usr[1]) {
+      for (const usr of meetingData!.users) {
+        console.log(usr);
+        for (const av of usr!.availabilities!) {
           if (timeCell.time.isSame(moment(av.time))) {
-            timeCell.markedBy.push(usr[0])            
-            if (usr[0] === user) {
+            timeCell.markedBy.push(usr.name)            
+            if (usr.id === user?.id) {
               timeCell.saved = true
               timeCell.selected = true
             }
           }
         }
       }
-      timeCell.time.toDate() 
     });
 
     // Format time labels
@@ -202,12 +202,14 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
 
   const persistCells = async () => {
     try {
-      const updateData = {
-        meeting: meetingData!.id,
-        user: user,
-        availabilities: availabilities
+      if (user) {
+        const updateData = {
+          user: user.id,
+          password: user?.password,
+          availabilities: availabilities
+        }
+        await updateAvailabilities(updateData)
       }
-      await updateAvailabilities(updateData)
     }
     catch(error){ 
       console.error(error)
@@ -215,7 +217,6 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   }
 
   const onCellEnter = (event: any, timeCell: TimeCell) => {
-    console.log('onCellEnter', clearTimerRef.current);
     setCurrentCell(timeCell)
     let currentCell = document.elementFromPoint(event.pageX, event.pageY)
     if (isClicked && currentCell?.classList.contains('TimeCell') && startCell) {
@@ -239,15 +240,12 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   }
 
   const startSelect = (event: any, timeCell: TimeCell) => {
-    console.log('start select');
-    
     setIsClicked(true)
     setStartCell(timeCell)
     setCurrentCell(timeCell)
   }
 
   const startTouchSelect = (event: any, timeCell: TimeCell) => {
-    console.log('start touch select');
     clearTimerRef.current = window.setTimeout(() => {enableDrag(event)}, longTouchDuration)
     setCurrentCell(timeCell)
     setIsClicked(true)
@@ -255,18 +253,15 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   }
 
   const enableDrag = (event: any) => {
-    console.log('enable drag');
     gridHTMLElement.current?.addEventListener('touchmove', preventDefault, {passive: false})
     setDragEnabled(true)
   }
 
   const touchDragSelect = (event: any, timeCell: TimeCell) => {
     const touch = event && event.touches[0];
-    console.log('dragEnabled', dragEnabled);
     window.clearTimeout(clearTimerRef.current)
 
     if (touch && dragEnabled) {
-      console.log('touch drag select');
       event.preventDefault()
       const currentCell = document.elementFromPoint(touch.clientX, touch.clientY)
       if (currentCell?.classList.contains('TimeCell')) {
@@ -298,15 +293,12 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
 
   const endTouchSelect = (event: any, timeCell: TimeCell) => {
     gridHTMLElement.current?.removeEventListener('touchmove', preventDefault, false)
-    console.log('REMOVED???');
     
     if (clearTimerRef.current) {
-      console.log('clearing timer');
       window.clearTimeout(clearTimerRef.current)
       clearTimerRef.current = undefined
       setDragEnabled(false)
     }
-    console.log('cleaned?', clearTimerRef.current);
     endSelect(event, timeCell)
   }
 
