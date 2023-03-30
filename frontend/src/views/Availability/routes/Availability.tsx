@@ -68,7 +68,6 @@ export const Availability = () => {
                         </Button>
                     </div>
                   <div className='GridButtonWrapper'>
-                    <AvailabilityLegend userCount={userCount}/>
                     <AvailabilityGrid userCount={userCount} setUserNumber={setUserNumber} currentCell={currentCell} setCurrentCell={setCurrentCell} 
                     editMode={editMode} user={user} meetingData={meetingData} showAllAvailabilities={showAllAvailabilities}/>
                     { editMode ? 
@@ -79,6 +78,7 @@ export const Availability = () => {
                       </Button> 
                       : <Button type={ButtonType.CIRCLE} size={ButtonSize.LG} onClick={() => handleModalOn()}><PlusIcon/></Button> 
                     }
+                    <AvailabilityLegend userCount={userCount}/>
                   </div>
               </div>
           </div>
