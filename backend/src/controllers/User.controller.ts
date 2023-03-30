@@ -46,8 +46,6 @@ export const UserController = {
         try {
             const data: { name: string, password: string, meeting: Meeting } = req.body
             const user = await DI.em.findOne(User, { name: data.name, meeting: data.meeting })
-            console.log(user);
-
             // User exists - log the user in
             if (user !== null) {
                 if (user.password === data.password) {
@@ -77,18 +75,6 @@ export const UserController = {
             wrap(user).assign(data);
             await DI.em.flush();
             res.send(user)
-            // const query = await DI.em.find(Availability, { user: data.user }) // FIX MEETING NULL!
-            // // remove all user availabilities
-            // console.log('query', query);
-
-            // query.forEach(async (availability) => {
-            //     await DI.em.remove(availability).flush();
-            // })
-            // data.availabilities.forEach(async (availability) => {
-            //     const newAvailability = DI.em.create(Availability, availability)
-            //     await DI.em.persistAndFlush(newAvailability)
-            // })
-            // res.send(data)
         } catch (error) {
             console.error(error)
             res.sendStatus(500)

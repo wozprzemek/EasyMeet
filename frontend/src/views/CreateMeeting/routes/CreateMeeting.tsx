@@ -69,8 +69,6 @@ export const CreateMeeting = () => {
   
   useEffect(() => {
     if (selectedDates.length > 0) setErrorMsg(errorMsg => ({ ...errorMsg, 'dates': '' }));
-    console.log(selectedDates.map(date => `${date.month}-${date.day}`));
-    
   }, [selectedDates])
 
   useEffect(() => {

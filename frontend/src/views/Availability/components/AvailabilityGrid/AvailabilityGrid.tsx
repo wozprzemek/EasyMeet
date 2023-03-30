@@ -153,29 +153,14 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
         })
       )
     )
-    
-    // Loop over all marked user availabilities and display them
-    // initTimeCells.flat().map(timeCell => {
-    //   for (let usr of Object.entries(meetingData!.availabilities)) {
-    //     for (let av of usr[1]) {
-    //       if (timeCell.time.isSame(moment(av.time))) {
-    //         timeCell.markedBy.push(usr[0])            
-    //         if (usr[0] === user) {
-    //           timeCell.saved = true
-    //           timeCell.selected = true
-    //         }
-    //       }
-    //     }
-    //   }
-    //   timeCell.time.toDate() 
-    // });
-
+      
+    // Loop through users and mark time cells
     initTimeCells.flat().map(timeCell => {
       for (const usr of meetingData!.users) {
         console.log(usr);
         for (const av of usr!.availabilities!) {
           if (timeCell.time.isSame(moment(av.time))) {
-            timeCell.markedBy.push(usr.id)            
+            timeCell.markedBy.push(usr.name)            
             if (usr.id === user?.id) {
               timeCell.saved = true
               timeCell.selected = true

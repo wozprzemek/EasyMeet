@@ -51,9 +51,6 @@ export const Availability = () => {
     return <Loading />
   }
 
-  console.log(meetingData);
-  
-  
   return (
     <ContentLayout>
         {showModal ? <Modal setEditMode={setEditMode} setShowAllAvailabilities={setShowAllAvailabilities}

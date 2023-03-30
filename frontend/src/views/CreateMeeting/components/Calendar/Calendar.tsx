@@ -109,8 +109,6 @@ export const Calendar = ({selectedDates, setSelectedDates, errorMsg}: ICalendar)
             const nextMonthDays = getNextMonthDays(month, year, Array.from(previousMonthDays, x => x.date), Array.from(currentMonthDays, x => x.date))
         
             const allDays = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays]
-            console.log(allDays.map(date => `${date.date} ${date.date.getMonth()}`));
-            
             return allDays
         },
         [selectedMonth],
