@@ -1,7 +1,7 @@
 import { updateAvailabilities } from 'api/updateUserAvailabilities'
 import { queryClient } from 'config/react-query'
 import moment from 'moment'
-import { Dispatch, useCallback, useEffect, useRef, useState } from 'react'
+import { Dispatch, useEffect, useRef, useState } from 'react'
 import { Availability as TAvailability } from 'types/Availability'
 import { Meeting } from 'types/Meeting'
 import { User } from 'views/CreateMeeting/types'
@@ -29,6 +29,11 @@ export interface TimeCell {
   saved: boolean
 }
 
+// Color definitions for time cell coloring
+export const baseCellColor: Color = {r: 50, g: 53, b: 58, a: 1}
+export const selectedCellColor: Color = {r: 224, g: 100, b: 97, a: 1}
+export const backgroundColor: Color = {r: 16, g: 19, b: 25, a: 1}
+
 // allows for easy cell color scaling
 // source: https://stackoverflow.com/questions/21576092/convert-rgba-to-hex/21576659#21576659
 const rgba2rgb = (background: Color, rgba: Color) : Color => {
@@ -45,7 +50,7 @@ const rgba2rgb = (background: Color, rgba: Color) : Color => {
 }
 
 // calculates color for cells based on the number of users 
-const calculateCellColor = (cellUsers: number, totalUsers: number, background: Color, selectedCellColor: Color, baseCellColor: Color) => {
+export const calculateCellColor = (cellUsers: number, totalUsers: number, background: Color, selectedCellColor: Color, baseCellColor: Color) : Color => {
   if (cellUsers === 0) {
     return baseCellColor
   }
@@ -103,11 +108,6 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   const [dragEnabled, setDragEnabled] = useState(false) // Is drag enabled
   const clearTimerRef = useRef<number|undefined>(undefined)
 
-  // Color definitions for time cell coloring
-  const baseCellColor: Color = {r: 50, g: 53, b: 58, a: 1}
-  const selectedCellColor: Color = {r: 224, g: 100, b: 97, a: 1}
-  const backgroundColor: Color = {r: 16, g: 19, b: 25, a: 1}
-
   useEffect(() => {
     setUserNumber(Object.keys((meetingData && meetingData.users) ?? {}).length)
   }, [meetingData])
@@ -157,7 +157,6 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
     // Loop through users and mark time cells
     initTimeCells.flat().map(timeCell => {
       for (const usr of meetingData!.users) {
-        console.log(usr);
         for (const av of usr!.availabilities!) {
           if (timeCell.time.isSame(moment(av.time))) {
             timeCell.markedBy.push(usr.name)            

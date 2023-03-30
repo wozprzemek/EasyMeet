@@ -11,6 +11,7 @@ import { ButtonSize, ButtonType } from 'types'
 import { Meeting } from 'types/Meeting'
 import { User } from 'views/CreateMeeting/types'
 import { AvailabilityGrid, TimeCell } from '../components/AvailabilityGrid/AvailabilityGrid'
+import { AvailabilityLegend } from '../components/AvailabilityLegend/AvailabilityLegend'
 import './availability.scss'
 
 export const Availability = () => {
@@ -66,9 +67,8 @@ export const Availability = () => {
                           Invite
                         </Button>
                     </div>
-                    {/* <AvailabilityDetails userCount={userCount} setUserNumber={setUserNumber} currentCell={currentCell} /> */}
-                  {/* </div>       */}
                   <div className='GridButtonWrapper'>
+                    <AvailabilityLegend userCount={userCount}/>
                     <AvailabilityGrid userCount={userCount} setUserNumber={setUserNumber} currentCell={currentCell} setCurrentCell={setCurrentCell} 
                     editMode={editMode} user={user} meetingData={meetingData} showAllAvailabilities={showAllAvailabilities}/>
                     { editMode ? 
