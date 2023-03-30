@@ -1,8 +1,10 @@
 import { axios } from "config/axios"
 import { Availability } from "types/Availability"
+import { User } from "views/CreateMeeting/types";
 
 interface IUpdateAvailabilities {
     user: string;
+    password: string;
     availabilities: Availability[];
 }
 

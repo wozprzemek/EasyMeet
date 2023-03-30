@@ -9,13 +9,13 @@ export class User {
     @PrimaryKey({ columnType: 'uuid' })
     id = uuidv4();
 
-    @PrimaryKey({ length: 50 })
+    @Property({ length: 50 })
     name!: string;
 
     @Property({ length: 100 })
     password: string;
 
-    @ManyToOne(() => Meeting, { primary: true })
+    @ManyToOne(() => Meeting)
     meeting!: Meeting;
 
     @OneToMany(() => Availability, a => a.user, { cascade: [Cascade.ALL], orphanRemoval: true })

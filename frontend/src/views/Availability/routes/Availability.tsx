@@ -16,7 +16,7 @@ import './availability.scss'
 export const Availability = () => {
   const {id} = useParams()
   const {data: meetingData, status: meetingStatus, refetch: meetingRefetch} = useQuery<Meeting>(['meeting', id], () => getMeeting(id))
-  const [user, setUser] = useState<User | {}>()
+  const [user, setUser] = useState<User | undefined>()
   const [password, setPassword] = useState('')
   const [editMode, setEditMode] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -38,7 +38,7 @@ export const Availability = () => {
   const handleModalOn = () => {
     document.body.style.overflow = 'hidden';
     setShowModal(true)
-    setUser({})
+    setUser(undefined)
     setPassword('')
   }
 

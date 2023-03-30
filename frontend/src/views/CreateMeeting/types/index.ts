@@ -19,7 +19,9 @@ export interface Availability {
 }
 
 export interface User {
+    id: string;
     name: string;
+    password: string;
     meeting_id: string;
     availabilities?: Availability[];
 }

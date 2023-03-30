@@ -1,5 +1,5 @@
 export interface Availability {
-    user: string;
+    // user: string;
     time: string;
-    meeting: string;
+    // meeting: string;
 }

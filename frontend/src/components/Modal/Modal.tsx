@@ -70,7 +70,6 @@ export const Modal = ({off, setUser, setEditMode, setShowAllAvailabilities} : IM
                     <label htmlFor='password'>Password (optional)</label>
                     <input type='text' name='password' value={password} className={`${errorMsg.password.length > 0 ? 'ErrorInput' : ''}`} onChange={(e) => setPassword && setPassword(e.target.value)}></input>
                     {errorMsg.password.length > 0 ? <span className='ErrorMsg'>{errorMsg.password}</span> : <span></span>}
-
                 </div>
             </div>
             <footer>

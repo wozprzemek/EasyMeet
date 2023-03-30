@@ -46,6 +46,7 @@ export const UserController = {
         try {
             const data: { name: string, password: string, meeting: Meeting } = req.body
             const user = await DI.em.findOne(User, { name: data.name, meeting: data.meeting })
+            console.log(user);
 
             // User exists - log the user in
             if (user !== null) {
