@@ -4,7 +4,7 @@ WORKDIR /backend
 
 COPY package*.json ./
 
-RUN if [ "$mode" = "dev" ] ; then npm install ; else npm ci --only=production ; fi
+RUN npm install
 
 COPY . .
 
