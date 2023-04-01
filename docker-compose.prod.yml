@@ -18,6 +18,7 @@ services:
   backend:
       build:
         context: ./backend
+      image: ghcr.io/wozprzemek/easymeet_backend
       ports:
         - 8000:8000
       command: sh -c "npx mikro-orm schema:update -r && npx mikro-orm migration:up && npx tsc && node dist/index.js"
@@ -29,6 +30,7 @@ services:
       build:
         context: ./frontend
         dockerfile: Dockerfile.prod
+      image: ghcr.io/wozprzemek/easymeet_frontend
       ports:
         - 3000:3000
       stdin_open: true
@@ -39,6 +41,7 @@ services:
   nginx:
     build:
       context: ./nginx
+    image: ghcr.io/wozprzemek/easymeet_nginx
     ports:
       - 80:8080
     depends_on:

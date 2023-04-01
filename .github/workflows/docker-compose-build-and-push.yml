@@ -26,3 +26,6 @@ jobs:
 
       - name: Build Docker Compose images
         run: docker-compose -f docker-compose.prod.yml build
+
+      - name: Push Docker Compose images
+        run: docker-compose -f docker-compose.prod.yml push
