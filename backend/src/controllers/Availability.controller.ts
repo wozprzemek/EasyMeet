@@ -2,41 +2,29 @@ import { Request, Response } from "express";
 import { DI } from "../..";
 import { Availability } from "../entities/Availability.entity";
 import { User } from "../entities/User.entity";
+import { AvailabilityQuery } from "../schemas/Availability.schema";
+import { AvailabilityService } from "../services/Availability.service";
 
 export const AvailabilityController = {
-    getMany: async (req: Request, res: Response) => {
+    getMany: async (req: Request<{}, Availability[], {}, AvailabilityQuery>, res: Response<Availability[]>) => {
         try {
-            if (!req.query) {
-                const result = await DI.em.find(Availability, {})
-                res.send(result)
+            const { user, time } = req.query
+            const query = {
+                ...(user && {user: user}),
+                ...(time && {time: time})
             }
-            else {
-                let filter: { time?: any, meeting?: any } = {}
-                if (req.query.meeting_id && req.query.date) {
-                    filter = { meeting: req.query.meeting_id, time: req.query.time }
-                }
-                else {
-                    if (req.query.meeting_id) {
-                        filter = { meeting: req.query.meeting_id }
-                    }
-                    else if (req.query.time) {
-                        filter = { time: req.query.time }
-                    }
-                }
-                const result = await DI.em.find(Availability, filter)
-                res.send(result)
-            }
+            const data = await AvailabilityService.getMany(query)
+            res.send(data)
         } catch (error) {
-            console.error(error);
-            res.status(500).send(500)
+            res.sendStatus(500)
         }
     },
     getOne: async (req: Request, res: Response) => {
         try {
-            const result = await DI.em.findOne(Availability, { id: req.params.id as string })
-            res.send(result)
+            const id = req.params.id
+            const data = await AvailabilityService.getOne(id)
+            res.send(data)
         } catch (error) {
-            console.error(error)
             res.sendStatus(500)
         }
     },
@@ -55,7 +43,6 @@ export const AvailabilityController = {
             })
             res.send(data)
         } catch (error) {
-            console.error(error)
             res.sendStatus(500)
         }
     }

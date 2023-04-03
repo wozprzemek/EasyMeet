@@ -12,9 +12,9 @@ export class Availability {
 
     @Property({ columnType: 'timestamp with time zone' })
     @Check({ expression: '(EXTRACT (MINUTE FROM "time") IN (0, 30)) AND (EXTRACT (SECOND FROM "time") = 0)' })
-    time!: DateTimeType;
+    time!: string; // consider DateTimeType
 
-    constructor(user: User, time: DateTimeType) {
+    constructor(user: User, time: string) {
         this.user = user;
         this.time = time;
     }
