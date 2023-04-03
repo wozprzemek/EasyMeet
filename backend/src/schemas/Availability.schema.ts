@@ -11,5 +11,12 @@ export const AvailabilityResponse = z.object({
     user: z.string().uuid(),
 })
 
+export const AvailabilityUpdateRequestBody = z.object({
+    user: z.string().uuid(),
+    password: z.string(),
+    availabilities: z.array(AvailabilityResponse),
+})
+
 export type AvailabilityQuery = z.infer<typeof AvailabilityQuery>
+export type AvailabilityUpdateRequestBody = z.infer<typeof AvailabilityUpdateRequestBody>
 export type AvailabilityResponse = z.infer<typeof AvailabilityResponse>

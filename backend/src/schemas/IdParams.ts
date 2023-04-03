@@ -4,4 +4,4 @@ export const IdParams = z.object({
     id: z.string().uuid(),
 })
 
-export type AvailabilityQuery = z.infer<typeof IdParams>
+export type IdParams = z.infer<typeof IdParams>
