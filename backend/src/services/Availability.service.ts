@@ -2,7 +2,7 @@ import { DI } from "../..";
 import { Availability } from "../entities/Availability.entity";
 import { User } from "../entities/User.entity";
 import { AvailabilityQuery, AvailabilityUpdateRequestBody } from "../schemas/Availability.schema";
-import { IdParams } from "../schemas/IdParams";
+import { IdParams } from "../interfaces/IdParams";
 
 export const AvailabilityService = {
     getMany: async (query: AvailabilityQuery) => {

@@ -8,6 +8,7 @@ import MeetingRoutes from "./src/routes/Meeting.routes";
 import MeetingDateRoutes from "./src/routes/MeetingDate.routes";
 import cors from "cors"
 import UserRoutes from "./src/routes/User.routes";
+import { errorHandler } from "./src/middlewares/errorHandler";
 
 const app = express()
 
@@ -35,8 +36,10 @@ export const DI = {} as {
     app.use(`${BASE_URL}/users`, UserRoutes)
 
     app.use('*', (req, res) => {
-        res.send('sY')
+        res.sendStatus(404)
     })
+
+    app.use(errorHandler);
 
     DI.server = app.listen(PORT, HOST, () => {
         console.log(`listening on ${PORT}`);

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { DI } from "../..";
 import { Availability } from "../entities/Availability.entity";
 import { AvailabilityQuery, AvailabilityResponse, AvailabilityUpdateRequestBody } from "../schemas/Availability.schema";
-import { IdParams } from "../schemas/IdParams";
+import { IdParams } from "../interfaces/IdParams";
 import { AvailabilityService } from "../services/Availability.service";
 
 export const AvailabilityController = {
