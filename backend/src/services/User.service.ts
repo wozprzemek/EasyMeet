@@ -1,8 +1,7 @@
-import { Request, Response } from "express";
-import { UserLoginOrCreateRequestBody, UserQuery } from "../schemas/User.schema";
 import { DI } from "../..";
 import { User } from "../entities/User.entity";
 import { IdParams } from "../interfaces/IdParams";
+import { UserLoginOrCreateRequestBody, UserQuery } from "../schemas/User.schema";
 
 export const UserService = {
     getMany: async (query: UserQuery) => {

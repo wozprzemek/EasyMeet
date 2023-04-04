@@ -1,4 +1,4 @@
-import { Check, DateTimeType, Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { Check, Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuidv4 } from 'uuid';
 import { User } from './User.entity';
 

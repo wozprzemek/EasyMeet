@@ -1,8 +1,8 @@
 import { DI } from "../..";
 import { Availability } from "../entities/Availability.entity";
 import { User } from "../entities/User.entity";
-import { AvailabilityQuery, AvailabilityUpdateRequestBody } from "../schemas/Availability.schema";
 import { IdParams } from "../interfaces/IdParams";
+import { AvailabilityQuery, AvailabilityUpdateRequestBody } from "../schemas/Availability.schema";
 
 export const AvailabilityService = {
     getMany: async (query: AvailabilityQuery) => {
@@ -13,7 +13,7 @@ export const AvailabilityService = {
         const data = await DI.em.findOne(Availability, id)
         return data
     },
-    updateUserAvailabilities: async ({user, password, availabilities}: AvailabilityUpdateRequestBody) => {
+    updateUserAvailabilities: async ({ user, password, availabilities }: AvailabilityUpdateRequestBody) => {
         // get the user ----- MOVE TO USER SERVICE
         const userInfo = await DI.em.findOne(User, { id: user, password: password })
         if (!userInfo) {

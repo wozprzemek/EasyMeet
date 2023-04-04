@@ -1,4 +1,4 @@
-import { DateType, Entity, ManyToOne, PrimaryKey } from '@mikro-orm/core';
+import { Entity, ManyToOne, PrimaryKey } from '@mikro-orm/core';
 import { v4 as uuidv4 } from 'uuid';
 import { Meeting } from './Meeting.entity';
 
@@ -9,12 +9,12 @@ export class MeetingDate {
     id = uuidv4();
 
     @PrimaryKey({ columnType: 'date' })
-    date!: DateType;
+    date!: string;
 
     @ManyToOne(() => Meeting, { primary: true })
     meeting!: Meeting;
 
-    constructor(date: DateType, meeting: Meeting) {
+    constructor(date: string, meeting: Meeting) {
         this.date = date;
         this.meeting = meeting;
     }

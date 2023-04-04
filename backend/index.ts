@@ -1,14 +1,14 @@
 import { EntityManager, MikroORM, RequestContext } from "@mikro-orm/core";
 import bodyParser from 'body-parser';
+import cors from "cors";
 import express from "express";
 import http from 'http';
+import { errorHandler } from "./src/middlewares/errorHandler";
 import options from "./src/mikro-orm.config";
 import AvailabilityRoutes from "./src/routes/Availability.routes";
 import MeetingRoutes from "./src/routes/Meeting.routes";
 import MeetingDateRoutes from "./src/routes/MeetingDate.routes";
-import cors from "cors"
 import UserRoutes from "./src/routes/User.routes";
-import { errorHandler } from "./src/middlewares/errorHandler";
 
 const app = express()
 
