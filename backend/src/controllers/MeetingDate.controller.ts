@@ -1,42 +1,29 @@
 import { Request, Response } from "express";
-import { DI } from "../..";
 import { MeetingDate } from "../entities/MeetingDate.entity";
+import { IdParams } from "../interfaces/IdParams";
+import { MeetingDateQuery } from "../schemas/MeetingDate.schema";
+import { MeetingDateService } from "../services/MeetingDate.service";
 
 export const MeetingDateController = {
-    getMany: async (req: Request, res: Response) => {
-
+    getMany: async (req: Request<{}, MeetingDate[], {}, MeetingDateQuery>, res: Response<MeetingDate[]>) => {
         try {
-            if (!req.query) {
-                const result = await DI.em.find(MeetingDate, {})
-                res.send(result)
+            const { date, meeting } = req.query
+            const query = {
+                ...(date && { date: date }),
+                ...(meeting && { meeting: meeting })
             }
-            else {
-                let filter: { date?: any, meeting?: any } = {}
-                if (req.query.meeting_id && req.query.date) {
-                    filter = { meeting: req.query.meeting_id, date: req.query.date }
-                }
-                else {
-                    if (req.query.meeting_id) {
-                        filter = { meeting: req.query.meeting_id }
-                    }
-                    else if (req.query.date) {
-                        filter = { date: req.query.date }
-                    }
-                }
-                const result = await DI.em.find(MeetingDate, filter)
-                res.send(result)
-            }
+            const data = await MeetingDateService.getMany(query)
+            return data
         } catch (error) {
-            console.error(error);
-            res.status(500).send(500)
+            res.sendStatus(500)
         }
     },
-    getOne: async (req: Request, res: Response) => {
+    getOne: async (req: Request<IdParams, MeetingDate, {}, {}>, res: Response<MeetingDate | null>) => {
         try {
-            const result = await DI.em.findOne(MeetingDate, { id: req.params.id })
-            res.send(result)
+            const id = req.params.id
+            const data = await MeetingDateService.getOne({ id: id })
+            res.send(data)
         } catch (error) {
-            console.error(error);
             res.sendStatus(500)
         }
     }

@@ -1,65 +1,37 @@
-import { DateTimeType, wrap } from "@mikro-orm/core";
 import { Request, Response } from "express";
-import { DI } from "../..";
-import { Availability } from "../entities/Availability.entity";
 import { Meeting } from "../entities/Meeting.entity";
-import { MeetingDate } from "../entities/MeetingDate.entity";
-import { User } from "../entities/User.entity";
+import { IdParams } from "../interfaces/IdParams";
+import { MeetingCreateRequestBody, MeetingResponse } from "../schemas/Meeting.schema";
+import { MeetingService } from "../services/Meeting.service";
 
 export const MeetingController = {
-    getAll: async (req: Request, res: Response) => {
+    getAll: async (req: Request<{}, Meeting[], {}, {}>, res: Response<Meeting[]>) => {
         try {
-            const query = await DI.em.find(Meeting, {})
-            res.send(query)
+            const data = await MeetingService.getMany()
+            res.send(data)
         } catch (error) {
-            console.error(error);
-            res.status(500).send(500)
-        }
-    },
-    getOne: async (req: Request, res: Response) => {
-        try {
-            const query = await DI.em.findOne(Meeting, { id: req.params.id }, { populate: ['dates.date', 'users.availabilities.time'] })
-            res.send(query)
-        } catch (error) {
-            console.error(error);
             res.sendStatus(500)
         }
     },
-    add: async (req: Request, res: Response) => {
+    getOne: async (req: Request<IdParams, Meeting, {}, {}>, res: Response<Meeting | null>) => {
         try {
-            const data: { name: string, dates: MeetingDate[], from: DateTimeType, to: DateTimeType, active: boolean } = req.body
-            if (data.dates.length === 0) {
+            const id = req.params.id
+            const data = await MeetingService.getOne({ id: id })
+            res.send(data)
+        } catch (error) {
+            res.sendStatus(500)
+        }
+    },
+    add: async (req: Request<{}, {}, MeetingCreateRequestBody, {}>, res: Response<MeetingResponse | string>) => {
+        try {
+            const { name, dates, from, to, active } = req.body
+            if (dates.length === 0) {
                 res.status(500).send('Meeting must have dates.')
                 return
             }
-            const meeting = DI.em.create(Meeting, data)
-            await DI.em.persistAndFlush(meeting)
-            res.send(meeting.id)
+            const data = await MeetingService.add({ name, dates, from, to, active })
+            res.send(data)
         } catch (error) {
-            console.error(error)
-            res.sendStatus(500)
-        }
-    },
-    update: async (req: Request, res: Response) => {
-        try {
-            const data: { name?: string, dates?: MeetingDate[], users?: User[], from?: DateTimeType, to?: DateTimeType, active?: boolean } = req.body
-            const meeting = await DI.em.findOneOrFail(Meeting, { id: req.params.id }, { populate: ['dates', 'users'] });
-
-            wrap(meeting).assign(data);
-            await DI.em.flush();
-            res.send(meeting)
-        } catch (error) {
-            console.error(error);
-            res.sendStatus(500)
-        }
-    },
-    delete: async (req: Request, res: Response) => {
-        try {
-            const meeting = DI.em.getReference(Meeting, req.params.id);
-            await DI.em.remove(meeting).flush();
-            res.send('deleted a meeting')
-        } catch (error) {
-            console.error(error);
             res.sendStatus(500)
         }
     },
