@@ -1,10 +1,8 @@
 import { Request, Response } from "express";
-import { DI } from "../..";
-import { Meeting } from "../entities/Meeting.entity";
 import { User } from "../entities/User.entity";
+import { IdParams } from "../interfaces/IdParams";
 import { UserLoginOrCreateRequestBody, UserQuery } from "../schemas/User.schema";
 import { UserService } from "../services/User.service";
-import { IdParams } from "../interfaces/IdParams";
 
 export const UserController = {
     getMany: async (req: Request<{}, User[], {}, UserQuery>, res: Response<User[]>) => {
