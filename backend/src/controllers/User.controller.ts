@@ -1,82 +1,40 @@
-import { wrap } from "@mikro-orm/core";
 import { Request, Response } from "express";
 import { DI } from "../..";
-import { Availability } from "../entities/Availability.entity";
 import { Meeting } from "../entities/Meeting.entity";
 import { User } from "../entities/User.entity";
+import { UserLoginOrCreateRequestBody, UserQuery } from "../schemas/User.schema";
+import { UserService } from "../services/User.service";
+import { IdParams } from "../interfaces/IdParams";
 
 export const UserController = {
-    getMany: async (req: Request, res: Response) => {
+    getMany: async (req: Request<{}, User[], {}, UserQuery>, res: Response<User[]>) => {
         try {
-            if (!req.query) {
-                const result = await DI.em.find(User, {})
-                res.send(result)
+            const { name, meeting } = req.query
+            const query = {
+                ...(name && { name: name }),
+                ...(meeting && { meeting: meeting })
             }
-            else {
-                let filter: { time?: any, meeting?: any } = {}
-                if (req.query.meeting_id && req.query.date) {
-                    filter = { meeting: req.query.meeting_id, time: req.query.time }
-                }
-                else {
-                    if (req.query.meeting_id) {
-                        filter = { meeting: req.query.meeting_id }
-                    }
-                    else if (req.query.time) {
-                        filter = { time: req.query.time }
-                    }
-                }
-                const result = await DI.em.find(User, filter)
-                res.send(result)
-            }
+            const users = await UserService.getMany(query)
+            res.send(users)
         } catch (error) {
-            console.error(error);
-            res.status(500).send(500)
-        }
-    },
-    getOne: async (req: Request, res: Response) => {
-        try {
-            const result = await DI.em.findOne(User, { id: req.params.id as string }, { populate: ['availabilities'] })
-            res.send(result)
-        } catch (error) {
-            console.error(error)
             res.sendStatus(500)
         }
     },
-    loginOrCreate: async (req: Request, res: Response) => {
+    getOne: async (req: Request<IdParams, User, {}, {}>, res: Response<User | null>) => {
         try {
-            const data: { name: string, password: string, meeting: Meeting } = req.body
-            const user = await DI.em.findOne(User, { name: data.name, meeting: data.meeting })
-            // User exists - log the user in
-            if (user !== null) {
-                if (user.password === data.password) {
-                    res.send(user)
-                }
-                else {
-                    res.sendStatus(401)
-                }
-            }
-            // User does not exist - create the user
-            else {
-                const user = DI.em.create(User, data)
-                await DI.em.persistAndFlush(user)
-                res.send(user)
-            }
-
-        } catch (error) {
-            console.error(error)
-            res.sendStatus(500)
-        }
-    },
-    update: async (req: Request, res: Response) => {
-        const data: { user: User, availabilities: Availability[] } = req.body
-        try {
-            const user = await DI.em.findOneOrFail(User, { id: req.params.id });
-
-            wrap(user).assign(data);
-            await DI.em.flush();
+            const id = req.params.id
+            const user = await UserService.getOne({ id: id })
             res.send(user)
         } catch (error) {
-            console.error(error)
+            res.sendStatus(500)
+        }
+    },
+    loginOrCreate: async (req: Request<{}, User, UserLoginOrCreateRequestBody, {}>, res: Response<User>) => {
+        try {
+            const { name, password, meeting } = req.body
+            const user = await UserService.loginOrCreate({ name, password, meeting })
+            res.send(user)
+        } catch (error) {
             res.sendStatus(500)
         }
     },
