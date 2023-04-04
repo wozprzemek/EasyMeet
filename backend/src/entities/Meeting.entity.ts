@@ -19,16 +19,16 @@ export class Meeting {
 
   @Property({ columnType: 'timestamp with time zone' })
   @Check({ expression: '(EXTRACT (MINUTE FROM "from") IN (0, 30)) AND (EXTRACT (SECOND FROM "from") = 0)' })
-  from!: DateTimeType;
+  from!: string;
 
   @Property({ columnType: 'timestamp with time zone' })
   @Check({ expression: '(EXTRACT (MINUTE FROM "to") IN (0, 30)) AND (EXTRACT (SECOND FROM "to") = 0) AND ("to" > "from")' })
-  to!: DateTimeType;
+  to!: string;
 
   @Property({ default: true })
   active: boolean = true
 
-  constructor(name: string, from: DateTimeType, to: DateTimeType, active: boolean) {
+  constructor(name: string, from: string, to: string, active: boolean) {
     this.name = name;
     this.from = from;
     this.to = to;
