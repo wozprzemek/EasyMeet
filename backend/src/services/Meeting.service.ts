@@ -8,10 +8,6 @@ export const MeetingService = {
         const data = await DI.em.find(Meeting, {})
         return data
     },
-    // getOne: async (id: IdParams) => {
-    //     const data = await DI.em.findOne(Meeting, id, { populate: ['dates.date', 'users.availabilities.time'] })
-    //     return data
-    // },
     getOne: async (id: IdParams) => {
         const data = await DI.em.findOne(Meeting, id, {
             fields: [

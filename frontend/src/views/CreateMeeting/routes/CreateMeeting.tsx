@@ -41,9 +41,7 @@ export const CreateMeeting = () => {
       }
     }
     
-    catch (error) {
-      console.error(error)
-    }
+    catch (error) {}
   }, [name, from, to, selectedDates])
 
   const validate = useCallback(() => {

@@ -210,9 +210,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
         await updateAvailabilities(updateData)
       }
     }
-    catch(error){ 
-      console.error(error)
-    }
+    catch(error){}
   }
 
   const onCellEnter = (event: any, timeCell: TimeCell) => {

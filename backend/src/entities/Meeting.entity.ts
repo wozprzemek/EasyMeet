@@ -1,4 +1,4 @@
-import { Cascade, Check, Collection, DateTimeType, Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
+import { Cascade, Check, Collection, Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuidv4 } from 'uuid';
 import { MeetingDate } from './MeetingDate.entity';
 import { User } from './User.entity';
