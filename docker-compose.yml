@@ -43,7 +43,7 @@ services:
       context: ./nginx
     image: ghcr.io/wozprzemek/easymeet_nginx
     ports:
-      - 443:443
+      - 80:8080
     depends_on:
       - backend
       - frontend

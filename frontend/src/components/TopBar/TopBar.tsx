@@ -19,10 +19,10 @@ export const TopBar = () => {
     <div className='TopBarContainer'>
       <Link to='/'><Logo /></Link>
       <div className='ButtonContainer'>
-        <SunIcon className='ModeChangeButton'></SunIcon>
+        {/* <SunIcon className='ModeChangeButton'></SunIcon> */}
         <Link to='/create/'><Button type={ButtonType.OUTLINE} size={ButtonSize.SM}>Create</Button></Link>
       </div>
-      <Bars3Icon className='ShowMenuButton'/>
+      {/* <Bars3Icon className='ShowMenuButton'/> */}
     </div>
   )
 }

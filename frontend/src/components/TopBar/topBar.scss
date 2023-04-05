@@ -54,9 +54,9 @@ a {
     align-items: center;
     gap: 1.25rem;
 
-    @media only screen and (max-width: 640px) {
-        display: none;
-    }
+    // @media only screen and (max-width: 640px) {
+    //     display: none;
+    // }
 }
 
 .ModeChangeButton {
@@ -65,11 +65,11 @@ a {
     cursor: pointer;
 }
 
-.ShowMenuButton {
-    display: none;
-    height: 1.5rem;
+// .ShowMenuButton {
+//     display: none;
+//     height: 1.5rem;
 
-    @media only screen and (max-width: 640px) {
-        display: block;
-    }
-}
+//     @media only screen and (max-width: 640px) {
+//         display: block;
+//     }
+// }
