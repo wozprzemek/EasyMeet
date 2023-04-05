@@ -5,11 +5,15 @@ import { UserLoginOrCreateRequestBody, UserQuery } from "../schemas/User.schema"
 
 export const UserService = {
     getMany: async (query: UserQuery) => {
-        const data = await DI.em.find(User, query)
+        const data = await DI.em.find(User, query, {
+            fields: ['id', 'name', 'meeting', 'availabilities']
+        })
         return data
     },
     getOne: async (id: IdParams) => {
-        const data = await DI.em.findOne(User, id)
+        const data = await DI.em.findOne(User, id, {
+            fields: ['id', 'name', 'meeting', 'availabilities']
+        })
         return data
     },
     loginOrCreate: async ({ name, password, meeting }: UserLoginOrCreateRequestBody) => {

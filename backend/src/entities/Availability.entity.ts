@@ -4,10 +4,10 @@ import { User } from './User.entity';
 
 @Entity()
 export class Availability {
-    @PrimaryKey({ columnType: 'uuid' })
+    @PrimaryKey({ columnType: 'uuid', hidden: true })
     id = uuidv4();
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, { hidden: true })
     user!: User;
 
     @Property({ columnType: 'timestamp with time zone' })

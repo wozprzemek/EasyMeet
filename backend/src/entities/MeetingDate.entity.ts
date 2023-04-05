@@ -5,14 +5,14 @@ import { Meeting } from './Meeting.entity';
 @Entity()
 export class MeetingDate {
 
-    @PrimaryKey({ columnType: 'uuid' })
+    @PrimaryKey({ columnType: 'uuid', hidden: true })
     id = uuidv4();
 
     @PrimaryKey({ columnType: 'date' })
-    date!: string;
+    date: string;
 
-    @ManyToOne(() => Meeting, { primary: true })
-    meeting!: Meeting;
+    @ManyToOne(() => Meeting, { hidden: true })
+    meeting: Meeting;
 
     constructor(date: string, meeting: Meeting) {
         this.date = date;

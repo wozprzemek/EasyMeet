@@ -9,7 +9,7 @@ export class Meeting {
   id = uuidv4();
 
   @Property({ length: 100 })
-  name!: string;
+  name: string;
 
   @OneToMany(() => MeetingDate, md => md.meeting, { cascade: [Cascade.ALL], orphanRemoval: true })
   dates = new Collection<MeetingDate>(this);
@@ -19,11 +19,11 @@ export class Meeting {
 
   @Property({ columnType: 'timestamp with time zone' })
   @Check({ expression: '(EXTRACT (MINUTE FROM "from") IN (0, 30)) AND (EXTRACT (SECOND FROM "from") = 0)' })
-  from!: string;
+  from: string;
 
   @Property({ columnType: 'timestamp with time zone' })
   @Check({ expression: '(EXTRACT (MINUTE FROM "to") IN (0, 30)) AND (EXTRACT (SECOND FROM "to") = 0) AND ("to" > "from")' })
-  to!: string;
+  to: string;
 
   @Property({ default: true })
   active: boolean = true

@@ -10,13 +10,13 @@ export class User {
     id = uuidv4();
 
     @Property({ length: 50 })
-    name!: string;
+    name: string;
 
     @Property({ length: 100 })
     password: string;
 
-    @ManyToOne(() => Meeting)
-    meeting!: Meeting;
+    @ManyToOne(() => Meeting, { hidden: true })
+    meeting: Meeting;
 
     @OneToMany(() => Availability, a => a.user, { cascade: [Cascade.ALL], orphanRemoval: true })
     availabilities = new Collection<Availability>(this);

@@ -8,8 +8,23 @@ export const MeetingService = {
         const data = await DI.em.find(Meeting, {})
         return data
     },
+    // getOne: async (id: IdParams) => {
+    //     const data = await DI.em.findOne(Meeting, id, { populate: ['dates.date', 'users.availabilities.time'] })
+    //     return data
+    // },
     getOne: async (id: IdParams) => {
-        const data = await DI.em.findOne(Meeting, id, { populate: ['dates.date', 'users.availabilities.time'] })
+        const data = await DI.em.findOne(Meeting, id, {
+            fields: [
+                'id',
+                'name',
+                'from',
+                'to',
+                'dates.date',
+                'users.id',
+                'users.name',
+                'users.availabilities.time'
+            ]
+        })
         return data
     },
     add: async ({ name, dates, from, to, active }: MeetingCreateRequestBody) => {
