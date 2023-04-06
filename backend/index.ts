@@ -13,10 +13,14 @@ import UserRoutes from "./src/routes/User.routes";
 const app = express()
 
 const PORT = 8000
-const HOST = '0.0.0.0';
+const HOST = 'backend';
 const BASE_URL = '/api'
 
-app.use(cors())
+var corsOptions = {
+    origin: [],
+}
+
+app.use(cors(corsOptions))
 
 
 export const DI = {} as {
