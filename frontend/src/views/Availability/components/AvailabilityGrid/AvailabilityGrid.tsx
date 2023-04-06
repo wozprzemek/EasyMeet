@@ -215,7 +215,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
 
   const onCellEnter = (event: any, timeCell: TimeCell) => {
     setCurrentCell(timeCell)
-    let currentCell = document.elementFromPoint(event.pageX, event.pageY)
+    let currentCell = document.elementFromPoint(event.clientX, event.clientY)
     if (isClicked && currentCell?.classList.contains('TimeCell') && startCell) {
       let x = parseInt(currentCell.getAttribute('data-x') || "0")
       let y = parseInt(currentCell.getAttribute('data-y') || "0")
@@ -238,6 +238,8 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
 
   const startSelect = (event: any, timeCell: TimeCell) => {
     setIsClicked(true)
+    console.log(timeCell.time);
+    
     setStartCell(timeCell)
     setCurrentCell(timeCell)
   }
@@ -261,6 +263,8 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
     if (touch && dragEnabled) {
       event.preventDefault()
       const currentCell = document.elementFromPoint(touch.clientX, touch.clientY)
+      console.log(touch.clienX, touch.clientY);
+      
       if (currentCell?.classList.contains('TimeCell')) {
         let x = parseInt(currentCell.getAttribute('data-x') || "0")
         let y = parseInt(currentCell.getAttribute('data-y') || "0")
