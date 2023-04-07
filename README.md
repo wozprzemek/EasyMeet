@@ -4,6 +4,14 @@ EasyMeet is a simple and user-friendly web application for scheduling meetings b
 
 The application has been self-hosted and is available at https://easymeet.toadres.pl/.
 
+<p align="center">
+ <img src="/frontend/src/assets/createMeeting.png" alt="createmeeting" width="800px" height="auto"/>
+</p>
+<p align="center">
+ <img src="/frontend/src/assets/availability.png" alt="createmeeting" width="800px" height="auto"/>
+</p>
+
+
 ## Features
 
 - Create meetings - set the meeting name, pick the appropiate dates and select the daily timeframes.
