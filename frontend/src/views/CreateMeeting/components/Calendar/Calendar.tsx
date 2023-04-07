@@ -38,18 +38,6 @@ const getNextMonthDays = (month : number, year : number, previousMonthDays : Dat
     )
 }
 
-// const getAllDays = () => {
-//     const [month, year] = [selectedMonth.month, selectedMonth.year]
-//     const previousMonthDays = getPreviousMonthDays(month, year)
-//     const currentMonthDays = getCurrentMonthDays(month+1, year)
-//     const nextMonthDays = getNextMonthDays(month, year, Array.from(previousMonthDays, x => x.date), Array.from(currentMonthDays, x => x.date))
-
-//     const allDays = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays]
-//     return allDays
-
-// }
-
-
 const getDayKey = (day: Date) => {
     return day.getDate().toString() + day.getMonth() + day.getFullYear()
 }
@@ -58,9 +46,10 @@ interface ICalendar {
     selectedDates: DateType[];
     setSelectedDates: React.Dispatch<DateType[]>;
     errorMsg: string;
+    calendarRef: React.RefObject<HTMLDivElement>;
 }
 
-export const Calendar = ({selectedDates, setSelectedDates, errorMsg}: ICalendar) => {
+export const Calendar = ({selectedDates, setSelectedDates, errorMsg, calendarRef}: ICalendar) => {
     const  now = new Date() // current date
     const [selectedMonth, setSelectedMonth] = useState({month: now.getMonth(), year: now.getFullYear()}) // used for selected year and month
     const [displayedDays, setDisplayedDays] = useState(getCurrentMonthDays(selectedMonth.month + 1, selectedMonth.year))
@@ -128,7 +117,7 @@ export const Calendar = ({selectedDates, setSelectedDates, errorMsg}: ICalendar)
                     </div>
                 <ChevronRightIcon className='MonthHeader--chevron' onClick={() => changeMonth(1)} />
             </div>
-            <div className='CalendarDaysContainer'>
+            <div className='CalendarDaysContainer' ref={calendarRef}>
                 {weekDays.map((i) => {
                     return (
                         <span className='WeekDayText'>{i}</span>

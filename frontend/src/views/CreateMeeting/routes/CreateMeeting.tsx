@@ -2,7 +2,7 @@ import { createMeeting } from 'api/createMeeting'
 import { Button } from 'components/Button/Button'
 import { ContentLayout } from 'components/ContentLayout/ContentLayout'
 import { DateType } from 'views/CreateMeeting/types'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { ButtonSize, ButtonType } from 'types'
 import { Calendar } from '../components/Calendar/Calendar'
@@ -18,6 +18,7 @@ export const CreateMeeting = () => {
   const [selectedDates, setSelectedDates] = useState<DateType[]>([])
 
   const defaultErrorMsg = { name: '', to: '', from: '', dates: ''}
+  const inputRefs = {name: useRef<HTMLInputElement>(null), to: useRef<HTMLDivElement>(null), dates: useRef<HTMLDivElement>(null)}
   const [errorMsg, setErrorMsg] = useState(defaultErrorMsg);
 
   const handleCreate = useCallback(async () => {
@@ -46,20 +47,23 @@ export const CreateMeeting = () => {
 
   const validate = useCallback(() => {
     let correct = true;
-    
-    if (name.length === 0) {
-      setErrorMsg(errorMsg => ({ ...errorMsg, 'name': 'Enter the meeting name' }));
-      correct = false;
-    }
-    
+  
     if (moment(to, "hh:mm").isSameOrBefore(moment(from, "hh:mm"))) {
       setErrorMsg(errorMsg => ({ ...errorMsg, 'to': 'End time must be after start time' }));
       correct = false;
+      inputRefs.to.current && inputRefs.to.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
     
     if (selectedDates.length === 0) {
       setErrorMsg(errorMsg => ({ ...errorMsg, 'dates': 'You must select at least one date' }));
       correct = false;
+      inputRefs.dates.current && inputRefs.dates.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+
+    if (name.length === 0) {
+      setErrorMsg(errorMsg => ({ ...errorMsg, 'name': 'Enter the meeting name' }));
+      correct = false;
+      inputRefs.name.current && inputRefs.name.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
 
     return correct;
@@ -85,13 +89,13 @@ export const CreateMeeting = () => {
             <div className='WrapperContent'>
                 <div className='TitleInputWrapper'>
                   <div>
-                    <input type="text" placeholder='New Meeting Name' className={`TitleInput ${errorMsg.name.length > 0 ? 'ErrorInput' : ''}`} value={name} onChange={e => setName(e.target.value)}></input>
+                    <input type="text" placeholder='New Meeting Name' className={`TitleInput ${errorMsg.name.length > 0 ? 'ErrorInput' : ''}`} value={name} onChange={e => setName(e.target.value)} ref={inputRefs.name}></input>
                     {errorMsg.name.length > 0 ? <span className='ErrorMsg'>{errorMsg.name}</span> : <span></span>}
                   </div>
                 </div>
                 <div className='ColumnWrapper'>
-                  <Calendar errorMsg={errorMsg.dates} selectedDates={selectedDates} setSelectedDates={setSelectedDates}/>
-                  <TimeForm from={from} setFrom={setFrom} to={to} setTo={setTo} errorMsg={{from: errorMsg.from, to: errorMsg.to}}/>
+                  <Calendar errorMsg={errorMsg.dates} selectedDates={selectedDates} setSelectedDates={setSelectedDates} calendarRef={inputRefs.dates}/>
+                  <TimeForm from={from} setFrom={setFrom} to={to} setTo={setTo} errorMsg={{from: errorMsg.from, to: errorMsg.to}} toRef={inputRefs.to}/>
                 </div>
                 <Button type={ButtonType.SOLID} size={ButtonSize.LG} onClick={handleCreate}>Create</Button>
             </div>

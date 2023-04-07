@@ -8,9 +8,10 @@ interface ITimeForm {
   to: string;
   setTo: React.Dispatch<string>;
   errorMsg: {from: string, to: string};
+  toRef: React.RefObject<HTMLDivElement>;
 }
 
-export const TimeForm = ({from, setFrom, to, setTo, errorMsg} : ITimeForm) => {
+export const TimeForm = ({from, setFrom, to, setTo, errorMsg, toRef} : ITimeForm) => {
   return (
     <form className='TimeForm'>
         <div className='TimePickerContainer'>
@@ -19,7 +20,7 @@ export const TimeForm = ({from, setFrom, to, setTo, errorMsg} : ITimeForm) => {
           {errorMsg.from.length > 0 ? <span className='ErrorMsg'>{errorMsg.from}</span> : <span></span>}
         </div>
 
-        <div className='TimePickerContainer'>
+        <div className='TimePickerContainer' ref={toRef}>
           <span>To</span>
           <TimePicker selectedTime={to} setSelectedTime={setTo} errorMsg={errorMsg.to}></TimePicker>
           {errorMsg.to.length > 0 ? <span className='ErrorMsg'>{errorMsg.to}</span> : <span></span>}
