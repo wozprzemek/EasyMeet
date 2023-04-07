@@ -1,4 +1,5 @@
 # **EasyMeet**
+![Docker Compose Build](https://github.com/wozprzemek/EasyMeet/actions/workflows/docker-compose-build-and-push.yml/badge.svg)
 
 EasyMeet is a simple and user-friendly web application for scheduling meetings based on participant availability. Inspired by the popular tool **When2Meet**, EasyMeet allows you to quickly and easily find the best time for a meeting by identifying the common availability of all participants.
 
