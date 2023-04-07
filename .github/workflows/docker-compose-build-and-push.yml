@@ -1,4 +1,4 @@
-name: Build and publish Docker Compose images
+name: Docker Compose Build
 on:
   push:
     branches: [ main ]
