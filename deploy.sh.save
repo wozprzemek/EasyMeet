@@ -1,4 +1,0 @@
-git pull
-docker-compose rm -f
-docker login ghcr.io
-docker compose -f docker-compose.prod.yml up
