@@ -30,7 +30,7 @@ services:
         - ./backend/tsconfig.json:/backend/tsconfig.json
         - ./backend/src:/backend/src
         - ./backend/index.ts:/backend/index.ts
-      command: sh -c "npx mikro-orm schema:update -r && npx mikro-orm migration:up && npx nodemon -L ./index.ts"
+      command: sh -c "npx mikro-orm schema:update -r && npx mikro-orm migration:up && npx nodemon ./index.ts"
 
   frontend:
       build:
@@ -38,10 +38,6 @@ services:
         args:
           - mode=dev
         dockerfile: Dockerfile.dev
-      environment:
-        - CHOKIDAR_USEPOLLING=true # create-ui-app <= 5.x
-        - WATCHPACK_POLLING=true # create-ui-app >= 5.x
-        - FAST_REFRESH=false
       ports:
         - 3000:3000
       volumes:

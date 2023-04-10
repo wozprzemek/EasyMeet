@@ -1,7 +1,7 @@
 import { updateAvailabilities } from 'api/updateUserAvailabilities'
 import { queryClient } from 'config/react-query'
 import moment from 'moment'
-import { Dispatch, useEffect, useRef, useState } from 'react'
+import { Dispatch, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Availability as TAvailability } from 'types/Availability'
 import { Meeting } from 'types/Meeting'
 import { User } from 'views/CreateMeeting/types'
@@ -19,7 +19,6 @@ export interface Color {
   b: number;
   a: number;
 }
-
 export interface TimeCell {
   time: Date,
   markedBy: string[],
@@ -85,6 +84,10 @@ const preventDefault = (event: any) => {
   event.preventDefault()
 }
 
+// const showDetailsInitial = () => {
+//   return window.innerWidth > 767
+// }
+
 interface IAvailabilityGrid {
   editMode: boolean;
   user: User | undefined;
@@ -102,11 +105,36 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   const [timeCells, setTimeCells] = useState<any[][]>([]) // TODO Change to TimeCell[][] type
   const [startCell, setStartCell] = useState<TimeCell>() // Saved position at mouse click
   const [isClicked, setIsClicked] = useState(false) // Is mouse currently down
-  const gridHTMLElement = useRef<HTMLDivElement>(null)
-  const [timer, setTimer] = useState<number|undefined>(undefined)
+  // const [showDetails, setShowDetails] = useState(() => showDetailsInitial()) // Show availability details
   const longTouchDuration = 100 // Duration for long touch in ms
   const [dragEnabled, setDragEnabled] = useState(false) // Is drag enabled
+  const gridRef = useRef<HTMLDivElement>(null)
   const clearTimerRef = useRef<number|undefined>(undefined)
+  const detailsRef = useRef<HTMLDivElement>(null)
+
+  // const hideDetailsEventListner = useCallback(() => {
+  //   console.log('event listener');
+    
+  //   if (detailsRef.current) {
+  //     console.log(showDetails, 'HIDE IT');
+      
+  //     detailsRef.current.style.display = 'none'
+  //   }
+  // }, [detailsRef])
+
+  // useEffect(() => {
+
+  //   if (detailsRef.current) {
+  //     if (showDetails) {
+  //       detailsRef.current.style.display = 'flex'
+  //       window.addEventListener('click', hideDetailsEventListner)
+  //     }
+  //     else {
+  //       detailsRef.current.style.display = 'none'
+  //       window.removeEventListener('click', hideDetailsEventListner)
+  //     }
+  //   }
+  // }, [showDetails])
 
   useEffect(() => {
     setUserNumber(Object.keys((meetingData && meetingData.users) ?? {}).length)
@@ -238,8 +266,11 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
 
   const startSelect = (event: any, timeCell: TimeCell) => {
     setIsClicked(true)
-    console.log(timeCell.time);
-    
+    // if (window.innerWidth < 768) {
+    //   setShowDetails(!showDetails)
+    //   console.log('set');
+      
+    // }
     setStartCell(timeCell)
     setCurrentCell(timeCell)
   }
@@ -252,7 +283,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   }
 
   const enableDrag = (event: any) => {
-    gridHTMLElement.current?.addEventListener('touchmove', preventDefault, {passive: false})
+    gridRef.current?.addEventListener('touchmove', preventDefault, {passive: false})
     setDragEnabled(true)
   }
 
@@ -293,7 +324,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   }
 
   const endTouchSelect = (event: any, timeCell: TimeCell) => {
-    gridHTMLElement.current?.removeEventListener('touchmove', preventDefault, false)
+    gridRef.current?.removeEventListener('touchmove', preventDefault, false)
     
     if (clearTimerRef.current) {
       window.clearTimeout(clearTimerRef.current)
@@ -366,10 +397,10 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
           })
         }
       </div>
-      <div ref={gridHTMLElement} className='AvailabilityGrid' onMouseEnter={editMode ? () => handleMouseLeave() : undefined}>
+      <div ref={gridRef} className='AvailabilityGrid' onMouseEnter={editMode ? () => handleMouseLeave() : undefined}>
         {timeGrid}
       </div>
-      <AvailabilityDetails userCount={userCount} setUserNumber={setUserNumber} currentCell={currentCell} />
+      <AvailabilityDetails userCount={userCount} setUserNumber={setUserNumber} currentCell={currentCell} detailsRef={detailsRef}/>
     </div>
   )
 }
