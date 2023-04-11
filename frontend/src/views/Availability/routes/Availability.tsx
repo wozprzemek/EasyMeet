@@ -65,7 +65,7 @@ export const Availability = () => {
                         <h1>{meetingData?.name}</h1>
                         <h2>{userCount} participants</h2>
                         <Button type={ButtonType.OUTLINE_GRAY} size={ButtonSize.LG} onClick={() => handleInvite()}>
-                          <LinkIcon width='1.25rem'/>
+                          <LinkIcon className='Icon'  />
                           {copied ? 'Copied!' : 'Share'}
                         </Button>
                     </div>
@@ -73,12 +73,19 @@ export const Availability = () => {
                     <AvailabilityGrid userCount={userCount} setUserNumber={setUserNumber} currentCell={currentCell} setCurrentCell={setCurrentCell} 
                     editMode={editMode} user={user} meetingData={meetingData} showAllAvailabilities={showAllAvailabilities}/>
                     { editMode ? 
+                    <>
                         <Button type={ButtonType.CIRCLE} size={ButtonSize.LG} onClick={() => visibilityToggle()}>
                         {
                           showAllAvailabilities ? <EyeSlashIcon className='Icon'/> : <EyeIcon className='Icon'/>
                         }
                       </Button> 
-                      : <Button type={ButtonType.CIRCLE} size={ButtonSize.LG} onClick={() => handleModalOn()}><PlusIcon/></Button> 
+                      Toggle all availabilities
+                    </>
+                      : 
+                    <>
+                      <Button type={ButtonType.CIRCLE} size={ButtonSize.LG} onClick={() => handleModalOn()}><PlusIcon className='Icon'/></Button> 
+                      Add your availability
+                    </> 
                     }
                     <AvailabilityLegend userCount={userCount}/>
                   </div>
