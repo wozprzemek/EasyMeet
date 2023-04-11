@@ -1,4 +1,4 @@
-import { EyeIcon, EyeSlashIcon, PlusIcon, UserPlusIcon } from '@heroicons/react/24/outline'
+import { EyeIcon, EyeSlashIcon, LinkIcon, PlusIcon, UserPlusIcon } from '@heroicons/react/24/outline'
 import { getMeeting } from 'api/getMeeting'
 import { Button } from 'components/Button/Button'
 import { ContentLayout } from 'components/ContentLayout/ContentLayout'
@@ -6,7 +6,7 @@ import { Loading } from 'components/Loading/Loading'
 import { Modal } from 'components/Modal/Modal'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
-import { useParams } from 'react-router'
+import { useLocation, useParams } from 'react-router'
 import { ButtonSize, ButtonType } from 'types'
 import { Meeting } from 'types/Meeting'
 import { User } from 'views/CreateMeeting/types'
@@ -16,6 +16,8 @@ import './availability.scss'
 
 export const Availability = () => {
   const {id} = useParams()
+  const location = useLocation();
+  const [copied, setCopied] = useState(false)
   const {data: meetingData, status: meetingStatus, refetch: meetingRefetch} = useQuery<Meeting>(['meeting', id], () => getMeeting(id))
   const [user, setUser] = useState<User | undefined>()
   const [password, setPassword] = useState('')
@@ -44,8 +46,8 @@ export const Availability = () => {
   }
 
   const handleInvite = async () => {
-    const message = `Meeting: ${meetingData?.name}\n`
-    await navigator.clipboard.writeText(message)
+    await navigator.clipboard.writeText(window.location.href)
+    setCopied(true)
   }
 
   if (meetingStatus === 'loading' && meetingData === undefined) {
@@ -63,8 +65,8 @@ export const Availability = () => {
                         <h1>{meetingData?.name}</h1>
                         <h2>{userCount} participants</h2>
                         <Button type={ButtonType.OUTLINE_GRAY} size={ButtonSize.LG} onClick={() => handleInvite()}>
-                          <UserPlusIcon width='1.25rem'/>
-                          Invite
+                          <LinkIcon width='1.25rem'/>
+                          {copied ? 'Copied!' : 'Share'}
                         </Button>
                     </div>
                   <div className='GridButtonWrapper'>
