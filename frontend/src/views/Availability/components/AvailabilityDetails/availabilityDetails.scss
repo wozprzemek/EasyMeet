@@ -43,10 +43,15 @@
 .DetailsHeader {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     width: 100%;
-    padding: 1.25rem;
     gap: 1rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 767px) {
+        align-items: center;
+        padding: 1.25rem;
+    }
 }
 
 .DetailsContent {
@@ -61,13 +66,6 @@
         box-sizing: border-box;
         height: 100%;
         touch-action: none;
-    }
-
-
-    div {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
     }
 
     h1 {
@@ -94,7 +92,32 @@
 
     h4 {
         font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    h5 {
+        font-size: 1rem;
         font-weight: 300;
         margin-bottom: 0.5rem;
+    }
+}
+
+.DetailsColumns {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    width: 100%;
+    flex-wrap: wrap;
+
+    @media (max-width: 767px) {
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }

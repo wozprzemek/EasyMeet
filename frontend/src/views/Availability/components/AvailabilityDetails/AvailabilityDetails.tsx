@@ -19,7 +19,7 @@ export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, deta
   const [transitionEnabled, setTransitionEnabled] = useState(false);
   const [hidePanel, setHidePanel] = useState(false);
 
-  const { height } = useWindowDimensions()
+  const { width, height } = useWindowDimensions()
 
   const handlePanelPosition = useCallback(() => {
     if(position < breakpoints.participants - (breakpoints.participants - 0) / 2) {
@@ -81,7 +81,7 @@ export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, deta
   
   return (
     <div className='DetailsWrapper' ref={detailsRef}  style={{
-      transform: `translateY(${position}px)`,
+      transform: `${width <= 768 ? `translateY(${position}px`: ''}`,
       transition: transitionEnabled ? "transform 0.2s ease-out" : "none", // Apply transition only on touchend
     }}>
       <div className='DetailsHandle' ref={handleRef}
@@ -100,13 +100,26 @@ export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, deta
           }
           <h2>{currentCell?.time.toString().split('GMT')[0] ?? 'Select a date'}</h2>
         </div>
-        <div>
-          {currentCell?.markedBy.length ?
-          currentCell?.markedBy.map((user) => {
-            return <h4>{user}</h4>
-          })
-          : <h4>No users</h4>
-          }
+        <div className='DetailsColumns'>
+          <div>
+          <h4> Available </h4>
+            {currentCell?.markedBy.length ?
+            currentCell?.markedBy.map((user) => {
+              return <h5>{user}</h5>
+            })
+            : <h5>-</h5>
+            }
+          </div>
+
+          <div>
+            <h4> Unavailable </h4>
+            {currentCell?.markedBy.length ?
+            currentCell?.markedBy.map((user) => {
+              return <h5>{user}</h5>
+            })
+            : <h5>-</h5>
+            }
+          </div>
         </div>
       </div>
     </div>
