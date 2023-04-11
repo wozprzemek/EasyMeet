@@ -2,15 +2,17 @@ import { Dispatch, useCallback, useEffect, useRef, useState } from 'react';
 import { TimeCell } from '../AvailabilityGrid/AvailabilityGrid'
 import './availabilityDetails.scss'
 import { useWindowDimensions } from 'hooks/useWindowDimensions';
+import { Meeting } from 'types/Meeting';
 
 interface IAvailabilityDetails {
   currentCell?: TimeCell;
   userCount: number;
   setUserNumber: Dispatch<number>;
   detailsRef: React.RefObject<HTMLDivElement>;
+  meetingData: Meeting | undefined;
 }
 
-export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, detailsRef} : IAvailabilityDetails) => {
+export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, detailsRef, meetingData} : IAvailabilityDetails) => {
   const handleRef = useRef<HTMLDivElement>(null);
   const initialPosition = window.innerHeight - 140;
   const [position, setPosition] = useState(initialPosition);
@@ -53,6 +55,9 @@ export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, deta
 
   const handleTouchStart = (event: any) => {
     touchStartPosition.current = event.touches[0].clientY
+    // if (position == initialPosition) {
+    //   setPosition(breakpoints.header)
+    // }
   };
 
   const handleTouchMove = (event: any) => {
@@ -107,15 +112,17 @@ export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, deta
             currentCell?.markedBy.map((user) => {
               return <h5>{user}</h5>
             })
-            : <h5>-</h5>
+            : null
             }
           </div>
 
           <div>
             <h4> Unavailable </h4>
-            {currentCell?.markedBy.length ?
-            currentCell?.markedBy.map((user) => {
-              return <h5>{user}</h5>
+            {meetingData ?
+            meetingData.users.map((user) => {
+              if (!currentCell?.markedBy.includes(user.name)) {
+                return <h5>{user.name}</h5>
+              }
             })
             : <h5>-</h5>
             }

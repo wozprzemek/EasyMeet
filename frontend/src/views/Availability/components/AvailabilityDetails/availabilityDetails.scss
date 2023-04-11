@@ -5,7 +5,7 @@
     height: 100%;
     width: 100%;
     padding-left: 4rem;
-    padding-top: 4rem;
+    padding-top: 1rem;
     box-sizing: border-box;
     justify-content: start;
 
@@ -112,7 +112,6 @@
 
     @media (max-width: 767px) {
         justify-content: space-around;
-        align-items: center;
     }
 
     div {

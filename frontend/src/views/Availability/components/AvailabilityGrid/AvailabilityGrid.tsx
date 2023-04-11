@@ -112,30 +112,6 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   const clearTimerRef = useRef<number|undefined>(undefined)
   const detailsRef = useRef<HTMLDivElement>(null)
 
-  // const hideDetailsEventListner = useCallback(() => {
-  //   console.log('event listener');
-    
-  //   if (detailsRef.current) {
-  //     console.log(showDetails, 'HIDE IT');
-      
-  //     detailsRef.current.style.display = 'none'
-  //   }
-  // }, [detailsRef])
-
-  // useEffect(() => {
-
-  //   if (detailsRef.current) {
-  //     if (showDetails) {
-  //       detailsRef.current.style.display = 'flex'
-  //       window.addEventListener('click', hideDetailsEventListner)
-  //     }
-  //     else {
-  //       detailsRef.current.style.display = 'none'
-  //       window.removeEventListener('click', hideDetailsEventListner)
-  //     }
-  //   }
-  // }, [showDetails])
-
   useEffect(() => {
     setUserNumber(Object.keys((meetingData && meetingData.users) ?? {}).length)
   }, [meetingData])
@@ -400,7 +376,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
       <div ref={gridRef} className='AvailabilityGrid' onMouseEnter={editMode ? () => handleMouseLeave() : undefined}>
         {timeGrid}
       </div>
-      <AvailabilityDetails userCount={userCount} setUserNumber={setUserNumber} currentCell={currentCell} detailsRef={detailsRef}/>
+      <AvailabilityDetails userCount={userCount} setUserNumber={setUserNumber} currentCell={currentCell} detailsRef={detailsRef} meetingData={meetingData}/>
     </div>
   )
 }
