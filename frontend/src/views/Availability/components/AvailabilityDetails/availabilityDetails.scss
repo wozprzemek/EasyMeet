@@ -8,6 +8,7 @@
     padding-top: 1rem;
     box-sizing: border-box;
     justify-content: start;
+    z-index:100;
 
     @media (max-width: 767px) {
         width: 100%;
