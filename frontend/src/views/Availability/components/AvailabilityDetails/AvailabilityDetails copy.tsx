@@ -13,15 +13,16 @@ interface IAvailabilityDetails {
 }
 
 export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, detailsRef, meetingData} : IAvailabilityDetails) => {
-  const { width, height } = useWindowDimensions()
   const handleRef = useRef<HTMLDivElement>(null);
-  const initialPosition = height - 100 - 40; // 100 - top, 40 - handle height
+  const initialPosition = window.innerHeight - 140;
   const [position, setPosition] = useState(initialPosition);
   const touchStartPosition = useRef(0);
-  const breakpoints = {initial: initialPosition, header: initialPosition - 64 - 52, participants: initialPosition - 300, full: 0}  // Breakpoints for details panel to snap to
+  const breakpoints = {initial: initialPosition, header: initialPosition - 92, participants: initialPosition - 300, full: 0}  // Breakpoints for details panel to snap to
   const currentBreakpoint = useRef(breakpoints.initial)
   const [transitionEnabled, setTransitionEnabled] = useState(false);
   const [hidePanel, setHidePanel] = useState(false);
+
+  const { width, height } = useWindowDimensions()
 
   const handlePanelPosition = useCallback(() => {
     if(position < breakpoints.participants - (breakpoints.participants - 0) / 2) {
@@ -101,43 +102,46 @@ export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, deta
       transition: transitionEnabled ? "transform 0.2s ease-out" : "none", // Apply transition only on touchend
     }}>
       <div className='DetailsHandle' ref={handleRef}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        <div></div>
-        <h1>Selected Availability</h1>
-      </div>
-      <div className='DetailsHeader'>
-        {currentCell ? 
-          <h2>{currentCell?.markedBy.length ?? 0}/{userCount} ({userCount ? Math.round((currentCell?.markedBy.length ?? 0) / userCount * 100) : 0}%)</h2>
-          : <h2>-/-</h2>
-        }
-        <h3>{currentCell?.time.toString().split('GMT')[0] ?? 'Select a date'}</h3>
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      <div></div>
       </div>
       <div className='DetailsContent'>
-        <div className='DetailsContentHeader'>
-          <div>Available </div>
-          <div>Unavailable</div>
+        <div className='DetailsHeader'>
+          <h1>Selected Availability</h1>
+          {currentCell ? 
+            <h3>{currentCell?.markedBy.length ?? 0}/{userCount} ({userCount ? Math.round((currentCell?.markedBy.length ?? 0) / userCount * 100) : 0}%)</h3>
+            : <h3>-/-</h3>
+          }
+          <h2>{currentCell?.time.toString().split('GMT')[0] ?? 'Select a date'}</h2>
         </div>
-        <div className='DetailsContentColumns'>
-          <div>
-            {currentCell?.markedBy.length ?
+        <div className='DetailsColumns'>
+          <div className='DetailsColumn'>
+            <h4>Available</h4>
+            <div>
+              {currentCell?.markedBy.length ?
               currentCell?.markedBy.map((user) => {
                 return <h5>{user}</h5>
               })
               : null
-            }
+              }
+            </div>
           </div>
-          <div>
-            {meetingData ?
+
+          <div className='DetailsColumn'>
+            <h4>Unavailable</h4>
+            <div>
+              {meetingData ?
               meetingData.users.map((user) => {
                 if (!currentCell?.markedBy.includes(user.name)) {
                   return <h5>{user.name}</h5>
                 }
               })
               : <h5>-</h5>
-            }
+              }
+            </div>
           </div>
         </div>
       </div>

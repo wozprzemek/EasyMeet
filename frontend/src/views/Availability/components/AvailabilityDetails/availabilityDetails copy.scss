@@ -1,0 +1,143 @@
+@import 'sassStyles/variables';
+
+.DetailsWrapper {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    padding-left: 4rem;
+    padding-top: 1rem;
+    box-sizing: border-box;
+    justify-content: start;
+    z-index:100;
+
+    @media (max-width: 767px) {
+        width: 100%;
+        height: 1000px;
+        border-radius: 1rem 1rem 0 0;
+        top: 100px;
+        flex-direction: column;
+        padding: 0;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        display: flex;
+        position: fixed;
+        bottom: 0;   
+        background-color: $grayTransparent;
+        backdrop-filter: blur(8px);
+
+        .DetailsHandle {
+            display: flex;
+            width: 100%;
+            height: 2.5rem;
+            // flex-shrink: 0;
+            // flex-basis: auto;
+            // padding: 1.125rem 0;
+            box-sizing: border-box;
+            justify-content: center;
+            align-items: center;
+            background-color: $gray;
+            border-radius: 1rem 1rem 0 0;
+
+            div {
+                background-color: rgb(153, 153, 153);
+                border-radius: 0.5rem;
+                width: 4rem;
+                height: 0.25rem;
+            }
+        }
+    }
+}
+
+.DetailsHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    box-sizing: border-box;
+    height: 92px;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 767px) {
+        align-items: center;
+        padding: 1.25rem;
+    }
+}
+
+.DetailsContent {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+
+    @media (max-width: 767px) {
+        align-items: center;
+        box-sizing: border-box;
+        height: 100%;
+        touch-action: none;
+    }
+
+    h1 {
+        font-size: 1.125rem;
+        font-weight: 600;
+
+        @media (max-width: 767px) {
+            display: none;
+        }
+    }
+
+    h2 {
+        font-size: 1rem;
+        font-weight: 400;
+    }
+
+    h3 {
+        font-weight: 800;
+        font-size: 1.25rem;
+        background: linear-gradient(0deg, $secondaryColor1 0%, $secondaryColor2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    h5 {
+        font-size: 1rem;
+        font-weight: 300;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.DetailsColumns {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    width: 100%;
+    // flex-wrap: wrap;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    @media (max-width: 767px) {
+        justify-content: space-around;
+    }
+}
+
+.DetailsColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    // overflow-y: auto;
+    // overflow-x: hidden;
+
+    div {
+        width: 100%;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
