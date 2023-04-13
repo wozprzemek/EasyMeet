@@ -109,6 +109,7 @@ export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, deta
         <h1>Selected Availability</h1>
       </div>
       <div className='DetailsHeader'>
+        {width > 768 ? <h1>Selected Availability</h1> : null}
         {currentCell ? 
           <h2>{currentCell?.markedBy.length ?? 0}/{userCount} ({userCount ? Math.round((currentCell?.markedBy.length ?? 0) / userCount * 100) : 0}%)</h2>
           : <h2>-/-</h2>
