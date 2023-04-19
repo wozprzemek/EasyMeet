@@ -3,15 +3,16 @@
 .DetailsWrapper {
     display: flex;
     height: 100%;
-    width: 400px;
+    width: 100%;
     box-sizing: border-box;
     flex-direction: column;
     justify-content: start;
     align-items: center;
+    padding: 1rem ;
     gap: 1rem;
     z-index:100;
-    padding-top: 1rem;
-    padding-left: 4rem;
+    // overflow-y: scroll;
+    // flex: 1;
 
     h1 {
         font-size: 1.125rem;
@@ -89,7 +90,7 @@
     flex-direction: column;
     height: calc(100vh - 100px - 2.5rem - 2rem - 1rem - 1rem - 86px);
     // align-items: start;
-    width: 100%;
+    width: 360px;
     // align-content: space-between;
 
     @media (max-width: 767px) {
@@ -102,7 +103,7 @@
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 0.5rem;
-    gap: 3rem;
+    // gap: 3rem;
 
     @media (max-width: 767px) {
         width: 100%;
@@ -131,8 +132,6 @@
     div {
         display: flex;
         flex-direction: column;
-        overflow-y: auto;
-        overflow-x: hidden;
         height: 100%;
         width: 100%;
         align-items: center;
@@ -142,6 +141,8 @@
         
         @media (max-width: 767px) {
             align-items: center;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
     }
 }
