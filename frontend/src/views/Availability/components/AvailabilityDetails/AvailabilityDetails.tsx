@@ -42,12 +42,12 @@ export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, deta
       setPosition(breakpoints.header)
     }
     console.log(currentBreakpoint);
-    
+
   }, [position])
 
   useEffect(() => {
     console.log(currentBreakpoint);
-    setPosition(currentBreakpoint.current)    
+    setPosition(currentBreakpoint.current)
   }, [height])
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, deta
     setTransitionEnabled(false)
     const touchCurrentPosition = event.touches[0].clientY
     const delta = touchCurrentPosition - touchStartPosition.current;
-    
+
     if (position + delta >= 0 && position + delta <= initialPosition) {
       setPosition(position + delta);
     }
@@ -94,53 +94,56 @@ export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, deta
   useEffect(() => {
     handleRef.current?.addEventListener('touchmove', preventDefault, {passive: false})
   }, [])
-  
+
   return (
     <div className='DetailsWrapper' ref={detailsRef}  style={{
       transform: `${width <= 768 ? `translateY(${position}px`: ''}`,
       transition: transitionEnabled ? "transform 0.2s ease-out" : "none", // Apply transition only on touchend
     }}>
-      <div className='DetailsHandle' ref={handleRef}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        <div></div>
-        <h1>Selected Availability</h1>
-      </div>
-      <div className='DetailsHeader'>
-        {width > 768 ? <h1>Selected Availability</h1> : null}
-        {currentCell ? 
-          <h2>{currentCell?.markedBy.length ?? 0}/{userCount} ({userCount ? Math.round((currentCell?.markedBy.length ?? 0) / userCount * 100) : 0}%)</h2>
-          : <h2>-/-</h2>
-        }
-        <h3>{currentCell?.time.toString().split('GMT')[0] ?? 'Select a date'}</h3>
-      </div>
-      <div className='DetailsContent'>
-        <div className='DetailsContentHeader'>
-          <div>Available </div>
-          <div>Unavailable</div>
+      <div className='Details'>
+        <div className='DetailsHandle' ref={handleRef}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div></div>
+          <h1>Selected Availability</h1>
         </div>
-        <div className='DetailsContentColumns'>
-          <div>
-            {currentCell?.markedBy.length ?
-              currentCell?.markedBy.map((user) => {
-                return <h5>{user}</h5>
-              })
-              : null
-            }
+        <div className='DetailsHeader'>
+          {width > 768 ? <h1>Selected Availability</h1> : null}
+          {currentCell ?
+            <h2>{currentCell?.markedBy.length ?? 0}/{userCount} ({userCount ? Math.round((currentCell?.markedBy.length ?? 0) / userCount * 100) : 0}%)</h2>
+            : <h2>-/-</h2>
+          }
+          <h3>{currentCell?.time.toString().split('GMT')[0] ?? 'Select a date'}</h3>
+        </div>
+        <div className='DetailsContent'>
+          <div className='DetailsContentHeader'>
+            <div>Available </div>
+            <div>Unavailable</div>
           </div>
-          <div>
-            {meetingData ?
-              meetingData.users.map((user) => {
-                if (!currentCell?.markedBy.includes(user.name)) {
-                  return <h5>{user.name}</h5>
-                }
-              })
-              : <h5>-</h5>
-            }
+          <div className='DetailsContentColumns'>
+            <div>
+              {currentCell?.markedBy.length ?
+                currentCell?.markedBy.map((user) => {
+                  return <h5>{user}</h5>
+                })
+                : null
+              }
+            </div>
+            <div>
+              {meetingData ?
+                meetingData.users.map((user) => {
+                  if (!currentCell?.markedBy.includes(user.name)) {
+                    return <h5>{user.name}</h5>
+                  }
+                })
+                : <h5>-</h5>
+              }
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   )

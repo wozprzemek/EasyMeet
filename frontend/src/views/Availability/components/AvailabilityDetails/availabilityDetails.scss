@@ -2,22 +2,11 @@
 
 .DetailsWrapper {
     display: flex;
-    height: 100%;
-    width: 100%;
-    box-sizing: border-box;
-    flex-direction: column;
     justify-content: start;
-    align-items: center;
-    padding: 1rem ;
-    gap: 1rem;
-    z-index:100;
-    // overflow-y: scroll;
-    // flex: 1;
-
-    h1 {
-        font-size: 1.125rem;
-        font-weight: 600;
-    }
+    align-items: start;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
 
     @media (max-width: 767px) {
         align-items: center;
@@ -32,6 +21,26 @@
         background-color: $grayTransparent;
         backdrop-filter: blur(8px);
     }
+}
+
+.Details {
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    // padding: 1rem ;
+    gap: 1rem;
+    z-index:100;
+    // overflow-y: scroll;
+    // flex: 1;
+
+    h1 {
+        font-size: 1.125rem;
+        font-weight: 600;
+    }
+
+
 }
 
 .DetailsHandle {
@@ -90,6 +99,7 @@
     flex-direction: column;
     // align-items: start;
     width: 360px;
+    height: 0px;
     // align-content: space-between;
 
     @media (max-width: 767px) {
