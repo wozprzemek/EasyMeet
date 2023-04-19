@@ -6,7 +6,7 @@
     grid-template-columns: 1fr min-content 1fr;
     grid-template-rows: 1fr;
     // min-height: 400px;
-    max-height: 400px;
+    // max-height: 400px;
     width: 100%;
 
     @media (max-width: 767px) {
@@ -14,7 +14,7 @@
         overflow-y: hidden;
         grid-template-columns: 1fr 1fr 1fr;
     }
-    
+
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -107,7 +107,7 @@
         height: 2.25rem;
         width: 100%;
         transform: translateY(-0.5rem);
-    }   
+    }
 }
 
 .ColumnHeader {
