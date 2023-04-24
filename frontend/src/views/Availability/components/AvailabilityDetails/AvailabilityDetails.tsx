@@ -23,6 +23,10 @@ export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, deta
   const [transitionEnabled, setTransitionEnabled] = useState(false);
   const [hidePanel, setHidePanel] = useState(false);
 
+  const disableTransition = useCallback(() => {
+    setTransitionEnabled(false)
+  }, [])
+
   const handlePanelPosition = useCallback(() => {
     if(position < breakpoints.participants - (breakpoints.participants - 0) / 2) {
       currentBreakpoint.current = breakpoints.full
@@ -46,8 +50,9 @@ export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, deta
   }, [position])
 
   useEffect(() => {
-    console.log(currentBreakpoint);
+    setTransitionEnabled(false)
     setPosition(currentBreakpoint.current)
+    setTransitionEnabled(true)
   }, [height])
 
   useEffect(() => {
@@ -56,6 +61,7 @@ export const AvailabilityDetails = ({currentCell, userCount, setUserNumber, deta
       setPosition(initialPosition)
     }
   }, [height])
+
 
   useEffect(() => {
     // Show the panel if a cell is selected and the panel is hidden

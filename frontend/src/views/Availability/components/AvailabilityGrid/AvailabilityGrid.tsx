@@ -1,7 +1,7 @@
 import { updateAvailabilities } from 'api/updateUserAvailabilities'
 import { queryClient } from 'config/react-query'
 import moment from 'moment'
-import { Dispatch, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Dispatch, useEffect, useRef, useState } from 'react'
 import { Availability as TAvailability } from 'types/Availability'
 import { Meeting } from 'types/Meeting'
 import { User } from 'views/CreateMeeting/types'
@@ -48,7 +48,7 @@ const rgba2rgb = (background: Color, rgba: Color) : Color => {
     )
 }
 
-// calculates color for cells based on the number of users 
+// calculates color for cells based on the number of users
 export const calculateCellColor = (cellUsers: number, totalUsers: number, background: Color, selectedCellColor: Color, baseCellColor: Color) : Color => {
   if (cellUsers === 0) {
     return baseCellColor
@@ -58,7 +58,7 @@ export const calculateCellColor = (cellUsers: number, totalUsers: number, backgr
   }
   else {
     const alpha = (cellUsers / totalUsers) // cells with less users appear more transparent
-    let cellColorRGBA = selectedCellColor 
+    let cellColorRGBA = selectedCellColor
     cellColorRGBA.a = alpha
     const cellColorRGB = rgba2rgb(background, cellColorRGBA)
 
@@ -84,10 +84,6 @@ const preventDefault = (event: any) => {
   event.preventDefault()
 }
 
-// const showDetailsInitial = () => {
-//   return window.innerWidth > 767
-// }
-
 interface IAvailabilityGrid {
   editMode: boolean;
   user: User | undefined;
@@ -105,7 +101,6 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   const [timeCells, setTimeCells] = useState<any[][]>([]) // TODO Change to TimeCell[][] type
   const [startCell, setStartCell] = useState<TimeCell>() // Saved position at mouse click
   const [isClicked, setIsClicked] = useState(false) // Is mouse currently down
-  // const [showDetails, setShowDetails] = useState(() => showDetailsInitial()) // Show availability details
   const longTouchDuration = 100 // Duration for long touch in ms
   const [dragEnabled, setDragEnabled] = useState(false) // Is drag enabled
   const gridRef = useRef<HTMLDivElement>(null)
@@ -126,14 +121,14 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
     const selectedCells = timeCells.flat().filter((timeCell) => timeCell.selected).map((timeCell) => {
       return timeCell
     })
-  
+
     const availabilities = selectedCells.map((timeCell) => {
       return {
         // user: user!.id,
         time: timeCell.time.toISOString()
       }
     })
-  
+
     return availabilities
   }
 
@@ -157,13 +152,13 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
         })
       )
     )
-      
+
     // Loop through users and mark time cells
     initTimeCells.flat().map(timeCell => {
       for (const usr of meetingData!.users) {
         for (const av of usr!.availabilities!) {
           if (timeCell.time.isSame(moment(av.time))) {
-            timeCell.markedBy.push(usr.name)            
+            timeCell.markedBy.push(usr.name)
             if (usr.id === user?.id) {
               timeCell.saved = true
               timeCell.selected = true
@@ -186,8 +181,8 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
   }, [meetingData, user])
 
   // Handles saving selected time cells and persisting them in the database
-  const saveCells = () => {    
-    setTimeCells(timeCells.map((column: TimeCell[]) => 
+  const saveCells = () => {
+    setTimeCells(timeCells.map((column: TimeCell[]) =>
       column.map((timeCell: TimeCell, j: number) => {
         if (timeCell.selected) {
           return {...timeCell, saved: true}
@@ -224,11 +219,11 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
       let x = parseInt(currentCell.getAttribute('data-x') || "0")
       let y = parseInt(currentCell.getAttribute('data-y') || "0")
 
-      setTimeCells(timeCells.map((column: TimeCell[], i: number) => 
+      setTimeCells(timeCells.map((column: TimeCell[], i: number) =>
         column.map((timeCell: TimeCell, j: number) => {
           if (isBetween(i, x, startCell.position.x) && isBetween(j, y, startCell.position.y)) {
             return { ...timeCell, selected: !startCell?.selected}
-          } 
+          }
           else {
             if (timeCell.saved)
               return {...timeCell, selected: true}
@@ -242,11 +237,6 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
 
   const startSelect = (event: any, timeCell: TimeCell) => {
     setIsClicked(true)
-    // if (window.innerWidth < 768) {
-    //   setShowDetails(!showDetails)
-    //   console.log('set');
-      
-    // }
     setStartCell(timeCell)
     setCurrentCell(timeCell)
   }
@@ -271,16 +261,16 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
       event.preventDefault()
       const currentCell = document.elementFromPoint(touch.clientX, touch.clientY)
       console.log(touch.clienX, touch.clientY);
-      
+
       if (currentCell?.classList.contains('TimeCell')) {
         let x = parseInt(currentCell.getAttribute('data-x') || "0")
         let y = parseInt(currentCell.getAttribute('data-y') || "0")
 
-        setTimeCells(timeCells.map((column: TimeCell[], i: number) => 
+        setTimeCells(timeCells.map((column: TimeCell[], i: number) =>
           column.map((timeCell: TimeCell, j: number) => {
             if (isBetween(i, x, startCell!.position.x) && isBetween(j, y, startCell!.position.y)) {
               return { ...timeCell, selected: !startCell?.selected}
-            } 
+            }
             else {
               if (timeCell.saved)
                 return {...timeCell, selected: true}
@@ -301,7 +291,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
 
   const endTouchSelect = (event: any, timeCell: TimeCell) => {
     gridRef.current?.removeEventListener('touchmove', preventDefault, false)
-    
+
     if (clearTimerRef.current) {
       window.clearTimeout(clearTimerRef.current)
       clearTimerRef.current = undefined
@@ -338,7 +328,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
 
     return ''
   }
-  
+
   // Main time grid component
   const timeGrid = timeCells.map((column : TimeCell[], col) => {
     return (
@@ -346,7 +336,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
         {formattedColumnHeader(column[0])}
         {column.map((timeCell: TimeCell, row) => {
           const cellColorRGB = calculateCellColor(timeCell.markedBy.length, userCount, backgroundColor, selectedCellColor, baseCellColor)
-          
+
           return (
             <div data-x={timeCell.position.x} data-y={timeCell.position.y} className={`TimeCell ${selectTimeCellClass(timeCell)}`} style={showAllAvailabilities? {backgroundColor: `rgb(${cellColorRGB.r}, ${cellColorRGB.g}, ${cellColorRGB.b})`}: {}}
               onMouseEnter={e => onCellEnter(e, timeCell)}
@@ -361,7 +351,7 @@ export const AvailabilityGrid = ({editMode, user, meetingData, showAllAvailabili
       </div>
     )
   })
-  
+
   return (
     <div className='AvailabilityGridWrapper'>
       <div className='TimesColumn'>
